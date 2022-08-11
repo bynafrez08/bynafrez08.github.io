@@ -1,0 +1,13 @@
+main:
+  - title: "Home"
+    url: /
+  - title: "Article"
+    url: /year-archive/
+  - title: "Categories"
+    url: /categories/
+  - title: "Tags"
+    url: /tags/
+  - title: "Search"
+    url: /buscador/
+  - title: "About"
+    url: /about/

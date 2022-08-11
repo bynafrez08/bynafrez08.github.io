@@ -1,0 +1,971 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.15.1 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>HTB - Ransom - bynafrez08.io</title>
+<meta name="description" content="Ransom is Linux machine with a medium level defficulty both in exploitain, user own, privilage escalation phase, this involves vulnerabilities such as type juggling that helps us gain access to the web page, and we will also have an encrypted zip file that we must…">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="bynafrez08.io">
+<meta property="og:title" content="HTB - Ransom">
+<meta property="og:url" content="http://localhost:4000/htb-ransom/">
+
+
+  <meta property="og:description" content="Ransom is Linux machine with a medium level defficulty both in exploitain, user own, privilage escalation phase, this involves vulnerabilities such as type juggling that helps us gain access to the web page, and we will also have an encrypted zip file that we must…">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/img-ransom/portada.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2022-03-18T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/htb-ransom/">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "",
+      "url": "http://localhost:4000",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="bynafrez08.io Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+   <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+                
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/" >Article</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/buscador/" >Search</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+    
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="http://localhost:4000/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        <li class="current">HTB - Ransom</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/avatar1.png" alt="Nafsu Uddin | AKA bynafrez" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Nafsu Uddin | AKA bynafrez</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Networking / Pentesting / Offensive Security
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Spain</span>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/bynafrez08" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="HTB - Ransom">
+    <meta itemprop="description" content="Ransom is Linux machine with a medium level defficulty both in exploitain, user own, privilage escalation phase, this involves vulnerabilities such as type juggling that helps us gain access to the web page, and we will also have an encrypted zip file that we must…">
+    <meta itemprop="datePublished" content="March 18, 2022">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">HTB - Ransom
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p class="page__meta">
+          
+            <i class="fa fa-fw fa-calendar" aria-hidden="true"></i> <time datetime="2022-03-18T00:00:00-04:00">March 18, 2022 </time>&emsp;
+          
+          
+        </p>
+        <p>Ransom is Linux machine with a medium level defficulty both in exploitain, user own, privilage escalation phase, this involves vulnerabilities such as type juggling that helps u  s gain access to the web page, and we will also have an encrypted zip file that we must access through a plaintext attack and for privilege escalation we must review some code files of the web page that will help us access as the root user.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/portada.png" />
+</p>
+
+<p>Machine matrix</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/matrix.png" />
+</p>
+
+<p>Fisrt thing that we are going to do is created a directory with the name of the target machine and inside of that directory with <strong><em>mkt</em></strong> command i am going to create the following directories, to organize the content (mkt is a function that i have defined in my zshrc to create the following directories).</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura1.png" />
+</p>
+
+<p>Once we have connected to the htb vpn and turned on the target machine, we will check if we have connectivity with the machine by sending one ICMP trace. And we see that we have sent a package and we received it back and with this we already know that we have connectivity, trough the TTL we can know if the machine is windows or linux, remember that the linux machines usually has ttl 64 and the windows machine has ttl 128.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura2.png" />
+</p>
+
+<p>And if you asking, why the ttl reports 63 instead of 64? This is because the packet that we send has to go through certain intermediate nodes before reaching the destination and this term is known as traceroute. If we use the <strong><em>-R</em></strong> flag on the ping command we can see those “nodes”.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura3.png" />
+</p>
+
+<p>Anyway, i have s script defined on my machine called <strong><em>wichSystem</em></strong>, and simply specifying the IP address of the machine through the ttl will tell us if it is a linux or windows machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura4.png" />
+</p>
+
+<p>wichSystem script:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/python3
+#coding: utf-8
+</span>
+<span class="kn">import</span> <span class="nn">re</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">subprocess</span>
+
+<span class="c1"># python3 wichSystem.py 10.10.10.188
+</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">[!] Uso: python3 "</span> <span class="o">+</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">" &lt;direccion-ip&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_ttl</span><span class="p">(</span><span class="n">ip_address</span><span class="p">):</span>
+
+    <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">"/usr/bin/ping -c 1 </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="n">ip_address</span><span class="p">,</span> <span class="s">""</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">err</span><span class="p">)</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">)</span>
+
+    <span class="n">ttl_value</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">r"\d{1,3}"</span><span class="p">,</span> <span class="n">out</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">ttl_value</span>
+
+<span class="k">def</span> <span class="nf">get_os</span><span class="p">(</span><span class="n">ttl</span><span class="p">):</span>
+
+    <span class="n">ttl</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ttl</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">ttl</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">ttl</span> <span class="o">&lt;=</span> <span class="mi">64</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"Linux"</span>
+    <span class="k">elif</span> <span class="n">ttl</span> <span class="o">&gt;=</span> <span class="mi">65</span> <span class="ow">and</span> <span class="n">ttl</span> <span class="o">&lt;=</span> <span class="mi">128</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"Windows"</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"Not Found"</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+
+    <span class="n">ip_address</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">ttl</span> <span class="o">=</span> <span class="n">get_ttl</span><span class="p">(</span><span class="n">ip_address</span><span class="p">)</span>
+
+    <span class="n">os_name</span> <span class="o">=</span> <span class="n">get_os</span><span class="p">(</span><span class="n">ttl</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="si">%</span><span class="s">s (ttl -&gt; </span><span class="si">%</span><span class="s">s): </span><span class="si">%</span><span class="s">s</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">ttl</span><span class="p">,</span> <span class="n">os_name</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="scanning">Scanning</h2>
+
+<p>We are going to perform nmap scanning to discover ports and other relevant information to the target machine, for this we are going to use the following parameters or flags:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Flags</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-p-</td>
+      <td>Means that we want to scan all the ports that exists in tcp and udp which is in total 65,535 ports.</td>
+    </tr>
+    <tr>
+      <td>-sS</td>
+      <td>Means that we want tcp syn scan.</td>
+    </tr>
+    <tr>
+      <td>–min-rate 5000</td>
+      <td>Means we just want to send packets no slower then 5000 packets per second to discover ports, and with that parameter our scan will be most faster.</td>
+    </tr>
+    <tr>
+      <td>–open</td>
+      <td>Means that we want only output the ports with the status open not filtred.</td>
+    </tr>
+    <tr>
+      <td>-vvv</td>
+      <td>Means that we want to output more information.</td>
+    </tr>
+    <tr>
+      <td>-n</td>
+      <td>Means we don’t want DNS resolution, because sometimes the DNS resolution can take our scan much slower.</td>
+    </tr>
+    <tr>
+      <td>-Pn</td>
+      <td>Means that we don’t to ping to discover ports.</td>
+    </tr>
+    <tr>
+      <td>-oG</td>
+      <td>Means that we want to save the scan in grapable format to not rescan again, you have more formats to save like nmap, xml, etc.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The scan:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Nmap 7.92 scan initiated Thu Mar 17 16:51:23 2022 as: nmap -p- -sS --min-rate 5000 --open -vvv -n -Pn -oG allports 10.10.11.153
+# Ports scanned: TCP(65535;1-65535) UDP(0;) SCTP(0;) PROTOCOLS(0;)
+Host: 10.10.11.153 ()   Status: Up
+Host: 10.10.11.153 ()   Ports: 22/open/tcp//ssh///, 80/open/tcp//http///        Ignored State: closed (65533)
+# Nmap done at Thu Mar 17 16:51:35 2022 -- 1 IP address (1 host up) scanned in 12.01 seconds
+</code></pre></div></div>
+
+<p>And basically i save the scan in grapable format because i have defined in zshrc a function called <strong><em>extractports</em></strong>, that specifying the file name shows me the ports and the IP address of the target machine in a much more elegant way and copies the ports to the clipboard. And this can be useful if there is a machine that has many ports enbled and we do not have to write those ports one by one.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura5.png" />
+</p>
+
+<p>The <strong><em>extractPorts</em></strong> script:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>extractPorts <span class="o">()</span> <span class="o">{</span>
+        <span class="nv">ports</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nb">cat</span> <span class="nv">$1</span> | <span class="nb">grep</span> <span class="nt">-oP</span> <span class="s1">'\d{1,5}/open'</span> | <span class="nb">awk</span> <span class="s1">'{print $1}'</span> <span class="nv">FS</span><span class="o">=</span><span class="s1">'/'</span> | xargs | <span class="nb">tr</span> <span class="s1">' '</span> <span class="s1">','</span><span class="si">)</span><span class="s2">"</span>
+        <span class="nv">ip_address</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nb">cat</span> <span class="nv">$1</span> | <span class="nb">grep</span> <span class="nt">-oP</span> <span class="s1">'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'</span> | <span class="nb">sort</span> <span class="nt">-u</span> | <span class="nb">head</span> <span class="nt">-n</span> 1<span class="si">)</span><span class="s2">"</span>
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">[*] Extracting information...</span><span class="se">\n</span><span class="s2">"</span> <span class="o">&gt;</span> extractPorts.tmp
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\t</span><span class="s2">[*] IP Address: </span><span class="nv">$ip_address</span><span class="s2">"</span> <span class="o">&gt;&gt;</span> extractPorts.tmp
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\t</span><span class="s2">[*] Open ports: </span><span class="nv">$ports</span><span class="se">\n</span><span class="s2">"</span> <span class="o">&gt;&gt;</span> extractPorts.tmp
+        <span class="nb">echo</span> <span class="nv">$ports</span> | <span class="nb">tr</span> <span class="nt">-d</span> <span class="s1">'\n'</span> | xclip <span class="nt">-sel</span> clip
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"[*] Ports copied to clipboard</span><span class="se">\n</span><span class="s2">"</span> <span class="o">&gt;&gt;</span> extractPorts.tmp
+        <span class="nb">cat </span>extractPorts.tmp
+        <span class="nb">rm </span>extractPorts.tmp
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="scanning---ports-recognition">Scanning - Ports Recognition</h2>
+
+<p>Once we have discovered possible ports, we will perform another scan to recognize the services and versions that use each of these ports. To order to do that we going to use the following parameters or flags:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Flags</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-sCV</td>
+      <td>Means that we want to use some nmap scripts, in this case to discover the version and services that are running each of those ports.</td>
+    </tr>
+    <tr>
+      <td>-p</td>
+      <td>To specify the ports.</td>
+    </tr>
+    <tr>
+      <td>-oN</td>
+      <td>Save the scan in nmap format.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Remember that nmap have bunch of scripts that we can use, nmap scripts end in <strong><em>.nse</em></strong> extension (nmap script engine).</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/locate.png" />
+</p>
+
+<p>Remember that nmap scripts have many categories that we can search for.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/categories.png" />
+</p>
+
+<p>Once the scan is finish we can see the versions of the services, and it output that the target machine is an ubuntu but it does not specify anu version of ubuntu.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura6.png" />
+</p>
+
+<p>If we want to know the version of the ubuntu that the target machine is using, what we can do is copy the version that of some services like apache or openssh that is using on the target machine and we can search in launchpad to see what version of ubuntu is used that particular version.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura9.png" />
+</p>
+
+<p>And we see that it is a ubuntu focal, this will not help us much to exploit the machine, but it would be good for us, to know what machine we are attacking.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura10.png" />
+</p>
+
+<p>Before we have seen a port 80 on the scan process, what we can so is using the command <strong><em>whatweb</em></strong> to do a little recognition, to know if the website is using any cms or some particular frameworks. And we can see that the website is using a old version of jquery that can be vulnerable to xss and prototype pollution attack, and we can see that the website is using laravel, that we will have to keeping that in mind these informations for the exploitation phase.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura11.png" />
+</p>
+
+<p>And if we access to the website and we can see an authentication panel that asks us to put a password. btw, we can use the wappalyzer extension in our browser, which is the same when we have used the whatweb command.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura12.png" />
+</p>
+
+<p>We are going to check with the typical defualt passwords and didn’t work.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura13.png" />
+</p>
+
+<p>What we can do is see if the website is vulnerable to sql injections, for this we are going to edit a little bit the html to the website and we are going to modify the password field to be able to see what we are writing.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura14.png" />
+</p>
+
+<p>We try a simple sql injection and we can see that is not vulnerable to sql injections.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura15.png" />
+</p>
+
+<p>Now what we can do is open burpsuite to intercept the request and manipulate them. Remembe that burpsuite is act like proxy between your browser and the web server.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura16.png" />
+</p>
+
+<p>We put any password in the password field and click login on the website to capture the request before sending it to the web server. And we can two cookies and we can see that is using laravel session cookie, another way to to know that the target website is using laravel framework. and on the other side is using cross-site request forgery token (xsrf).</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura17.png" />
+</p>
+
+<p>We see that it is using and api behind the login form and now because it’s going into this api this xsrf token it’s not to useful. There’s also a second thing that happens in a lot laravel forms that’s if it not going to api it also normally likes passing in <strong><em>&amp;_token</em></strong> parameter which is another xsrf thing, but in this case it not having this parameter and also having api in the url mean’s we’re hitting the api middleware of laravel.</p>
+
+<p>So what we could have done is save this burpsuite request and with sqlmap make several sql injections to check if it is injectable or not, but as we have seen before, the website it’s not vulnerable to sql injections. So if we try to send the request it says “invalid password”.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura18.png" />
+</p>
+
+<p>So what we can try is to change the request method to send the same data but in  <strong><em>POST</em></strong>, so in order to do that we right click and click where is says <strong><em>change request method</em></strong>. And when sending the request and it will output the status http code 405, so by post we do not see information that can be useful to us.</p>
+<p align="center">
+<img src="/assets/images/img-ransom/captura19.png" />
+</p>
+
+<p>What we can do is to change POST to GET, but keeping the same format as post. And we can see that it returns the request in json format, and we get the status code 422, and this happen because the <strong><em>content-type</em></strong> it doesn’t in json format.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura20.png" />
+</p>
+
+<p>So what we’re going to do is change the content-type in json and put the password field in json format. And we can see the status code is 200 and it’s says “invalid password”, and depending on how the validation of the password field is being applied from the backend at the code level (in this case php) we can exploit vulnerabilities such as type juggling.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura21.png" />
+</p>
+
+<p>For example, here we are making a comparison between two inputs, if “jonh” is equal to “jonh” the credentials will be valid, and if it’s not, the credentials will be invalid. Let’s imagine that this is the input field of the password and in the backend side is being compared with a password.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura22.png" />
+</p>
+
+<p>So inside the comparison we put a <strong><em>true</em></strong> and because we are in json we can remove the strings (“”) and php will interpreted this as a boolean state. And here is says if “jonh” is equal to the boolean “true”, which is essentially saying if that variable “jonh” is not empty then secceded. But in the case that we put an invalid comparison, it will be false.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/true.png" />
+</p>
+
+<h2 id="exploitation">Exploitation</h2>
+
+<p>Well now back on the burpsuite, in the password field we remove the quotes and we put <strong><em>true</em></strong> and send the request, and as you can see it’s says loggin succed. And with this we already know that the website is vulnerable to type juggling attack and we have already hacked the password field.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura24.png" />
+</p>
+
+<p>So if we now go to the <strong><em>intercept</em></strong>, and keep the data format as post and we do the same porcess as we did in the repeater, which is change the <strong><em>content-type</em></strong> to json and change the password field to json format. And if we click in <strong><em>forward</em></strong> we should already have access to the website.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura25.png" />
+</p>
+
+<p>And indeed we already have access to the website and can already visualize the first flag.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura26.png" />
+</p>
+
+<p>So for example, if we change the value with 0 it’s says “valid credentials” and if we put 1 it’s says “invalid credentials”, because <strong><em>true</em></strong> is 0 and 1 is <strong><em>false</em></strong>. But if we want to mitigate or fix this type of attacks is using tree equals (“===”) to enforce type comparison in php, so if we do three equals it make sure the content is the same and how it’s declaring it’s the same (one thing to metion the “==” is <strong><em>lose comparison</em></strong> and “===” is <strong><em>strict comparison</em></strong>).</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/mitigate.png" />
+</p>
+
+<p>So now if i do “jonh” is equal to “jonh” its says “valid credentials” means that is true. So this is a common php logic bug that affects a lot of applications that a lot of developers don’t really test for it, because you have to convert the request to json, so after we will look de source code of that vulnerable website.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/mitigate2.png" />
+</p>
+
+<p>To understand this better, we can see the following table: We see that a string with clear text in quotes is true, so that’s why it gives us a valid password.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/losstable.png" />
+</p>
+
+<p>And with strict comparison this is not happen:</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/strict.png" />
+</p>
+
+<p>So before we see a zip file on the website called <strong><em>homedirectory.zip</em></strong>, so if we try to unzip it will require for a password that we don’t know.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura27.png" />
+</p>
+
+<p>If we can’t unzip the file, remember that using <strong><em>7z</em></strong> we can view the content of that zip file. So here we can see that this zip file contains some system files for that particular user, and we can see interesting files like <strong><em>id_rsa</em></strong> which is the ssh private key that will allow us to access through shh without providing the password and we can access to the target machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura28.png" />
+</p>
+
+<p>In this case what we can do is try to crack this zip file using tools like <strong><em>fcrackzip</em></strong>, or in this case i am going to use <strong><em>zip2john</em></strong> and speciffyling the name of the compressed file. And it will dump me the password hash that we can try to crack it using brute force attack with tools like john or hashcat.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura29.png" />
+</p>
+
+<p>So, lets save the hash in to a file and then try to crack it with john.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura30.png" />
+</p>
+
+<p>And we can see that john is not been able to crack the hash, it has check 14 million lines of the <strong><em>rockyou.txt</em></strong> dictionary and has not found the password.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura31.png" />
+</p>
+
+<p>So what we can do now is output more information about the compressed file. So with the utility <strong><em>7z</em></strong> we can use the flag <strong><em>-slt</em></strong> that will allow to output more technical information about the zip file. So we can see that the this compressed file is encryted with the zipcrypto method, so thats why we can’t crack it before. And because it’s encrypted in <strong><em>zipcrypto</em></strong> is vulnerable to a <strong><em>plain text attack</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura32.png" />
+</p>
+
+<h2 id="exploitation-2">Exploitation 2</h2>
+
+<p>On the following <a href="https://medium.com/@whickey000/how-i-cracked-conti-ransomware-groups-leaked-source-code-zip-file-e15d54663a8">website</a> this guide that we can use, basically in this post the conti malware (conti is ransomware) group had a rouge employee leak a bunch of files and one of them is the source code that was encrypted and they use the zipcrypto library to encrypted. And then someone will managed able to crack it through plain text attack using a tool called <strong><em>bkcrack</em></strong>, that we will going to use now.</p>
+
+<p>So to proceed this attack we need to have a file that we fairly know in plain text how its line can be composed, basically we need to have a file that has more or less similarities of lines to a file that is inside the compressed file that we can carry out this attack, when more similarities there are, the faster the attack will be.</p>
+
+<p>In this case we cannot use the “id_rsa” because we cannot compare it with the id_rsa of the compressed since they are very different. In this case, the file that we can use is the <strong><em>bash_logout</em></strong> to make the comparison since it is a file that usually has the same content in all linux systems.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura33.png" />
+</p>
+
+<p>We can see that the size of my bash_logout is the same as the one in the zip file.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura34.png" />
+</p>
+
+<p>Let’s install the bkcrack tool, first we need to clone the following <a href="https://github.com/kimci86/bkcrack">repo</a> and then we need to compiled with the following commands.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura35.png" />
+</p>
+
+<p>Now if we execute the bkcrack binary with the flag “-h” it will show us the options that we can use.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura36.png" />
+</p>
+
+<p>The first thing that we are going to do is locate the file <strong><em>bash_logout</em></strong> in our machine and we’re going to make a copy and move it to the directory where is the bkcrack executable. And then we are goint to zip that file.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura37.png" />
+</p>
+
+<p>And as we can see already inside the zip file that we created is our bash_logout.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura38.png" />
+</p>
+
+<p>In this case i am also going to move the zip file that is encrypted into the directory where the bkcrack executable is, just for convenience (it’s not necessary to do this process).</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura39.png" />
+</p>
+
+<p>And now let’s proceed with the attack, we invoke the executable and with the flag <strong><em>-C</em></strong>  we are going to specify the zip file that is encrypted, and with the flag <strong><em>-c</em></strong> we are going the specify the file that we believe that have similarities in this case will be the bash_logout, and then with the flag <strong><em>-P</em></strong> we are going to specify the zip file that we created and then with the flag <strong><em>-p</em></strong> we are going to specify our bash_logout file which is inside our zip file.</p>
+
+<p>And this allow us  is to generate a pair of keys (if it’s works), which will then be used to create a new compressed file that will have the same files as the encrypted file.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura40.png" />
+</p>
+
+<p>Once we get the keys, we are going to do the same attack, but now we are going to specify the keys with the flag <strong><em>-k</em></strong>, and then with the flag <strong><em>-U</em></strong> we are going to specify the new zip file which will contain the same files as the encrypted one and we are gonna to specify a password for that zip file. and with this we would have created the new zip files, which in my case is called “test.zip”.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura41.png" />
+</p>
+
+<p>And in my case what i am going to do is move that compressed file to another directory, and now if we list the content of that zip file that we just created we can see that it contains the same files that had the encrypted file.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura42.png" />
+</p>
+
+<p>Now we are going to unzip this zip file and it will asks us for the password, which in this case would be the one we specified in the bkcrack. And as we can see we already have the files that had the encrypted one.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura43.png" />
+</p>
+
+<p>So now we can visualize the id_rsa, and now we can use this private key to access the target machine via ssh.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura44.png" />
+</p>
+
+<p>First of all you don’t know with what user we can access via ssh, what we can do is view the <strong><em>authorized_keys</em></strong> to see what usets can access on the target machine, and we can see a user called <strong><em>htb</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura45.png" />
+</p>
+
+<p>We are going to apply the permission 600, because if we don’t it will output an error when we try to access for security reasons. And using the id_rsa we already have access to the target machine, and we can see the flag user.txt that we have seen before.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura46.png" />
+</p>
+
+<h2 id="privilege-escalation">Privilege Escalation</h2>
+
+<p>We do not have access to the root directory and there are no cron jobs.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura47.png" />
+</p>
+
+<p>We are going to check the OS version, and we see that we are in a ubuntu focal machine, which we had previously guessed.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura48.png" />
+</p>
+
+<p>What we can do is move where the content of the website is hosted, which is normally on the path <strong><em>/var/www/html</em></strong> and it’s not here. we can check the following path which is <strong><em>/etc/apache2/sites-enabled/</em></strong> and in the default file, we see that he content of the website is hosting in the following path, and we can see the user.txt and the encrypted zip file.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura49.png" />
+</p>
+
+<p>And in this case on route <strong><em>/srv/prod</em></strong>, basically i went back one directory since in the other there was nothing interesting. And now if we use the command <strong><em>grep -r “login”</em></strong> to see where the website login authentication is being applied. And we see a route called <strong><em>/route/api</em></strong> that is the same route we have seen in burpsuite.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura50.png" />
+</p>
+
+<p>We are going to filter the <strong><em>authcontroller.php</em></strong> file with the find command to see where it is located.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura51.png" />
+</p>
+
+<p>And we can see that we were right that the type juggling is being applied, we see the password field is compared with the password <strong><em>UHC-March-Global-PW!</em></strong> and as the name indicates, this password is used for everything. And in the event that they were with three “===” it would not be vulnerable.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura52.png" />
+</p>
+
+<p>Let’s check this password in the login form.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura53.png" />
+</p>
+
+<p>An as you can see we have access.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura54.png" />
+</p>
+
+<p>And with the same password we can access with the root user and visualize the last flag which is <strong><em>root.txt</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura55.png" />
+</p>
+
+<p>And with this we would already have the machine pwned.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/captura56.png" />
+</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#api" class="page__taxonomy-item" rel="tag">Api</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#hack-the-box" class="page__taxonomy-item" rel="tag">Hack the box</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#linux" class="page__taxonomy-item" rel="tag">Linux</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#php" class="page__taxonomy-item" rel="tag">PHP</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#web" class="page__taxonomy-item" rel="tag">Web</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#pentest" class="page__taxonomy-item" rel="tag">Pentest</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Fecha:</strong> <time datetime="2022-03-18T00:00:00-04:00">March 18, 2022</time></p>
+        
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/tryh-solar/" class="pagination--pager" title="Tryhackme - Solar
+">Previous</a>
+    
+    
+      <a href="/htb-driver/" class="pagination--pager" title="HTB - Driver
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+</div>
+
+    </div>
+
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 bynafrez08.io</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script data-search-pseudo-elements defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>

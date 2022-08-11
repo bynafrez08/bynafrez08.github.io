@@ -1,0 +1,908 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.15.1 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>HTB - Previse - bynafrez08.io</title>
+<meta name="description" content="Previse is a linux machine with difficulty esay pulling a little to medium both the level of intrusion and privilege escalation pulls a little to medium level of difficulty. this machine has vulnerabilities such as log poisoning and in the part of escalation we take advantage of nopasswd.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="bynafrez08.io">
+<meta property="og:title" content="HTB - Previse">
+<meta property="og:url" content="http://localhost:4000/htb-previse/">
+
+
+  <meta property="og:description" content="Previse is a linux machine with difficulty esay pulling a little to medium both the level of intrusion and privilege escalation pulls a little to medium level of difficulty. this machine has vulnerabilities such as log poisoning and in the part of escalation we take advantage of nopasswd.">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/img-previse/portada.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2021-12-09T00:00:00-05:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/htb-previse/">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "",
+      "url": "http://localhost:4000",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="bynafrez08.io Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+   <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+                
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/" >Article</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/buscador/" >Search</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+    
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="http://localhost:4000/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        <li class="current">HTB - Previse</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/avatar1.png" alt="Nafsu Uddin | AKA bynafrez" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Nafsu Uddin | AKA bynafrez</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Networking / Pentesting / Offensive Security
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Spain</span>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/bynafrez08" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="HTB - Previse">
+    <meta itemprop="description" content="Previse is a linux machine with difficulty esay pulling a little to medium both the level of intrusion and privilege escalation pulls a little to medium level of difficulty. this machine has vulnerabilities such as log poisoning and in the part of escalation we take advantage of nopasswd.">
+    <meta itemprop="datePublished" content="December 09, 2021">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">HTB - Previse
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p class="page__meta">
+          
+            <i class="fa fa-fw fa-calendar" aria-hidden="true"></i> <time datetime="2021-12-09T00:00:00-05:00">December 09, 2021 </time>&emsp;
+          
+          
+        </p>
+        <p>Previse is a linux machine with difficulty esay pulling a little to medium both the level of intrusion and privilege escalation pulls a little to medium level of difficulty. this machine has vulnerabilities such as log poisoning and in the part of escalation we take advantage of nopasswd.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/portada.png" />
+</p>
+
+<p>Machine rating according to the people.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/cali.png" />
+</p>
+
+<p>Machine matrix:</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/matrix.png" />
+</p>
+
+<p>The first thing we are going to do is to create a file with the machine name, and inside of that file with <strong><em>mkt</em></strong> we are going to create to following directories.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura1.png" />
+</p>
+
+<h2 id="recognition">recognition</h2>
+
+<p>Now i am going to send a one icmp packet to know if i have connection to the victim machine, and to know what is the OS in the victim machine through the <strong><em>ttl</em></strong>. If you that the windows systems have 128 ttl and the linux systems have 64 ttl.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura2.png" />
+</p>
+
+<p>And in my case i have a function that is <strong><em>wichsystem</em></strong> that through the ttl reports me if it is a windows or linux machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura3.png" />
+</p>
+
+<p>wichsystem script:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/python3
+#coding: utf-8
+</span> 
+<span class="kn">import</span> <span class="nn">re</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">subprocess</span>
+ 
+<span class="c1"># python3 wichSystem.py YOURIP 
+</span> 
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">[!] Uso: python3 "</span> <span class="o">+</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">" &lt;direccion-ip&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+ 
+<span class="k">def</span> <span class="nf">get_ttl</span><span class="p">(</span><span class="n">ip_address</span><span class="p">):</span>
+ 
+    <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">"/usr/bin/ping -c 1 </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="n">ip_address</span><span class="p">,</span> <span class="s">""</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">err</span><span class="p">)</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+ 
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">)</span>
+ 
+    <span class="n">ttl_value</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">r"\d{1,3}"</span><span class="p">,</span> <span class="n">out</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+ 
+    <span class="k">return</span> <span class="n">ttl_value</span>
+ 
+<span class="k">def</span> <span class="nf">get_os</span><span class="p">(</span><span class="n">ttl</span><span class="p">):</span>
+ 
+    <span class="n">ttl</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ttl</span><span class="p">)</span>
+ 
+    <span class="k">if</span> <span class="n">ttl</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">ttl</span> <span class="o">&lt;=</span> <span class="mi">64</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"Linux"</span>
+    <span class="k">elif</span> <span class="n">ttl</span> <span class="o">&gt;=</span> <span class="mi">65</span> <span class="ow">and</span> <span class="n">ttl</span> <span class="o">&lt;=</span> <span class="mi">128</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"Windows"</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"Not Found"</span>
+ 
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+ 
+    <span class="n">ip_address</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+ 
+    <span class="n">ttl</span> <span class="o">=</span> <span class="n">get_ttl</span><span class="p">(</span><span class="n">ip_address</span><span class="p">)</span>
+ 
+    <span class="n">os_name</span> <span class="o">=</span> <span class="n">get_os</span><span class="p">(</span><span class="n">ttl</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="si">%</span><span class="s">s (ttl -&gt; </span><span class="si">%</span><span class="s">s): </span><span class="si">%</span><span class="s">s</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">ttl</span><span class="p">,</span> <span class="n">os_name</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>When we ping the ttl it reports 63 but this is because there are intermediate nodes as we can see.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura4.png" />
+</p>
+
+<h2 id="scanning---ports-recognition">Scanning - Ports recognition</h2>
+
+<p>With nmap we will scan wich ports are open on the victim machine so that we can attack.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura5.png" />
+</p>
+
+<p>Basically i report the scan in a grepable format because I have a function defined in the <strong><em>~/.zshrc</em></strong> called <strong><em>extractports</em></strong> that shows me the available ports in a much more elegant way and it copies the ports that we can paste it in the clipboard.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura6.png" />
+</p>
+
+<p>Extractports script:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="k">function </span>extractPorts<span class="o">(){</span>
+        <span class="nv">ports</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nb">cat</span> <span class="nv">$1</span> | <span class="nb">grep</span> <span class="nt">-oP</span> <span class="s1">'\d{1,5}/open'</span> | <span class="nb">awk</span> <span class="s1">'{print $1}'</span> <span class="nv">FS</span><span class="o">=</span><span class="s1">'/'</span> | xargs | <span class="nb">tr</span> <span class="s1">' '</span> <span class="s1">','</span><span class="si">)</span><span class="s2">"</span>
+        <span class="nv">ip_address</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nb">cat</span> <span class="nv">$1</span> | <span class="nb">grep</span> <span class="nt">-oP</span> <span class="s1">'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'</span> | <span class="nb">sort</span> <span class="nt">-u</span> | <span class="nb">head</span> <span class="nt">-n</span> 1<span class="si">)</span><span class="s2">"</span>
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">[*] Extracting information...</span><span class="se">\n</span><span class="s2">"</span> <span class="o">&gt;</span> extractPorts.tmp
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\t</span><span class="s2">[*] IP Address: </span><span class="nv">$ip_address</span><span class="s2">"</span>  <span class="o">&gt;&gt;</span> extractPorts.tmp
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\t</span><span class="s2">[*] Open ports: </span><span class="nv">$ports</span><span class="se">\n</span><span class="s2">"</span>  <span class="o">&gt;&gt;</span> extractPorts.tmp
+        <span class="nb">echo</span> <span class="nv">$ports</span> | <span class="nb">tr</span> <span class="nt">-d</span> <span class="s1">'\n'</span> | xclip <span class="nt">-sel</span> clip
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"[*] Ports copied to clipboard</span><span class="se">\n</span><span class="s2">"</span>  <span class="o">&gt;&gt;</span> extractPorts.tmp
+        <span class="nb">cat </span>extractPorts.tmp<span class="p">;</span> <span class="nb">rm </span>extractPorts.tmp
+<span class="o">}</span>
+</code></pre></div></div>
+<p>Now with the ports we have discovered we will do another scan to find out what version and services are running on each of those ports.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Nmap 7.91 scan initiated Mon Dec  6 17:36:15 2021 as: nmap -sCV -p22,80 -oN targeted 10.10.11.104
+Nmap scan report for 10.10.11.104
+Host is up (0.047s latency).
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   2048 53:ed:44:40:11:6e:8b:da:69:85:79:c0:81:f2:3a:12 (RSA)
+|   256 bc:54:20:ac:17:23:bb:50:20:f4:e1:6e:62:0f:01:b5 (ECDSA)
+|_  256 33:c1:89:ea:59:73:b1:78:84:38:a4:21:10:0c:91:d8 (ED25519)
+80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
+| http-cookie-flags:
+|   /:
+|     PHPSESSID:
+|_      httponly flag not set
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+| http-title: Previse Login
+|_Requested resource was login.php
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Mon Dec  6 17:36:26 2021 -- 1 IP address (1 host up) scanned in 10.48 seconds
+</code></pre></div></div>
+
+<p>With <strong><em>whatweb</em></strong> we can make a small recognition of the web service to know if the victim machine is using any cms and the web server that is using.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura7.png" />
+</p>
+
+<p>I am access to the website and it is a login page that i dont have credentials to access and i can’t create an account.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura8.png" />
+</p>
+
+<p>Looking at the page code i don’t see anything interesting.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura9.png" />
+</p>
+
+<p>Now with nmap i am going to do a simple fuzzing to see potential routes, but i didn’t find any shit and its because nmap its not to powerful to fuzzing.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Nmap 7.91 scan initiated Mon Dec  6 17:42:20 2021 as: nmap --script http-enum -p80 -oN Webscan 10.10.11.104
+Nmap scan report for 10.10.11.104
+Host is up (0.044s latency).
+
+PORT   STATE SERVICE
+80/tcp open  http
+| http-enum:
+|   /login.php: Possible admin folder
+|   /css/: Potentially interesting directory w/ listing on 'apache/2.4.29 (ubuntu)'
+|_  /js/: Potentially interesting directory w/ listing on 'apache/2.4.29 (ubuntu)'
+
+# Nmap done at Mon Dec  6 17:42:29 2021 -- 1 IP address (1 host up) scanned in 9.51 seconds
+</code></pre></div></div>
+<p>Now with <strong><em>wfuzz</em></strong> we are going to perform fuzzing using a dictionary to see more potential routes and it is also more powerful than nmap.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura11.png" />
+</p>
+
+<p>In the word <strong><em>FUZZ</em></strong> I am going to indicate the php extension so that it looks for paths containing the php extension, and i found some interesting paths</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura12.png" />
+</p>
+
+<p>And basically when accessing each of those routes it does not let me show the content.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura13.png" />
+</p>
+
+<p>As the ftp service was open i try to access if the user <strong><em>anonymous</em></strong> was enabled, but in this case it is not enabled.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura14.png" />
+</p>
+
+<p>Ok so in the login page i tried to test if the web was vulnerable to sql injections, and we can see it’s not.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura15.png" />
+</p>
+
+<p>I try to apply virtual hosting to see if there is any change in the web if it is with the domain name, and if i can access in the php paths i found above.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura16.png" />
+</p>
+
+<p>But as we can see i can’t view tha content each of the php paths.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura17.png" />
+</p>
+
+<p>So then i use burpsuite if i can see anything, and as we can see in the route <strong><em>accounts.php</em></strong> there is a form to sing up on the website.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura18.png" />
+</p>
+
+<p>If you look at the response part of the code of the page, we see that the http server returns a status code <strong><em>302</em></strong> which means that the resource we have solved was found, but not in the expected place, basically it is used for the temporary redirection of the url. So thinking a little bit what would happen if we change tha http status code with 200 (which is successful)? let’s try.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura19.png" />
+</p>
+
+<p>Then what we will do is intercept that request before sending it to the server, so in burpsuite in the <strong><em>intercept</em></strong> section we right click and select <strong><em>“Do intercept -&gt; Response to this request”</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura20.png" />
+</p>
+
+<p>We are going to put <strong><em>200</em></strong> and then click in <strong><em>forward</em></strong></p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura21.png" />
+</p>
+
+<p>And magic!!!, now we can access in “accounts.php” and now we go to create an account anN click on <strong><em>submit</em></strong>, and in burpsuite we click on <strong><em>forward</em></strong> or send the request that we have modified to the server.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura22.png" />
+</p>
+
+<p>Now close tha proxy, and we are going to try login with the account that we have created.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura23.png" />
+</p>
+
+<p>And boom!! we can access on the website.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura24.png" />
+</p>
+
+<p>If we go to the <strong><em>files</em></strong> section we see that there are interesting files as you can see we can download the files and we can also upload files, We are going to download the 3 files.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura25.png" />
+</p>
+
+<p>Let’s unzip the the backup file.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura26.png" />
+</p>
+
+<p>So in the <strong><em>config.php</em></strong> we have mysql database credentials, that we are going to save this credentials for letter.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura27.png" />
+</p>
+
+<p>Ok so in the <strong><em>revshell.php</em></strong> file we see that a reverse shell is being applied using netcat and php code for command execution.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura28.png" />
+</p>
+
+<p>And in the file <strong><em>combinazione.txt</em></strong> we can see the admin credentials idk, i don’t find this useful this file.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura29.png" />
+</p>
+
+<p>On the web it reports that the mysql server is active and that there are 11 admin users logged in, and 3 files uploaded.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura30.png" />
+</p>
+
+<p>And in the <strong><em>log data</em></strong> part i download a .log file, let’s see what it is.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura31.png" />
+</p>
+
+<p>And we see that the file contains logs of the users who have uploaded the files or who have registered, well we see that there is a user called <strong><em>m4lwhere</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura32.png" />
+</p>
+
+<h2 id="explotation">Explotation</h2>
+
+<p>I came up with an idea is to make a reverse shell inside a php file and upload it on the web to see if I can connect to the machine on port “4444”.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura33.png" />
+</p>
+
+<p>It lets me upload the file but unfortunately i can’t connect to the machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura34.png" />
+</p>
+
+<p>I trying to make a reverse shell with python.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura35.png" />
+</p>
+
+<p>But it doesn’t work anyway.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura36.png" />
+</p>
+
+<p>Well thinking about it a bit, as before we could download the logs i thought of intercepting the request in burpsuite when downloading the log to see if we can see something.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura36.png" />
+</p>
+
+<p>In the burpsuite in the request part there is a parameter called <strong><em>delim=comma</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura37.png" />
+</p>
+
+<p>Well so we are going to establish reverse shell with bash on the port 4444 in the <strong><em>delim=comma** parameter. And click on **</em>forward or send</strong>* to send the request we have just modified.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura38.png" />
+</p>
+
+<p>We can do tha same process with python.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura39.png" />
+</p>
+
+<p>And on our attacker machine we see that we have a connection on the victim machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura40.png" />
+</p>
+
+<p>Now we are as the user “www-data” and do <strong><em>cat /etc/passwd</em></strong> we see all the users of the victim machine. Ok so let’s access to the home directory of the user <strong><em>m4lwhere</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura41.png" />
+</p>
+
+<p>I access the home directory of the user m4lwhere and we see that the first flag is there, but i can’t see the content because i don’t have permissions.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura42.png" />
+</p>
+
+<p>Well let’s access to the mysql database, since we have the credentials from the <strong><em>config.php</em></strong> file we downloaded earlier.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura43.png" />
+</p>
+
+<p>We can see that there are an database called <strong><em>previse</em></strong>, let’s access on that database and we can see there two tables called <strong><em>account</em></strong>, huhuhu let’s see what is there on that table.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura44.png" />
+</p>
+
+<p>And gentlemens as we can see we have usernames and passwords. and well i also see my credentials when i created the account which is the user <strong><em>test101</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura45.png" />
+</p>
+
+<p>As the password is hashed we are going to crack it with <strong><em>john</em></strong>. The first thing I’m going to do is to unzip the file where the <strong><em>rockyou.txt</em></strong>, because we are going to use it this dictionary.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura46.png" />
+</p>
+
+<p>What we do is with john specify the dictionary <strong><em>rockyou.txt</em></strong> and then what i have done is to put the hashed password of the user m4lwhere in the file called <strong><em>hash.txt</em></strong>. As it is an md5-crypt hash it reports in terminal that we must specify the format.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura47.png" />
+</p>
+
+<p>Here are some of the most commonly used hashes, but there are other types of hashes.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/hashes.png" />
+</p>
+
+<p>Now specify the hash type and wait for it to finish cracking the password using the <strong><em>rockyou.txt</em></strong> dictionary. And we can see the hash is cracked and we found the password.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura48.png" />
+</p>
+
+<p>With john let’s visualize the password better way.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura49.png" />
+</p>
+
+<p>And with the password obtained we can see that I can access via ssh in the user <strong><em>m4lwhere</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura50.png" />
+</p>
+
+<p>And as we are with the user <strong><em>m4lwhere</em></strong> we can visualize the first flag.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura51.png" />
+</p>
+
+<h2 id="privilege-escalation">Privilege Escalation</h2>
+
+<p>With the command <strong><em>sudo -l</em></strong> we are going to check which commands we can execute with the privileges in this case of root we can execute without using the password. And we can see that we can execute a script as the user <strong><em>root</em></strong>, let’s check that script.</p>
+
+<p>reference = https://book.hacktricks.xyz/linux-unix/privilege-escalation#nopasswd</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura52.png" />
+</p>
+
+<p>Basically the script must store the logs using gzip and that there are backups that is a task that should have been configured with cron, as commented in the comments of the script.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura53.png" />
+</p>
+
+<p>After analyzing the script and investigating a little, there is a possible vulnerability that we can exploit that is the <strong><em>path injection</em></strong>. this attack is based on changing the value of variable <strong><em>$PATH</em></strong>, this variable contains the paths where certain programs or commands run on our systems, so if we want our malicious script to run in <strong><em>/tmp</em></strong> or <strong><em>/dev/shm</em></strong> we must change the path so that it can run. normally by default are in / “usr/bin”.</p>
+
+<p>what we will do it’s go inside a directory that we have permissions of sudo in this case can be the <strong><em>/tmp</em></strong> or <strong><em>/dev/shm</em></strong>, then we will create our small script execute so that it returns us a revershell through netcat, we assign permissions to our script and finally we will change the variable <strong><em>$path</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura54.png" />
+</p>
+
+<p>We going to listen on port 4444 with netcat, now with sudo we are going to execute the script <strong><em>access_backup</em></strong> in the same path where we were. And SIUUUUUUUU we have connection with root user.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura55.png" />
+</p>
+
+<p>So we are going to the root path, and as you can see we can view the second flag.</p>
+
+<p align="center">
+<img src="/assets/images/img-previse/captura56.png" />
+</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#hack-the-box" class="page__taxonomy-item" rel="tag">Hack the box</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#linux" class="page__taxonomy-item" rel="tag">Linux</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#reverse-shell" class="page__taxonomy-item" rel="tag">reverse shell</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#pentest" class="page__taxonomy-item" rel="tag">Pentest</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Fecha:</strong> <time datetime="2021-12-09T00:00:00-05:00">December 09, 2021</time></p>
+        
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/htb-pikaboo/" class="pagination--pager" title="HTB - Pikaboo
+">Previous</a>
+    
+    
+      <a href="/htb-secret/" class="pagination--pager" title="HTB - Secret
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+</div>
+
+    </div>
+
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 bynafrez08.io</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script data-search-pseudo-elements defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>

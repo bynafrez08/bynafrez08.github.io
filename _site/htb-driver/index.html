@@ -1,0 +1,840 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.15.1 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>HTB - Driver - bynafrez08.io</title>
+<meta name="description" content="Driver is a windows machine with easy level of difficulty both in exploitation phase and privilage escalation this machine is based to attacking printers on a corporate network, we will going to start to create…">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="bynafrez08.io">
+<meta property="og:title" content="HTB - Driver">
+<meta property="og:url" content="http://localhost:4000/htb-driver/">
+
+
+  <meta property="og:description" content="Driver is a windows machine with easy level of difficulty both in exploitation phase and privilage escalation this machine is based to attacking printers on a corporate network, we will going to start to create…">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/img-driver/portada.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2022-05-01T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/htb-driver/">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "",
+      "url": "http://localhost:4000",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="bynafrez08.io Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+   <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+                
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/" >Article</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/buscador/" >Search</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+    
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="http://localhost:4000/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        <li class="current">HTB - Driver</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/avatar1.png" alt="Nafsu Uddin | AKA bynafrez" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Nafsu Uddin | AKA bynafrez</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Networking / Pentesting / Offensive Security
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Spain</span>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/bynafrez08" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="HTB - Driver">
+    <meta itemprop="description" content="Driver is a windows machine with easy level of difficulty both in exploitation phase and privilage escalation this machine is based to attacking printers on a corporate network, we will going to start to create…">
+    <meta itemprop="datePublished" content="May 01, 2022">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">HTB - Driver
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p class="page__meta">
+          
+            <i class="fa fa-fw fa-calendar" aria-hidden="true"></i> <time datetime="2022-05-01T00:00:00-04:00">May 01, 2022 </time>&emsp;
+          
+          
+        </p>
+        <p>Driver is a windows machine with easy level of difficulty both in exploitation phase and privilage escalation this machine is based to attacking printers on a corporate network, we will going to start to create and upload a malicious scf file which allows to get user ntlmv2 hash which then we will crack it to gain access to the machine, and we will escalate privilage to exploiting the vulnerability called PrintNightMare.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/portada.png" />
+</p>
+
+<p>Machine matrix:</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/matrix.png" />
+</p>
+
+<p>First of all we are going to create a directory with the name of the machine, and with the command “mkt” i am gonna create a following directories.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura1.png" />
+</p>
+
+<p>The <strong><em>mkt</em></strong> command is a function that i defined on the file <strong><em>~/.zshrc</em></strong> that allows me to create the following directories, if you using bash in your case is the file <strong><em>~/.bashrc</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura2.png" />
+</p>
+
+<p>Now we are going to send one icmp trace to see if we get a connection with the target machine, and through the ttl we can know what OS is using the machine, remember that the Windows machine have 128 ttl and the Linux machine have 64 tll. And if you can asking why it’s output me 127 instead of 128? It’s because when we send icmp packets it not send directly with the target machine or server, it will send those packets some intermediate node before sending to the target machine and for this reason the ttl decreases by one digit, this process is also called <strong><em>traceroute</em></strong>. You can try to check it with the flag <strong><em>-R</em></strong> on the ping command.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura3.png" />
+</p>
+
+<p>Anyway in my machine i have defined a script called <strong><em>wichsystem</em></strong> that specifying the target ip address it Will output us if the machine is Windows or Linux through the ttl.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura4.png" />
+</p>
+
+<p>wichSystem script:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/python3
+#coding: utf-8
+</span>
+<span class="kn">import</span> <span class="nn">re</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">subprocess</span>
+
+<span class="c1"># python3 wichSystem.py 10.10.10.188
+</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">[!] Uso: python3 "</span> <span class="o">+</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">" &lt;direccion-ip&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_ttl</span><span class="p">(</span><span class="n">ip_address</span><span class="p">):</span>
+
+    <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">"/usr/bin/ping -c 1 </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="n">ip_address</span><span class="p">,</span> <span class="s">""</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">err</span><span class="p">)</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">)</span>
+
+    <span class="n">ttl_value</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">r"\d{1,3}"</span><span class="p">,</span> <span class="n">out</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">ttl_value</span>
+
+<span class="k">def</span> <span class="nf">get_os</span><span class="p">(</span><span class="n">ttl</span><span class="p">):</span>
+
+    <span class="n">ttl</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ttl</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">ttl</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">ttl</span> <span class="o">&lt;=</span> <span class="mi">64</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"Linux"</span>
+    <span class="k">elif</span> <span class="n">ttl</span> <span class="o">&gt;=</span> <span class="mi">65</span> <span class="ow">and</span> <span class="n">ttl</span> <span class="o">&lt;=</span> <span class="mi">128</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"Windows"</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"Not Found"</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+
+    <span class="n">ip_address</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">ttl</span> <span class="o">=</span> <span class="n">get_ttl</span><span class="p">(</span><span class="n">ip_address</span><span class="p">)</span>
+
+    <span class="n">os_name</span> <span class="o">=</span> <span class="n">get_os</span><span class="p">(</span><span class="n">ttl</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="si">%</span><span class="s">s (ttl -&gt; </span><span class="si">%</span><span class="s">s): </span><span class="si">%</span><span class="s">s</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">ttl</span><span class="p">,</span> <span class="n">os_name</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="scanning">Scanning</h2>
+
+<p>Now we are going to perform nmap scanning to discover ports and other relevant information to the target machine, for this we are going to use the following parameters or flags:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Flags</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-p-</td>
+      <td>Means that we want to scan all the ports that exists in tcp and udp which is in total 65,535 ports.</td>
+    </tr>
+    <tr>
+      <td>-sS</td>
+      <td>Means that we want tcp syn scan.</td>
+    </tr>
+    <tr>
+      <td>–min-rate 5000</td>
+      <td>Means we just want to send packets no slower then 5000 packets per second to discover ports, and with that parameter our scan will be most faster.</td>
+    </tr>
+    <tr>
+      <td>–open</td>
+      <td>Means that we want only output the ports with the status open not filtred.</td>
+    </tr>
+    <tr>
+      <td>-vvv</td>
+      <td>Means that we want to output more information.</td>
+    </tr>
+    <tr>
+      <td>-n</td>
+      <td>Means we don’t want DNS resolution, because sometimes the DNS resolution can take our scan much slower.</td>
+    </tr>
+    <tr>
+      <td>-Pn</td>
+      <td>Means that we don’t to ping to discover ports.</td>
+    </tr>
+    <tr>
+      <td>-oG</td>
+      <td>Means that we want to save the scan in grapable format to not rescan again, you have more formats to save like nmap, xml, etc.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>the scan:</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura5.png" />
+</p>
+
+<p>And basically i save the scan in grapable format because i have defined in zshrc a function called <strong><em>extractports</em></strong>, that specifying the file name shows me the ports and the IP address of the target machine in a much more elegant way and copies the ports to the clipboard. And this can be useful if there is a machine that has many ports enabled and we don’t have to write those ports one by one to perform another scan.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura6.png" />
+</p>
+
+<p>The <strong><em>extractPorts</em></strong> script:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>extractPorts <span class="o">()</span> <span class="o">{</span>
+        <span class="nv">ports</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nb">cat</span> <span class="nv">$1</span> | <span class="nb">grep</span> <span class="nt">-oP</span> <span class="s1">'\d{1,5}/open'</span> | <span class="nb">awk</span> <span class="s1">'{print $1}'</span> <span class="nv">FS</span><span class="o">=</span><span class="s1">'/'</span> | xargs | <span class="nb">tr</span> <span class="s1">' '</span> <span class="s1">','</span><span class="si">)</span><span class="s2">"</span>
+        <span class="nv">ip_address</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nb">cat</span> <span class="nv">$1</span> | <span class="nb">grep</span> <span class="nt">-oP</span> <span class="s1">'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'</span> | <span class="nb">sort</span> <span class="nt">-u</span> | <span class="nb">head</span> <span class="nt">-n</span> 1<span class="si">)</span><span class="s2">"</span>
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">[*] Extracting information...</span><span class="se">\n</span><span class="s2">"</span> <span class="o">&gt;</span> extractPorts.tmp
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\t</span><span class="s2">[*] IP Address: </span><span class="nv">$ip_address</span><span class="s2">"</span> <span class="o">&gt;&gt;</span> extractPorts.tmp
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\t</span><span class="s2">[*] Open ports: </span><span class="nv">$ports</span><span class="se">\n</span><span class="s2">"</span> <span class="o">&gt;&gt;</span> extractPorts.tmp
+        <span class="nb">echo</span> <span class="nv">$ports</span> | <span class="nb">tr</span> <span class="nt">-d</span> <span class="s1">'\n'</span> | xclip <span class="nt">-sel</span> clip
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"[*] Ports copied to clipboard</span><span class="se">\n</span><span class="s2">"</span> <span class="o">&gt;&gt;</span> extractPorts.tmp
+        <span class="nb">cat </span>extractPorts.tmp
+        <span class="nb">rm </span>extractPorts.tmp
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="scanning---ports-recognition">Scanning - Ports Recognition</h2>
+
+<p>Once we have discovered possible ports, we will perform another scan to recognize the version of the services that use each of these ports. In order to do that we going to use the following parameters or flags:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Flags</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-sCV</td>
+      <td>Means that we want to use some nmap scripts, in this case to discover the version and services that are running each of those ports.</td>
+    </tr>
+    <tr>
+      <td>-p</td>
+      <td>To specify the ports.</td>
+    </tr>
+    <tr>
+      <td>-oN</td>
+      <td>Save the scan in nmap format.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The scan:</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura10.png" />
+</p>
+
+<p>Remember that nmap have bunch of scripts that we can use, nmap scripts end in <strong><em>.nse</em></strong> extension (nmap script engine).</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/locate.png" />
+</p>
+
+<p>Remember that nmap scripts have many categories that we can search for.</p>
+
+<p align="center">
+<img src="/assets/images/img-ransom/categories.png" />
+</p>
+
+<p>Now we can use <strong><em>crackmapexec</em></strong> using the smb protocol to see what specific version of Windows have the target machine. And we can see that is a windows 10 enterprise version.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura7.png" />
+</p>
+
+<p>Let’s check if we can list the shared resources with <strong><em>smbclient</em></strong> making use of a null session. And we get an access denied, so nothing interesting at the moment.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura8.png" />
+</p>
+
+<p>We are going the check with another tool if it’s let us to use the null session, and this case nothing.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura9.png" />
+</p>
+
+<p>Before we see that the target machine has the port 80 enabled, so with “whatweb” command we can use it as a “wappalyzer” to see the versions of the framework, web service and the programming language used by the website. hmm firmware update center inresting…</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura12.png" />
+</p>
+
+<p>So, when we try to access on the website it will ask us for credentials, and I try with some typical default credentials and it’s works. The default credential it was user “admin” and the password “admin”, so in this case the target machine has weak password to access on a private site.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura13.png" />
+</p>
+
+<p>So we are in on the website and the wappalyzer reports few things, which is the frameworks and libraries that are using on this particular webpage, so anything interesting here to exploit.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura14.png" />
+</p>
+
+<p>On the “Firmware Update” section we can see that we can upload a file, hmm interesting …</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura15.png" />
+</p>
+
+<p>So with “searchsploit” tool we try to see if that have any exploit or vulnerability the service called “MFP firmware update center” we can’t find anything related to that service.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura16.png" />
+</p>
+
+<h2 id="exploitation">Exploitation</h2>
+
+<p>Before on the section “firmware upload” on the webpage it’s says that the file we upload it will be reviewed by a somebody and then uploaded to the page. Thinking a bit here we can try to use a malicious scf file. So what we can try is to upload the scf file to indicate that we are uploading a new firmware for the printer, and what we can do is that malicious file will load as an icon and on the victim side if the user only sees the icon of that file we can obtain the ntlmv2 hash of that user. More info about scf files on the following website.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura17.png" />
+</p>
+
+<p>We are going to use this payload and the idea is that icon of the file it will load to our shared resource at the network that is in our attacker’s machine, in my case the share resource will be called “smbFolder”.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura18.png" />
+</p>
+
+<p>Now we are going to upload the scf file on the target webpage.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura19.png" />
+</p>
+
+<p>While we are uploading the file, we are going to create our smb server with <strong><em>impacket</em></strong> in our attacker machine, and we are going to specify a shared resource that is called the same name that we have specify on the scf file that is synchronized in the current working directory at the absolute path, and since the target machine is windows 10 we are going to add support the version 2 of smb.</p>
+
+<p>And once we upload the file if a user on the victim machine sees that file icon it should be uploaded to our malicious smb server and with this we would get the NTLMv2 hash of that user. in this case the user is “tony”.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura20.png" />
+</p>
+
+<p>Once we obtain the user hash, we are going try to crack it with hashcat or john using the rockyou dictionary, it doesn’t take too long to crack the hash because the user “tony” has a very weak password.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura21.png" />
+</p>
+
+<p>Now with <strong><em>crackmapexec</em></strong> we are going to check if those crendentials is valid or not, and if it’s output <strong><em>+</em></strong> means that the credential is valid.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura22.png" />
+</p>
+
+<p>Before we have seen that the <strong><em>winrm</em></strong> service is enable on the target machine which is on the port 5985. So once we have obtained valid credentials what we can do now is use those credentials with crackmapexec specifying the winrm service if the user reports pwned (baiscally means that this user have privileges on that machine), and in this case it does.</p>
+
+<p>Basically, it’s reports <strong><em>pwned</em></strong> because the user is in the group <strong><em>remote management user</em></strong> this group is used to allow users to manage servers through the server manager console, which winrm allows us to do that.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura23.png" />
+</p>
+
+<p>In the case that it’s says pwned, what we can do is with <strong><em>evil-winrm</em></strong> try to access on the target machine with powershell.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura24.png" />
+</p>
+
+<p>So if we execute <strong><em>net user</em></strong> command specifying the user tony, we can see that this user is on the group <strong><em>remote management users</em></strong>. So we were right.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura25.png" />
+</p>
+
+<p>So if we access on the user tony desktop we can visualize the first flag, which is <strong><em>user.txt”</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura26.png" />
+</p>
+
+<p>So if we try to access the on the administrator user directory we get a permission denied, So now we need to escalate privileges.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura27.png" />
+</p>
+
+<h2 id="privesc---enum">PrivEsc - Enum</h2>
+
+<p>Let’s check what permissions have the user <strong><em>tony</em></strong>, and anything interesting here.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura28.png" />
+</p>
+
+<p>Let’s try with <strong><em>/all</em></strong> flag we will see more information about the current user, we don’t see any type of permission that we can exploit or that is in a group that we can take advantage, so anything here at the moment.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura29.png" />
+</p>
+
+<p>If we execute the command <strong><em>systeminfo</em></strong> we get a permission denied, in this case what we can do is try to output an registry to know the information about the system, to do that use the following command: <strong><em>reg query “hklm\software\microsoft\windowsnt\currentversion” /v ProductName</em></strong> this command it will just output the version of the windows.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura30.png" />
+</p>
+
+<p>If we don’t see a way to escalate privileges we can use <strong><em>linpeas</em></strong> which automates the process to see potential ways to escalate privileges. Since we are dealing with a windows machine we are going to download the binary <strong><em>.exe</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura31.png" />
+</p>
+
+<p>Once we have downloaded what we can do is to host the linpeas binary with python and download it to the target machine with the <strong><em>upload</em></strong> command or <strong><em>certutil</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura32.png" />
+</p>
+
+<p>Linpeas reports several interesting information to us, but we are going to focus on the <strong><em>spoolsv</em></strong> service that is more related to the theme of this machine, basically this service is used for managing the printer queue or print spooler and managing the interaction with the printers. So every time that we want to print something with windows, this service caches the print job in memory so your printer knows what to print.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura33.png" />
+</p>
+
+<h2 id="privesc">PrivEsc</h2>
+
+<p>Searching a little bit with this particular service i found vulnerabilities related to this service called “Print Nightmare”, This critical vulnerability occurs within the print spooler service. There are two variants of this vulnerability the first one allows remote code execution <strong><em>(CVE-2021-34527)</em></strong> and the second it’s allowed to escalate privileges when we have access on the machine <strong><em>(CVE-2021-1675)</em></strong>.</p>
+
+<p>So, in this case we are going to use the <strong><em>CVE-2021-1675</em></strong> for escalate privileges because we have access to the target machine. So, there are two options for using this exploit, in this case we are going to use the first one which is to provide a username and password and then exploit will create a DDL file that creates a local user and adding it to the local administrators group using the credentials the we provide. So, in order to do that I am going to use the following script that is made in PowerShell.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura34.png" />
+</p>
+
+<p>So once we have downloaded the exploit, we are going to host it with python to transfer that exploit on the target machine. So when we try to execute the exploit it will create a user with admin privilege, but when we try to valid that user in crackmapexec it will report that user isn’t valid and we can’t connect with that user via evil-winrm, so if we will try to import that exploit it gives us permission denied.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura35.png" />
+</p>
+
+<p>To solve this issue we need to set some execution policies with the following commands annd with that it will allows to import the exploit and let us to create new users with admin privileges. And what this will do is to put the group <strong><em>administrators</em></strong> you can check it using the command ***net user <username>***.</username></p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura36.png" />
+</p>
+
+<p>So now with crackmapexec we will try to valid the user that we have ben created, and as you can see it’s output <strong><em>pwned</em></strong> meaning that the user have privileges.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura37.png" />
+</p>
+
+<p>Now will access to that user with evil-winrm.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura38.png" />
+</p>
+
+<p>And as you can see, I can access in the admin working directory, and on the desktop folder we can visualize the last flag which is <strong><em>root.txt</em></strong>. And with that we pwned this machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-driver/captura39.png" />
+</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#cve" class="page__taxonomy-item" rel="tag">CVE</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#hack-the-box" class="page__taxonomy-item" rel="tag">Hack the box</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#printer-exploitation" class="page__taxonomy-item" rel="tag">Printer exploitation</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#web" class="page__taxonomy-item" rel="tag">Web</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#windows" class="page__taxonomy-item" rel="tag">Windows</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#pentest" class="page__taxonomy-item" rel="tag">Pentest</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Fecha:</strong> <time datetime="2022-05-01T00:00:00-04:00">May 01, 2022</time></p>
+        
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/htb-ransom/" class="pagination--pager" title="HTB - Ransom
+">Previous</a>
+    
+    
+      <a href="/htb-pandora/" class="pagination--pager" title="HTB - Pandora
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+</div>
+
+    </div>
+
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 bynafrez08.io</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script data-search-pseudo-elements defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>

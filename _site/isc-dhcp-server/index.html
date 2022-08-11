@@ -1,0 +1,536 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.15.1 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Configure dhcp server in linux with isc-dhcp-server - bynafrez08.io</title>
+<meta name="description" content="we are going to learn how to configure a dhcp server in linux using the isc-dhcp-server service, we are going to learn how to create subnets and make reserved ips.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="bynafrez08.io">
+<meta property="og:title" content="Configure dhcp server in linux with isc-dhcp-server">
+<meta property="og:url" content="http://localhost:4000/isc-dhcp-server/">
+
+
+  <meta property="og:description" content="we are going to learn how to configure a dhcp server in linux using the isc-dhcp-server service, we are going to learn how to create subnets and make reserved ips.">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/img-dhcp/servidor-DHCP-e1511228735448.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2021-10-20T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/isc-dhcp-server/">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "",
+      "url": "http://localhost:4000",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="bynafrez08.io Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+   <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+                
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/" >Article</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/buscador/" >Search</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+    
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="http://localhost:4000/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        <li class="current">Configure dhcp server in linux with isc-dhcp-server</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/avatar1.png" alt="Nafsu Uddin | AKA bynafrez" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Nafsu Uddin | AKA bynafrez</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Networking / Pentesting / Offensive Security
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Spain</span>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/bynafrez08" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Configure dhcp server in linux with isc-dhcp-server">
+    <meta itemprop="description" content="we are going to learn how to configure a dhcp server in linux using the isc-dhcp-server service, we are going to learn how to create subnets and make reserved ips.">
+    <meta itemprop="datePublished" content="October 20, 2021">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Configure dhcp server in linux with isc-dhcp-server
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p class="page__meta">
+          
+            <i class="fa fa-fw fa-calendar" aria-hidden="true"></i> <time datetime="2021-10-20T00:00:00-04:00">October 20, 2021 </time>&emsp;
+          
+          
+        </p>
+        <p align="center">
+<img src="/assets/images/img-dhcp/servidor-DHCP-e1511228735448.png" />
+</p>
+
+<p>we are going to learn how to configure a dhcp server in linux using the isc-dhcp-server service, we are going to learn: create a fixed ip for our server machine, create subnets, exclude ips ranges, create an ips address concession and finally make a reserved ip for a specific host with its mac address.</p>
+
+<h2 id="what-is-a-dhcp-server">What is a dhcp server?</h2>
+
+<p>Dynamic Host Configuration Protocol (DHCP), is a network management protocol that allows us to automatically assign IP addresses to client computers, default gateways, and other network parameters. allowing them to use network services such as DNS, NTP and any communication protocol based on UDP or TCP.</p>
+
+<p>To understand more clearly how the dhcp protocol works, the following diagram shows us how it works:</p>
+
+<p align="center">
+<img src="/assets/images/img-dhcp/dhcp.png" />
+</p>
+
+<h2 id="installing-dhcp-server-and-adding-fix-ip-address-in-our-server-machine">Installing dhcp-server and adding fix ip address in our server machine.</h2>
+<p>Before configuring the dhcp server, we are going to install it with the command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install isc-dhcp-server
+</code></pre></div></div>
+
+<p>In my case I am going to assign a fixed IP address on the server machine. For this we will go to the path “/ etc / netplan” and then we will enter with the «nano» editor in the configuration file that haswithin that route. Inside the file we will put the following parameters:</p>
+
+<p align="center">
+<img src="/assets/images/img-dhcp/captura2.png" />
+</p>
+
+<p>After we are going to save the changes to the file, we use the command “netplan apply” so that the ip is added to our server. And we use the command “ifconfig” to see if the ip address has been apply.</p>
+
+<p align="center">
+<img src="/assets/images/img-dhcp/captura3.png" />
+</p>
+
+<h2 id="configuring-our-dhcp-sever">Configuring our dhcp sever</h2>
+
+<p>Once we have configured an ip for our server, we will go to the file “/etc/default/isc-dhcp.server”, where it says “interfacesv4 (ipv4 version)” we put the name of the network card where it will listen to the requests that we are going to configure. In my case I want it to assign the ips addresses in the “enp0s8” adapter on the client machines.</p>
+
+<p align="center">
+<img src="/assets/images/img-dhcp/captura4.png" />
+</p>
+
+<p>We are going to create a subnet declaration specifying the ip range, open dhcp configure file (“/etc/dhcp/dhcpd.conf”). what we have to do inside a subnet declaration and then with the command «range» we will first put the lowest ip (in my case it is 10) the second the highest ip ( which in my case is 200).</p>
+
+<p align="center">
+<img src="/assets/images/img-dhcp/captura6.png" />
+</p>
+
+<p>To add any changes it is important to <strong><em>restart</em></strong> the dhcp service with the command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo service isc-dhcp-server restart
+</code></pre></div></div>
+
+<p>In the same configuration file we can establish the default time that an IP address is going to be lend (defualt-lease-time) and the second would be the maximum rental time of an IP address (max-lease-time). In my case, in both, the time is 1 and 3 hours, which I have indicated in seconds.</p>
+
+<p align="center">
+<img src="/assets/images/img-dhcp/captura8.png" />
+</p>
+
+<p>If in the case that we want to exclude ip ranges, within the same subnet declaration, we are going to specify which range of ip we want to exclude, for example in my case what I did is within the subnet declaration is to add a new range ip that is from 10 to 49 and change the ip range that I put previously, in this case it is from 61 to 200, and with this we exclude the ip range from 50 to 60.</p>
+
+<p align="center">
+<img src="/assets/images/img-dhcp/captura7.png" />
+</p>
+
+<h2 id="reserve-ip-for-a-host">Reserve ip for a host</h2>
+
+<p>To reserve an IP with the mac address of a specific host, inside the dhcp configuration file we add a new host declaration (in my case I put the name of the client machine which is name “nafsuclient”) and with the command «hardware ethernet “we put the client’s mac address and with the command” fixed-address “we add the ip that we want to assign for that machine. once we done, save the file and restart de dhcp service.</p>
+
+<p align="center">
+<img src="/assets/images/img-dhcp/captura9.png" />
+</p>
+
+<p>And this is my client machine, we can see that the mac address is the same as I have put in the configuration file.</p>
+
+<p align="center">
+<img src="/assets/images/img-dhcp/captura10.png" />
+</p>
+
+<p>Before we have to make sure that the “isc-dhcp-client” service is installed on the client’s machine. If in the case that it is not installed we execute the following command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install isc-dhcp-client
+</code></pre></div></div>
+
+<p>In the client machine that we are going to reserve the IP, we are going to use the following command so that it can carry out the process of obtaining the IP, indicating the network adapter that will obtain the IP that we put on the server.</p>
+
+<p align="center">
+<img src="/assets/images/img-dhcp/captura12.png" />
+</p>
+
+<p>Then in the client machine, we turn off and on the adapter that will get the ip (in my case it is 8).</p>
+
+<p align="center">
+<img src="/assets/images/img-dhcp/captura13.png" />
+</p>
+
+<p>We use the “ifconfig” command on the client machine to verify that we have added the ip that we declared on the server.</p>
+
+<p align="center">
+<img src="/assets/images/img-dhcp/captura14.png" />
+</p>
+
+<p>In conclusion we have been able to learn some concepts of the dhcp protocol, and also how to administer the dhcp service in linux in a very easy and fasty way.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#dhcp" class="page__taxonomy-item" rel="tag">dhcp</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#isc-dhcp-server" class="page__taxonomy-item" rel="tag">isc-dhcp-server</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#linux" class="page__taxonomy-item" rel="tag">Linux</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#networking" class="page__taxonomy-item" rel="tag">Networking</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#subnetting" class="page__taxonomy-item" rel="tag">Subnetting</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Fecha:</strong> <time datetime="2021-10-20T00:00:00-04:00">October 20, 2021</time></p>
+        
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="#" class="pagination--pager disabled">Previous</a>
+    
+    
+      <a href="/azure-appservice/" class="pagination--pager" title="Azure - Appservice
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+</div>
+
+    </div>
+
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 bynafrez08.io</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script data-search-pseudo-elements defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>
