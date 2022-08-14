@@ -98,4 +98,9 @@ var store = [{
         "excerpt":"Retro is a windows machine with wordpress site hosted on the port 80, which contain some credentials that allow access on the admin panel and get a reverse shell on the target machine, and lastly we escalete privileges abusing the CVE-2019-1388. First we will create a directory with the name...","categories": ["CTF","Web"],
         "tags": ["Tryhackme","Windows","CVE","Wordpress"],
         "url": "http://localhost:4000/thm-retro/",
-        "teaser":"http://localhost:4000/assets/images/img-retro/retro.jpeg"}]
+        "teaser":"http://localhost:4000/assets/images/img-retro/retro.jpeg"},{
+        "title": "THM - Relevant",
+        "excerpt":"Relevant is a windows machine that has enabled smb which will going to exploit this services to access on the machine, and for the privilege escalation we are going to exploit windows access tokens. First we will create a directory with the name of the machine, and with mkt i...","categories": ["CTF","Web"],
+        "tags": ["Tryhackme","Windows","CVE"],
+        "url": "http://localhost:4000/thm-relevant/",
+        "teaser":"http://localhost:4000/assets/images/img-relevant/portada.jpeg"}]
