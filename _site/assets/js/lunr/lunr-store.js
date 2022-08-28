@@ -103,4 +103,9 @@ var store = [{
         "excerpt":"Relevant is a windows machine that has enabled smb which will going to exploit this services to access on the machine, and for the privilege escalation we are going to exploit windows access tokens. First we will create a directory with the name of the machine, and with mkt i...","categories": ["CTF","Web"],
         "tags": ["Tryhackme","Windows","CVE"],
         "url": "http://localhost:4000/thm-relevant/",
-        "teaser":"http://localhost:4000/assets/images/img-relevant/portada.jpeg"}]
+        "teaser":"http://localhost:4000/assets/images/img-relevant/portada.jpeg"},{
+        "title": "HTB - Timelapse",
+        "excerpt":"Machine matrix: First we will create a directory with the name of the machine, and with mkt i will create the following directories to be able to move better the content of each one of those directories. mkt is a function that i have defined in the ~/.zshrc so that...","categories": ["CTF"],
+        "tags": ["Hack the box","Samba","Openssl","WinRM","Laps"],
+        "url": "http://localhost:4000/htb-timelapse/",
+        "teaser":"http://localhost:4000/assets/images/"}]
