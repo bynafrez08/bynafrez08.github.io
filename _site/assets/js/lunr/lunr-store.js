@@ -105,7 +105,7 @@ var store = [{
         "url": "http://localhost:4000/thm-relevant/",
         "teaser":"http://localhost:4000/assets/images/img-relevant/portada.jpeg"},{
         "title": "HTB - Timelapse",
-        "excerpt":"Machine matrix: First we will create a directory with the name of the machine, and with mkt i will create the following directories to be able to move better the content of each one of those directories. mkt is a function that i have defined in the ~/.zshrc so that...","categories": ["CTF"],
+        "excerpt":"Timelapse is a windows machine with easy level of difficulty in the exploitation phase and mediumn the escalation of privileges. first we need to crack a protected zip file using john and then crack an pfx file that contain inside of that zip file in order to extracting the certificate...","categories": ["CTF"],
         "tags": ["Hack the box","Samba","Openssl","WinRM","Laps"],
         "url": "http://localhost:4000/htb-timelapse/",
-        "teaser":"http://localhost:4000/assets/images/"}]
+        "teaser":"http://localhost:4000/assets/images/img-timelapse/portada.png"}]
