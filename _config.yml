@@ -100,9 +100,9 @@ analytics:
 
 # Site Author
 author:
-  name             : "Nafsu Uddin | AKA bynafrez"
+  name             : "bynafrez"
   avatar           : "/assets/images/avatar1.png"
-  bio              : "Networking / Pentesting / Offensive Security"
+  bio              : "Offensive Security / IT enthusiast"
   uri              :
   home             : # null (default), "absolute or relative url to link to author home"
   bitbucket        :
