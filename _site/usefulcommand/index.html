@@ -18,7 +18,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="bynafrez08.io">
 <meta property="og:title" content="bynafrez08.io">
-<meta property="og:url" content="http://localhost:4000/usefulcommand/">
+<meta property="og:url" content="http://0.0.0.0:4000/usefulcommand/">
 
 
 
@@ -36,7 +36,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/usefulcommand/">
+<link rel="canonical" href="http://0.0.0.0:4000/usefulcommand/">
 
 
 
@@ -49,7 +49,7 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "",
-      "url": "http://localhost:4000",
+      "url": "http://0.0.0.0:4000",
       "sameAs": null
     }
   </script>
@@ -143,9 +143,16 @@
 
 <p>sudo bundle update –bundler</p>
 
-<p>Run the jekyll in local.</p>
+<p>If the update give issues use the following commnnds:</p>
 
-<p>sudo bundle exec jekyll serve</p>
+<p>gem uninstall bundler
+gem install bundler
+rm Gemfile.lock
+bundle install</p>
+
+<p>Run the jekyll in local live.</p>
+
+<p>sudo bundle exec jekyll serve –livereload –host 0.0.0.0</p>
 
     </div>
 
@@ -166,7 +173,7 @@
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2022 bynafrez08.io</div>
+<div class="page__footer-copyright">&copy; 2025 bynafrez08.io</div>
 
       </footer>
     </div>

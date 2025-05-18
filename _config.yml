@@ -12,7 +12,7 @@
 
 # theme                  : "minimal-mistakes-jekyll"
 remote_theme             : "mmistakes/minimal-mistakes@4.15.1"
-minimal_mistakes_skin    : "haxor" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+minimal_mistakes_skin    : "dark" #"haxor" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
 locale                   : "en-US"
@@ -102,7 +102,7 @@ analytics:
 author:
   name             : "bynafrez"
   avatar           : "/assets/images/avatar1.png"
-  bio              : "Offensive Security / IT enthusiast"
+  bio              : "Offensive Security / CTF / Networking / IT enthusiast"
   uri              :
   home             : # null (default), "absolute or relative url to link to author home"
   bitbucket        :

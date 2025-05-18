@@ -18,14 +18,14 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="bynafrez08.io">
 <meta property="og:title" content="THM - Alfred">
-<meta property="og:url" content="http://localhost:4000/thm-alfred/">
+<meta property="og:url" content="http://0.0.0.0:4000/thm-alfred/">
 
 
   <meta property="og:description" content="Alfred is a windows machine which has jenkins installed on the port 8080 and the first step is to exploit it and gain access to the machine, and in privilege escalation we are going to be exploiting the windows authentication tokens we are going exploit this in two ways, the first is using metasploit and then manually.">
 
 
 
-  <meta property="og:image" content="http://localhost:4000/assets/images/img-alfred/portada.png">
+  <meta property="og:image" content="http://0.0.0.0:4000/assets/images/img-alfred/portada.png">
 
 
 
@@ -42,7 +42,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/thm-alfred/">
+<link rel="canonical" href="http://0.0.0.0:4000/thm-alfred/">
 
 
 
@@ -55,7 +55,7 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "",
-      "url": "http://localhost:4000",
+      "url": "http://0.0.0.0:4000",
       "sameAs": null
     }
   </script>
@@ -160,7 +160,7 @@
     
       
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="http://localhost:4000/" itemprop="item"><span itemprop="name">Home</span></a>
+          <a href="http://0.0.0.0:4000/" itemprop="item"><span itemprop="name">Home</span></a>
           <meta itemprop="position" content="1" />
         </li>
         <span class="sep">/</span>
@@ -188,18 +188,18 @@
       
 
       
-        <img src="/assets/images/avatar1.png" alt="Nafsu Uddin | AKA bynafrez" itemprop="image">
+        <img src="/assets/images/avatar1.png" alt="bynafrez" itemprop="image">
       
     </div>
   
 
   <div class="author__content">
     
-      <h3 class="author__name" itemprop="name">Nafsu Uddin | AKA bynafrez</h3>
+      <h3 class="author__name" itemprop="name">bynafrez</h3>
     
     
       <p class="author__bio" itemprop="description">
-        Networking / Pentesting / Offensive Security
+        Offensive Security / CTF / Networking / IT enthusiast
       </p>
     
   </div>
@@ -358,27 +358,27 @@
 <p>As we can see on the scan results we have a http running on the port 80 and the jenkins running on the port 8080 (remember that <strong><em>jetty</em></strong> it’s jenkins).</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Nmap 7.92 scan initiated Sun Jul  3 12:26:39 2022 as: nmap -sC -sV -Pn -oA allports 10.10.250.85 
-</span><span class="n">Nmap</span> <span class="n">scan</span> <span class="n">report</span> <span class="k">for</span> <span class="mf">10.10.250.85</span>
-<span class="n">Host</span> <span class="ow">is</span> <span class="n">up</span> <span class="p">(</span><span class="mf">0.046</span><span class="n">s</span> <span class="n">latency</span><span class="p">)</span><span class="o">.</span>
+</span><span class="n">Nmap</span> <span class="n">scan</span> <span class="n">report</span> <span class="k">for</span> <span class="mf">10.10</span><span class="p">.</span><span class="mf">250.85</span>
+<span class="n">Host</span> <span class="ow">is</span> <span class="n">up</span> <span class="p">(</span><span class="mf">0.046</span><span class="n">s</span> <span class="n">latency</span><span class="p">).</span>
 <span class="n">Not</span> <span class="n">shown</span><span class="p">:</span> <span class="mi">997</span> <span class="n">filtered</span> <span class="n">tcp</span> <span class="n">ports</span> <span class="p">(</span><span class="n">no</span><span class="o">-</span><span class="n">response</span><span class="p">)</span>
 <span class="n">PORT</span>     <span class="n">STATE</span> <span class="n">SERVICE</span>    <span class="n">VERSION</span>
 <span class="mi">80</span><span class="o">/</span><span class="n">tcp</span>   <span class="nb">open</span>  <span class="n">http</span>       <span class="n">Microsoft</span> <span class="n">IIS</span> <span class="n">httpd</span> <span class="mf">7.5</span>
 <span class="o">|</span> <span class="n">http</span><span class="o">-</span><span class="n">methods</span><span class="p">:</span> 
 <span class="o">|</span><span class="n">_</span>  <span class="n">Potentially</span> <span class="n">risky</span> <span class="n">methods</span><span class="p">:</span> <span class="n">TRACE</span>
-<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">title</span><span class="p">:</span> <span class="n">Site</span> <span class="n">doesnt</span> <span class="n">have</span> <span class="n">a</span> <span class="n">title</span> <span class="p">(</span><span class="n">text</span><span class="o">/</span><span class="n">html</span><span class="p">)</span><span class="o">.</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">title</span><span class="p">:</span> <span class="n">Site</span> <span class="n">doesnt</span> <span class="n">have</span> <span class="n">a</span> <span class="n">title</span> <span class="p">(</span><span class="n">text</span><span class="o">/</span><span class="n">html</span><span class="p">).</span>
 <span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">header</span><span class="p">:</span> <span class="n">Microsoft</span><span class="o">-</span><span class="n">IIS</span><span class="o">/</span><span class="mf">7.5</span>
 <span class="mi">3389</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">tcpwrapped</span>
 <span class="o">|</span> <span class="n">ssl</span><span class="o">-</span><span class="n">cert</span><span class="p">:</span> <span class="n">Subject</span><span class="p">:</span> <span class="n">commonName</span><span class="o">=</span><span class="n">alfred</span>
 <span class="o">|</span> <span class="n">Not</span> <span class="n">valid</span> <span class="n">before</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">02</span><span class="n">T16</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mi">45</span>
 <span class="o">|</span><span class="n">_Not</span> <span class="n">valid</span> <span class="n">after</span><span class="p">:</span>  <span class="mi">2023</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span><span class="n">T16</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mi">45</span>
-<span class="mi">8080</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">http</span>       <span class="n">Jetty</span> <span class="mf">9.4</span><span class="o">.</span><span class="n">z</span><span class="o">-</span><span class="n">SNAPSHOT</span>
-<span class="o">|</span> <span class="n">http</span><span class="o">-</span><span class="n">robots</span><span class="o">.</span><span class="n">txt</span><span class="p">:</span> <span class="mi">1</span> <span class="n">disallowed</span> <span class="n">entry</span> 
+<span class="mi">8080</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">http</span>       <span class="n">Jetty</span> <span class="mf">9.4</span><span class="p">.</span><span class="n">z</span><span class="o">-</span><span class="n">SNAPSHOT</span>
+<span class="o">|</span> <span class="n">http</span><span class="o">-</span><span class="n">robots</span><span class="p">.</span><span class="n">txt</span><span class="p">:</span> <span class="mi">1</span> <span class="n">disallowed</span> <span class="n">entry</span> 
 <span class="o">|</span><span class="n">_</span><span class="o">/</span>
-<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">title</span><span class="p">:</span> <span class="n">Site</span> <span class="n">doesnt</span> <span class="n">have</span> <span class="n">a</span> <span class="n">title</span> <span class="p">(</span><span class="n">text</span><span class="o">/</span><span class="n">html</span><span class="p">;</span><span class="n">charset</span><span class="o">=</span><span class="n">utf</span><span class="o">-</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span>
-<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">header</span><span class="p">:</span> <span class="n">Jetty</span><span class="p">(</span><span class="mf">9.4</span><span class="o">.</span><span class="n">z</span><span class="o">-</span><span class="n">SNAPSHOT</span><span class="p">)</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">title</span><span class="p">:</span> <span class="n">Site</span> <span class="n">doesnt</span> <span class="n">have</span> <span class="n">a</span> <span class="n">title</span> <span class="p">(</span><span class="n">text</span><span class="o">/</span><span class="n">html</span><span class="p">;</span><span class="n">charset</span><span class="o">=</span><span class="n">utf</span><span class="o">-</span><span class="mi">8</span><span class="p">).</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">header</span><span class="p">:</span> <span class="n">Jetty</span><span class="p">(</span><span class="mf">9.4</span><span class="p">.</span><span class="n">z</span><span class="o">-</span><span class="n">SNAPSHOT</span><span class="p">)</span>
 <span class="n">Service</span> <span class="n">Info</span><span class="p">:</span> <span class="n">OS</span><span class="p">:</span> <span class="n">Windows</span><span class="p">;</span> <span class="n">CPE</span><span class="p">:</span> <span class="n">cpe</span><span class="p">:</span><span class="o">/</span><span class="n">o</span><span class="p">:</span><span class="n">microsoft</span><span class="p">:</span><span class="n">windows</span>
 
-<span class="n">Service</span> <span class="n">detection</span> <span class="n">performed</span><span class="o">.</span> <span class="n">Please</span> <span class="n">report</span> <span class="nb">any</span> <span class="n">incorrect</span> <span class="n">results</span> <span class="n">at</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">submit</span><span class="o">/</span> <span class="o">.</span>
+<span class="n">Service</span> <span class="n">detection</span> <span class="n">performed</span><span class="p">.</span> <span class="n">Please</span> <span class="n">report</span> <span class="nb">any</span> <span class="n">incorrect</span> <span class="n">results</span> <span class="n">at</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">submit</span><span class="o">/</span> <span class="p">.</span>
 <span class="c1"># Nmap done at Sun Jul  3 12:27:27 2022 -- 1 IP address (1 host up) scanned in 48.28 seconds
 </span></code></pre></div></div>
 
@@ -825,7 +825,7 @@
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2022 bynafrez08.io</div>
+<div class="page__footer-copyright">&copy; 2025 bynafrez08.io</div>
 
       </footer>
     </div>

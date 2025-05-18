@@ -4,5 +4,8 @@ title: "Author info"
 permalink: /about/
 date: 2020-01-29
 ---
+<br>
+<p align="center">
+<img src="/assets/images/about2.png" />
+</p>
 
-Don`t Get pwned!! Secure your system.
