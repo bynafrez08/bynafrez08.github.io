@@ -1,0 +1,407 @@
+<p>Alfred is a windows machine which has jenkins installed on the port 8080 and the first step is to exploit it and gain access to the machine, and in privilege escalation we are going to be exploiting the windows authentication tokens we are going exploit this in two ways, the first on metasploit and then manually.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/portada.png" />
+</p>
+
+<p>First we will create a directory with the name of the machine, and with <strong><em>mkt</em></strong> i will create the following directories to be able to organize the files of each one of those directories.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura1.png" />
+</p>
+
+<p>mkt is a function that i have defined in the <strong><em>~/.zshrc</em></strong> so that I can create these directories without creating them one by one.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkt () {
+        mkdir {nmap,content,exploits,scripts}
+}
+</code></pre></div></div>
+
+<h2 id="scanning">Scanning</h2>
+
+<p>Let’s start with the nmap scan with the following parameters:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Flags</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-sCV (-sC -sV)</td>
+      <td>Use nmap recon scripts to discover the version and services that are running each of those ports.</td>
+    </tr>
+    <tr>
+      <td>-Pn</td>
+      <td>No ping, this machine no response icmp packets so we must assign this flag.</td>
+    </tr>
+    <tr>
+      <td>-oA</td>
+      <td>Save the scan in all formats.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>As we can see on the scan results we have a http running on the port 80 and the jenkins running on the port 8080 (remember that <strong><em>jetty</em></strong> it’s jenkins).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Nmap 7.92 scan initiated Sun Jul  3 12:26:39 2022 as: nmap -sC -sV -Pn -oA allports 10.10.250.85 
+</span><span class="n">Nmap</span> <span class="n">scan</span> <span class="n">report</span> <span class="k">for</span> <span class="mf">10.10</span><span class="p">.</span><span class="mf">250.85</span>
+<span class="n">Host</span> <span class="ow">is</span> <span class="n">up</span> <span class="p">(</span><span class="mf">0.046</span><span class="n">s</span> <span class="n">latency</span><span class="p">).</span>
+<span class="n">Not</span> <span class="n">shown</span><span class="p">:</span> <span class="mi">997</span> <span class="n">filtered</span> <span class="n">tcp</span> <span class="n">ports</span> <span class="p">(</span><span class="n">no</span><span class="o">-</span><span class="n">response</span><span class="p">)</span>
+<span class="n">PORT</span>     <span class="n">STATE</span> <span class="n">SERVICE</span>    <span class="n">VERSION</span>
+<span class="mi">80</span><span class="o">/</span><span class="n">tcp</span>   <span class="nb">open</span>  <span class="n">http</span>       <span class="n">Microsoft</span> <span class="n">IIS</span> <span class="n">httpd</span> <span class="mf">7.5</span>
+<span class="o">|</span> <span class="n">http</span><span class="o">-</span><span class="n">methods</span><span class="p">:</span> 
+<span class="o">|</span><span class="n">_</span>  <span class="n">Potentially</span> <span class="n">risky</span> <span class="n">methods</span><span class="p">:</span> <span class="n">TRACE</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">title</span><span class="p">:</span> <span class="n">Site</span> <span class="n">doesnt</span> <span class="n">have</span> <span class="n">a</span> <span class="n">title</span> <span class="p">(</span><span class="n">text</span><span class="o">/</span><span class="n">html</span><span class="p">).</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">header</span><span class="p">:</span> <span class="n">Microsoft</span><span class="o">-</span><span class="n">IIS</span><span class="o">/</span><span class="mf">7.5</span>
+<span class="mi">3389</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">tcpwrapped</span>
+<span class="o">|</span> <span class="n">ssl</span><span class="o">-</span><span class="n">cert</span><span class="p">:</span> <span class="n">Subject</span><span class="p">:</span> <span class="n">commonName</span><span class="o">=</span><span class="n">alfred</span>
+<span class="o">|</span> <span class="n">Not</span> <span class="n">valid</span> <span class="n">before</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">02</span><span class="n">T16</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mi">45</span>
+<span class="o">|</span><span class="n">_Not</span> <span class="n">valid</span> <span class="n">after</span><span class="p">:</span>  <span class="mi">2023</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span><span class="n">T16</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mi">45</span>
+<span class="mi">8080</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">http</span>       <span class="n">Jetty</span> <span class="mf">9.4</span><span class="p">.</span><span class="n">z</span><span class="o">-</span><span class="n">SNAPSHOT</span>
+<span class="o">|</span> <span class="n">http</span><span class="o">-</span><span class="n">robots</span><span class="p">.</span><span class="n">txt</span><span class="p">:</span> <span class="mi">1</span> <span class="n">disallowed</span> <span class="n">entry</span> 
+<span class="o">|</span><span class="n">_</span><span class="o">/</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">title</span><span class="p">:</span> <span class="n">Site</span> <span class="n">doesnt</span> <span class="n">have</span> <span class="n">a</span> <span class="n">title</span> <span class="p">(</span><span class="n">text</span><span class="o">/</span><span class="n">html</span><span class="p">;</span><span class="n">charset</span><span class="o">=</span><span class="n">utf</span><span class="o">-</span><span class="mi">8</span><span class="p">).</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">header</span><span class="p">:</span> <span class="n">Jetty</span><span class="p">(</span><span class="mf">9.4</span><span class="p">.</span><span class="n">z</span><span class="o">-</span><span class="n">SNAPSHOT</span><span class="p">)</span>
+<span class="n">Service</span> <span class="n">Info</span><span class="p">:</span> <span class="n">OS</span><span class="p">:</span> <span class="n">Windows</span><span class="p">;</span> <span class="n">CPE</span><span class="p">:</span> <span class="n">cpe</span><span class="p">:</span><span class="o">/</span><span class="n">o</span><span class="p">:</span><span class="n">microsoft</span><span class="p">:</span><span class="n">windows</span>
+
+<span class="n">Service</span> <span class="n">detection</span> <span class="n">performed</span><span class="p">.</span> <span class="n">Please</span> <span class="n">report</span> <span class="nb">any</span> <span class="n">incorrect</span> <span class="n">results</span> <span class="n">at</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">submit</span><span class="o">/</span> <span class="p">.</span>
+<span class="c1"># Nmap done at Sun Jul  3 12:27:27 2022 -- 1 IP address (1 host up) scanned in 48.28 seconds
+</span></code></pre></div></div>
+
+<h2 id="exploitation">Exploitation</h2>
+
+<p>If we access on the port 80 there is nothing interesting just a foto of burce wayne and a message.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura3.png" />
+</p>
+
+<p>So let’s access on the port 8080 where is the jenkin hosted, and for access to the admin panel the credentials are <strong><em>admin:admin</em></strong>. So in this step anything complicated we don’t need brute force it.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura4.png" />
+</p>
+
+<p>Once we are in we can see that there is a project created, so click on that project.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura5.png" />
+</p>
+
+<p>So one of the things that is very controversial in jenkins is that if we have access we can execute commands on the system, for this we must click on setting icon.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura6.png" />
+</p>
+
+<p>So if we scrolling down and where it’s says <strong><em>Execute batch commands</em></strong> we can inject here any system commands, in this case let’s try with “whoami” to see if it’s works, once we put the command that we want to execute just click on <strong><em>save</em></strong>.</p>
+<p align="center">
+<img src="/assets/images/img-alfred/captura7.png" />
+</p>
+
+<p>So if we go back on that project where is says <strong><em>build history</em></strong> is the commands that we execute on this project, for check we can click on that or click on <strong><em>Build now</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura8.png" />
+</p>
+
+<p>Then click on the <strong><em>Console output</em></strong> and we can see that the command we set previously is execute it, and we are as a user <strong><em>bruce</em></strong> so we know that this user is who runs the jenkins service.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura9.png" />
+</p>
+
+<p>We can do another test using the command “dir” to list the files on the current directory, and as you can see is execute it perfectly.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura10.png" />
+</p>
+
+<p>Now we are going to establish a reverse shell and for that we going to using the script <strong><em>Invoke-PowershellTcp.ps1</em></strong> from <a href="https://github.com/samratashok/nishang/blob/master/Shells/Invoke-PowerShellTcp.ps1">nishang</a> repo. First let’s create an http server with python to transfer that script to the target machine and in another window is listening with netcat for a connection.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura11.png" />
+</p>
+
+<p>Now we are going to do same thing as we done before to execute commands, we are going to use the following command to install the script and get the reverse shell on the listening port in netcat.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura12.png" />
+</p>
+
+<p>Now if we go back on the project we can see that the task is processing.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura13.png" />
+</p>
+
+<p>Now we move on the console output section we can see that our command is still executing.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura14.png" />
+</p>
+
+<p>Now if we look on our netcat listener see that we receive a connection from the target machine, and we have access to the machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura15.png" />
+</p>
+
+<p>We are as a bruce user so if we move on the bruce desktop folder we can view the first flag which is <strong><em>user.txt</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura16.png" />
+</p>
+
+<h2 id="privesc">PrivESC</h2>
+
+<p>So for privilage escalation first we are going to do it using metasploit, so the first thing it’s to create a executable binary with <strong><em>msfvenom</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura17.png" />
+</p>
+
+<p>Now we are going to transfer that executable on the target machine with the following commands as we use before.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura18.png" />
+</p>
+
+<p>Start the <strong><em>msfconsole</em></strong> and use the module <strong><em>exploit/multi/handler</em></strong> which is used to get connection in metasploit, now set the payload that you used to create the executable and then set the lhost and lport, con use the command <strong><em>run</em></strong> to start listening for the connection.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura19.png" />
+</p>
+
+<p>Now on the target machine we are going to run this executable as a process.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura20.png" />
+</p>
+
+<p>Now if we back in our msfconsole we receive a connection and we have a meterpreter session, so it’s going be more easy to escalate privilege.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura21.png" />
+</p>
+
+<p>In windows systems they use tokens to ensure that accounts have the right privileges to carry out particular actions, account tokens are assigned to an account when users log in on the system or are authenticated. This is usually done by LSASS.exe (think of this as an authentication process). Every process executed on behalf of the user has a copy of the access tokens.</p>
+
+<p>The token identifies the user, the user’s group and user’s privileges, because this access tokens are consists of:</p>
+
+<ul>
+  <li>User’s SID’s(security identifier) that identifies the current logon session.</li>
+  <li>group SID’s</li>
+  <li>privileges</li>
+</ul>
+
+<p>We can see all this information using the command <strong><em>whoami /all</em></strong>.</p>
+
+<p>There are two type of access tokens:</p>
+
+<ul>
+  <li><strong><em>primary access tokens</em></strong>: those associated with a user account that are genereted on log on.</li>
+  <li><strong><em>impersonation tokens</em></strong>: these allow a particular process (or thread in a process) to gain access to resources using the tokens of another (user/client) process.</li>
+</ul>
+
+<p>For an impersonation token, there are different levels:</p>
+
+<ul>
+  <li><strong><em>SecurityAnonymous</em></strong>: current user/client cannot impersonate another user/client.</li>
+  <li><strong><em>SecurityIdentification</em></strong>: current user/client can get the identity and privileges of a client, but cannot impersonate the client.</li>
+  <li><strong><em>SecurityImpersonation</em></strong>: current user/client can impersonate the client’s security context on the local system.</li>
+  <li><strong><em>SecurityDelegation</em></strong>: Current user/client can impersonate the client’s security context on a remote system.</li>
+</ul>
+
+<p>Where the security context is a data structure that contains user’s relevant security information.</p>
+
+<p>The privileges of an account(which are either given to the account when created or inherited from a group) allow a user to carry out particular actions on the system. Here is some privileges that we can abused:</p>
+
+<ul>
+  <li>SeImpersonatePrivilege (common one)</li>
+  <li>SeAssignPrimaryPrivilege</li>
+  <li>SeTcbPrivilege</li>
+  <li>SeBackupPrivilege</li>
+  <li>SeRestorePrivilege</li>
+  <li>SeCreateTokenPrivilege</li>
+  <li>SeLoadDriverPrivilege</li>
+  <li>SeTakeOwnershipPrivilege</li>
+  <li>SeDebugPrivilege</li>
+</ul>
+
+<p>More info about access tokens in <a href="https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation/access-tokens">hacktricks</a> and <a href="https://docs.microsoft.com/es-es/windows/win32/secauthz/access-tokens">microsoft documentation</a>.</p>
+
+<p>Now if we type <strong><em>whoami /priv</em></strong> on target system we can see the privileges that are enabled for the current user, so here we can see that the user bruce have <strong><em>SeImpersonatePrivilege</em></strong> and <strong><em>SeDebugPrivilege</em></strong> enbled.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura22.png" />
+</p>
+
+<p>So go back on our meterpreter session we can download on the target system a tool called <strong><em>incognito</em></strong>, this allows us to enumerate tokens and through these tokens we can create new processes, create users, and add users in a specific group, basically is used to impersonate  authentication tokens when we sucessfully comprimised a windows system. In this case we are going to use this tool to expliot this two privileges.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura23.png" />
+</p>
+
+<p>Execute the command <strong><em>list_tokens -g</em></strong> to check which tokens are available. We can see that there is a admin token available on the delegation tokens which is the <strong><em>BUILTIN\Administrators</em></strong>, so let’s impersonate this admin token.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura24.png" />
+</p>
+
+<p>For impersonating a token on meterpreter use the command <strong><em>impersonate_token</em></strong> and the token that we see previously. And we are NT AUTHORITY\SYSTEM.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura25.png" />
+</p>
+
+<p>Even though we have a higher privileged token we may not actually have the permissions of a privileged user. this is due to the way windows handles permissions, it uses the primary token of the process and not the impersonated token to determine what the process can or cannot do. So we need to migrate to a process with correct permissions, the safest process to pick is the <strong><em>services.exe</em></strong> process. First to identify the PID of that process use the command <strong><em>ps</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura26.png" />
+</p>
+
+<p>Now migrate to this process using the command <strong><em>Migrate PID-OF-PROCESS</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura27.png" />
+</p>
+
+<p>Now we can type shell to get the command propmt and as you can see we are as a NT AUTHORITY\SYSTEM, and we can view the last flag on the following directory.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura28.png" />
+</p>
+
+<h2 id="now-without-metasploit">Now without metasploit</h2>
+
+<p>We are going to do the same process to escalate privileges but without using metasploit, so first download the incognito tool on the following url and unzip it.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura29.png" />
+</p>
+
+<p>Now let’s get a reverse shell using the netcat binary to avoid some issues.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura30.png" />
+</p>
+
+<p>Now we are going to do the same process as we done previously to get reverse shell, we are going to use <strong><em>certutil.exe</em></strong> to download the netcat binary on the target machine, And we are going to save it on the tmp folder.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura31.png" />
+</p>
+
+<p>Go back on the <strong><em>console output</em></strong> section and check if the command it’s executed correctly.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura32.png" />
+</p>
+
+<p>Now once transfer the netcat binary now we are going to get a reverse shell.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura33.png" />
+</p>
+
+<p>Now if we check on <strong><em>build now</em></strong> we can see that it’s processing to execute the command.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura34.png" />
+</p>
+
+<p>If we go back on our netcat listener we get a connection from the target machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura35.png" />
+</p>
+
+<p>Now inside of the incognito folder that we unzip before we are going to transfer the <strong><em>incognito.exe</em></strong> on the target machine with smb (or if you want you can do it using python).</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura36.png" />
+</p>
+
+<p>So the command that we are going to use on incognito is the same commands that we use on the meterpreter, so as you can see you can list available tokens using the command <strong><em>list_tokens</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura37.png" />
+</p>
+
+<p>If we execute just the binary we can see the options that offers incognito.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura38.png" />
+</p>
+
+<p>First we are going to create a user with incognito (you can skip this part if you want, but i recommend to create a test user).</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura39.png" />
+</p>
+
+<p>So as you can see that the user that i created is not assigned in any group on the system.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura40.png" />
+</p>
+
+<p>And now what we are going to do is add that user on the admins group using the flag <strong><em>add_localgroup_user</em></strong>, and with that the user it should be added on the admins group. Remember that incognito can do that because it’s taking advantage of those privilege tokens that we seen before with the command “whoami /priv”.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura41.png" />
+</p>
+
+<p>As you can see the user “attacker” is added on the admins group, so now if we switch with that user we are going to have admin privileges on the system.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura42.png" />
+</p>
+
+<p>So on our nmap scan we see that rdp is available, so with <strong><em>rdesktop</em></strong> let’s access on the target machine with the user thar we created with incognito.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura43.png" />
+</p>
+
+<p>And i am in as a user attacker and we can see that i am using cmd as an administrator.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura44.png" />
+</p>
+
+<h2 id="privesc-using-juicypotato">PrivESC using juicypotato</h2>
+
+<p>In the case that we have the permission <strong><em>SeImpersonatePrivilege</em></strong> enabled we can exploit it and escalate privilages using a tool called <strong><em>juicypotato</em></strong>, which is a tool to exploit windows service accounts impersionating privileges. This tool takes advantages of the <strong><em>SeImpersonatePrivilege</em></strong> or <strong><em>SeAssignPrimaryTokenPrivilege</em></strong> if enabled on the machine to elevate the local privileges to System. Normally, these privileges are assigned to service users, admins, and local systems, if the machine is running IIS or SQL service, these privileges will be enabled by default. So let’s download it on the following <a href="https://github.com/ohpe/juicy-potato/releases/tag/v0.1">repo</a>.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura45.png" />
+</p>
+
+<p>Then transfer the binary on the target machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura46.png" />
+</p>
+
+<p>Now if we execute the juicypotato.exe we can see the options or flags that we can use with this tool.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura47.png" />
+</p>
+
+<p>Now we are going to take advantage the netcat binary that we transfer before to get a privileged reverse shell, with the flag <strong><em>-l</em></strong> specify the COM server, the flag <strong><em>-p</em></strong> is used to execute a program in this case we want “cmd.exe”, the flag <strong><em>-a</em></strong> is the command line argument to pass to that program (in our case it will be to establish a reverse shell on our attacker machine) and the <strong><em>-t</em></strong> flag is used to createprocess call and if we add the * it’s going to use <strong><em>CreateProcessWithW</em></strong> and <strong><em>CreateProcessAsuser</em></strong>. More info <a href="https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation/juicypotato">here</a>.</p>
+
+<p>And once we execute that juicypotato with those options we can receive a connection in our netcat listener and as you can see we are as a <strong><em>nt authority\system</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-alfred/captura48.png" />
+</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>If you are new doing ctf’s i highly recommend doing this machine because it’s touch fundamentals things like windows access tokens and how to exploit them, and services that may be exposed and exploited.</p>

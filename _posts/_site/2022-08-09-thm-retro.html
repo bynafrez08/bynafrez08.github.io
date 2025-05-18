@@ -1,0 +1,244 @@
+<p>Retro is a windows machine with wordpress site hosted on the port 80, which contain some credentials that allow access on the admin panel and get a reverse shell on the target machine, and lastly we escalete privileges abusing the CVE-2019-1388.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/retro.jpeg" />
+</p>
+
+<p>First we will create a directory with the name of the machine, and with <strong><em>mkt</em></strong> i will create the following directories to be able to organize the files of each one of those directories.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/mkt.png" />
+</p>
+
+<p>mkt is a function that i have defined in the <strong><em>~/.zshrc</em></strong> so that I can create these directories without creating them one by one.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkt () {
+        mkdir {nmap,content,exploits,scripts}
+}
+</code></pre></div></div>
+
+<h2 id="scanning">Scanning</h2>
+
+<p>This machine doesn’t response icmp packets so we move directly with the nmap scan with the following parameters:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Flags</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-sCV (-sC -sV)</td>
+      <td>Use nmap recon scripts to discover the version and services that are running each of those ports.</td>
+    </tr>
+    <tr>
+      <td>-Pn</td>
+      <td>No ping, this machine no response icmp packets so we must assign this flag.</td>
+    </tr>
+    <tr>
+      <td>-p</td>
+      <td>specify the ports that we want to scan (i know what’s ports to scan because i do previous scan to know whats ports are open).</td>
+    </tr>
+    <tr>
+      <td>-oN</td>
+      <td>Save the scan in nmap format.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>As we can see here there is port 80 open with IIS and on the port 3389 is running rdp, so we can access later remotely on the target machine with rdp.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Nmap 7.92 scan initiated Wed Jul 27 19:08:06 2022 as: nmap -sCV -p80,3389 -Pn -oN targeted 10.10.68.169
+</span><span class="n">Nmap</span> <span class="n">scan</span> <span class="n">report</span> <span class="k">for</span> <span class="mf">10.10</span><span class="p">.</span><span class="mf">68.169</span>
+<span class="n">Host</span> <span class="ow">is</span> <span class="n">up</span> <span class="p">(</span><span class="mf">0.047</span><span class="n">s</span> <span class="n">latency</span><span class="p">).</span>
+
+<span class="n">PORT</span>     <span class="n">STATE</span> <span class="n">SERVICE</span>       <span class="n">VERSION</span>
+<span class="mi">80</span><span class="o">/</span><span class="n">tcp</span>   <span class="nb">open</span>  <span class="n">http</span>          <span class="n">Microsoft</span> <span class="n">IIS</span> <span class="n">httpd</span> <span class="mf">10.0</span>
+<span class="o">|</span> <span class="n">http</span><span class="o">-</span><span class="n">methods</span><span class="p">:</span> 
+<span class="o">|</span><span class="n">_</span>  <span class="n">Potentially</span> <span class="n">risky</span> <span class="n">methods</span><span class="p">:</span> <span class="n">TRACE</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">title</span><span class="p">:</span> <span class="n">IIS</span> <span class="n">Windows</span> <span class="n">Server</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">header</span><span class="p">:</span> <span class="n">Microsoft</span><span class="o">-</span><span class="n">IIS</span><span class="o">/</span><span class="mf">10.0</span>
+<span class="mi">3389</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">ms</span><span class="o">-</span><span class="n">wbt</span><span class="o">-</span><span class="n">server</span> <span class="n">Microsoft</span> <span class="n">Terminal</span> <span class="n">Services</span>
+<span class="o">|</span> <span class="n">ssl</span><span class="o">-</span><span class="n">cert</span><span class="p">:</span> <span class="n">Subject</span><span class="p">:</span> <span class="n">commonName</span><span class="o">=</span><span class="n">RetroWeb</span>
+<span class="o">|</span> <span class="n">Not</span> <span class="n">valid</span> <span class="n">before</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">26</span><span class="n">T22</span><span class="p">:</span><span class="mi">22</span><span class="p">:</span><span class="mi">29</span>
+<span class="o">|</span><span class="n">_Not</span> <span class="n">valid</span> <span class="n">after</span><span class="p">:</span>  <span class="mi">2023</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">25</span><span class="n">T22</span><span class="p">:</span><span class="mi">22</span><span class="p">:</span><span class="mi">29</span>
+<span class="o">|</span><span class="n">_ssl</span><span class="o">-</span><span class="n">date</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">27</span><span class="n">T23</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">28</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">;</span> <span class="o">+</span><span class="mi">1</span><span class="n">s</span> <span class="k">from</span> <span class="n">scanner</span> <span class="n">time</span><span class="p">.</span>
+<span class="o">|</span> <span class="n">rdp</span><span class="o">-</span><span class="n">ntlm</span><span class="o">-</span><span class="n">info</span><span class="p">:</span> 
+<span class="o">|</span>   <span class="n">Target_Name</span><span class="p">:</span> <span class="n">RETROWEB</span>
+<span class="o">|</span>   <span class="n">NetBIOS_Domain_Name</span><span class="p">:</span> <span class="n">RETROWEB</span>
+<span class="o">|</span>   <span class="n">NetBIOS_Computer_Name</span><span class="p">:</span> <span class="n">RETROWEB</span>
+<span class="o">|</span>   <span class="n">DNS_Domain_Name</span><span class="p">:</span> <span class="n">RetroWeb</span>
+<span class="o">|</span>   <span class="n">DNS_Computer_Name</span><span class="p">:</span> <span class="n">RetroWeb</span>
+<span class="o">|</span>   <span class="n">Product_Version</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">.</span><span class="mi">14393</span>
+<span class="o">|</span><span class="n">_</span>  <span class="n">System_Time</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">27</span><span class="n">T23</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">27</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="n">Service</span> <span class="n">Info</span><span class="p">:</span> <span class="n">OS</span><span class="p">:</span> <span class="n">Windows</span><span class="p">;</span> <span class="n">CPE</span><span class="p">:</span> <span class="n">cpe</span><span class="p">:</span><span class="o">/</span><span class="n">o</span><span class="p">:</span><span class="n">microsoft</span><span class="p">:</span><span class="n">windows</span>
+
+<span class="n">Service</span> <span class="n">detection</span> <span class="n">performed</span><span class="p">.</span> <span class="n">Please</span> <span class="n">report</span> <span class="nb">any</span> <span class="n">incorrect</span> <span class="n">results</span> <span class="n">at</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">submit</span><span class="o">/</span> <span class="p">.</span>
+<span class="c1"># Nmap done at Wed Jul 27 19:08:27 2022 -- 1 IP address (1 host up) scanned in 21.14 seconds
+</span></code></pre></div></div>
+
+<h2 id="exploitation">Exploitation</h2>
+
+<p>So if we access on the webpage on the port 80 we can see that is a default page of IIS.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura2.png" />
+</p>
+
+<p>Using gobuster if we try to fuzz the webpage we can find that there is path called <strong><em>retro</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura3.png" />
+</p>
+
+<p>If we access it, we can see that is a wordpress site with some posts.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura4.png" />
+</p>
+
+<p>Now if we try to fuzz the retro path we can see that it’s contain dafault wordpress directories.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura5.png" />
+</p>
+
+<p>Now we can see that all the posts are write by the user <strong><em>Wade</em></strong> and if we look one of this posts there is comment by that user saying the word <strong><em>parzival</em></strong>, this can be some pontential credentials that wecan try to use.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura6.png" />
+</p>
+
+<p>Moving on the login page let’s try using this credentials to see if it’s works, which is <strong><em>wade:parzival</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura7.png" />
+</p>
+
+<p>And as you can see we have access on the admin page of this wordpress site.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura8.png" />
+</p>
+
+<p>Now let’s try to access on the target system, first let’s generate a payload with msfvenom to get reverse shell with php, remember that wordpress use php on the backend.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura9.png" />
+</p>
+
+<p>Once genereted the paylod let’s open it and we are going to remove the comments on the first line and the last, and save the payload.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura10.png" />
+</p>
+
+<p>In order to get reverse shell inside of the wordpress admin page is moving on the follwing path and paste the payload that we generated before, and then click on <strong><em>update file</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura11.png" />
+</p>
+
+<p>Now we are going to listening with netcat on the port that we specify on the payload and then we are going to access on the following route and it’s going to loading.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura12.png" />
+</p>
+
+<p>Now if we go back on our netcat listener we can see that we receive a connection to the target machine and we have access.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura13.png" />
+</p>
+
+<p>So if we list the directory users we can see that there is directory for the user <strong><em>wade</em></strong> but it not allow me to access on that directory and any directories on the system, so then i realised that there is rdp service enbled on this machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura15.png" />
+</p>
+
+<p>So i try to access with rpd using <strong><em>xfreerdp</em></strong> using the credentials that we saw before, and as you can see i have access on target system and view the first flag which is <strong><em>user.txt</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura16.png" />
+</p>
+
+<h2 id="privesc">PrivESC</h2>
+
+<p>Now open a command prompt and execute the command <strong><em>whoami /priv</em></strong> to see what privileges we can abused, and anythin interesting we can find here.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura17.png" />
+</p>
+
+<p>Then i realised that there is chrome installed, so if we open chrome we can see that there is a site highlighted with a particular CVE.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura18.png" />
+</p>
+
+<p>If we access on that website we can see that is a vulnerablity to escalate privileges abusing windows certificate dialog. So maybe this machine it’s vulnerable to this particular CVE and the user maybe not mitigated.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura19.png" />
+</p>
+
+<p>Now if we search for this CVE we can see that there is a <a href="https://github.com/jas502n/CVE-2019-1388">Poc</a> with an exploit.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura20.png" />
+</p>
+
+<p>So on that repo it’s show us how to exploit this vulnerability with the following executable, so first let’s download that .exe binary and setup a http server to transfer on the victim machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura21.png" />
+</p>
+
+<p>On the target machine we are going to use <strong><em>Invoke-Webrequest</em></strong> command to download that binary.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura22.png" />
+</p>
+
+<p>As it indicates on the README.md file on the repo we need to run this executable with admin privileges.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura23.png" />
+</p>
+
+<p>It’s going to popup to ask for a admin password, here we going to click on <strong><em>show more details</em></strong> and then click on <strong><em>show information about the publisher’s certificate</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura24.png" />
+</p>
+
+<p>Once we click on that it will appear a popup to chose the browser that we want to see the information, in this case we are going to chose <strong><em>internet explorer</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura25.png" />
+</p>
+
+<p>Once the internet explorer it’s open we need go on <strong><em>settings</em></strong> the <strong><em>file</em></strong> and click on <strong><em>save as</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura26.png" />
+</p>
+
+<p>Now here if we execute <strong><em>cmd.exe</em></strong> on the following path we can see that we are as an <strong><em>nt authority\system</em></strong>, means that we are as an admins.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura27.png" />
+</p>
+
+<p>And with that we can access on the admin user folder and view the root flag.</p>
+
+<p align="center">
+<img src="/assets/images/img-retro/captura28.png" />
+</p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>This is one of those machine that i recommend if you are starting doing ctf’s because it’s esay and it’s show you the methodology that you need follow in order to compromise a system.</p>

@@ -1,0 +1,801 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.15.1 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>HTB - Underpass - bynafrez08.io</title>
+<meta name="description" content="Underpass is an Easy Linux machine starting with a default Apache Ubuntu page. This leads the attacker to enumerate the machine with UDP ports for alternative attack vector, The attacker can enumerate SNMP and discover that Daloradius is running on the remote machine, and the operators panel can be accessed using the default credentials.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="bynafrez08.io">
+<meta property="og:title" content="HTB - Underpass">
+<meta property="og:url" content="http://0.0.0.0:4000/htb-underpass/">
+
+
+  <meta property="og:description" content="Underpass is an Easy Linux machine starting with a default Apache Ubuntu page. This leads the attacker to enumerate the machine with UDP ports for alternative attack vector, The attacker can enumerate SNMP and discover that Daloradius is running on the remote machine, and the operators panel can be accessed using the default credentials.">
+
+
+
+  <meta property="og:image" content="http://0.0.0.0:4000/assets/images/img-underpass/portada.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2025-05-17T00:00:00-04:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/htb-underpass/">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "",
+      "url": "http://0.0.0.0:4000",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="bynafrez08.io Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+   <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+                
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/" >Article</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/buscador/" >Search</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/" >About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+    
+
+    <div class="initial-content">
+      
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="http://0.0.0.0:4000/" itemprop="item"><span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        <li class="current">HTB - Underpass</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/avatar1.png" alt="bynafrez" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">bynafrez</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Offensive Security / CTF / Networking / IT enthusiast
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Spain</span>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/bynafrez08" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="HTB - Underpass">
+    <meta itemprop="description" content="Underpass is an Easy Linux machine starting with a default Apache Ubuntu page. This leads the attacker to enumerate the machine with UDP ports for alternative attack vector, The attacker can enumerate SNMP and discover that Daloradius is running on the remote machine, and the operators panel can be accessed using the default credentials.">
+    <meta itemprop="datePublished" content="May 17, 2025">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">HTB - Underpass
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p class="page__meta">
+          
+            <i class="fa fa-fw fa-calendar" aria-hidden="true"></i> <time datetime="2025-05-17T00:00:00-04:00">May 17, 2025 </time>&emsp;
+          
+          
+        </p>
+        <p>Underpass is an Easy Linux machine starting with a default Apache Ubuntu page. This leads the attacker to enumerate the machine using UDP ports for alternative attack vectors. The attacker can enumerate SNMP and discover that <code class="language-plaintext highlighter-rouge">Daloradius</code> is running on the remote machine, and the operators panel can be accessed using the default credentials. Inside the panel, the password hash for the user <code class="language-plaintext highlighter-rouge">svcMosh</code> is stored, and it’s crackable. Then, the attacker can log in to the remote machine using SSH with the credentials they have obtained.</p>
+
+<p>The user <code class="language-plaintext highlighter-rouge">svcMosh</code> is configured to run <code class="language-plaintext highlighter-rouge">mosdh-server</code> as <code class="language-plaintext highlighter-rouge">root</code>, which allows the attacker to connect to the server from their local machine and interact with the remote machine as the <code class="language-plaintext highlighter-rouge">root</code> user.</p>
+
+<p align="center">
+<img src="/assets/images/img-underpass/portada.png" />
+</p>
+
+<h2 id="machine-matrix">Machine matrix</h2>
+
+<p align="center">
+<img src="/assets/images/img-underpass/matrix.png" />
+</p>
+
+<h2 id="scanning">Scanning</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">root</span><span class="o">@</span><span class="n">tornado</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">h4nger</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">uderpass</span><span class="c1"># nmap -sS --min-rate=5000 -n -Pn -vvv 10.10.11.48 -oN scan
+</span><span class="n">Starting</span> <span class="n">Nmap</span> <span class="mf">7.95</span> <span class="p">(</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span> <span class="p">)</span> <span class="n">at</span> <span class="mi">2025</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">11</span> <span class="mi">17</span><span class="p">:</span><span class="mi">27</span> <span class="n">EDT</span>
+<span class="n">Initiating</span> <span class="n">SYN</span> <span class="n">Stealth</span> <span class="n">Scan</span> <span class="n">at</span> <span class="mi">17</span><span class="p">:</span><span class="mi">27</span>
+<span class="n">Scanning</span> <span class="mf">10.10</span><span class="p">.</span><span class="mf">11.48</span> <span class="p">[</span><span class="mi">1000</span> <span class="n">ports</span><span class="p">]</span>
+<span class="n">Discovered</span> <span class="nb">open</span> <span class="n">port</span> <span class="mi">22</span><span class="o">/</span><span class="n">tcp</span> <span class="n">on</span> <span class="mf">10.10</span><span class="p">.</span><span class="mf">11.48</span>
+<span class="n">Discovered</span> <span class="nb">open</span> <span class="n">port</span> <span class="mi">80</span><span class="o">/</span><span class="n">tcp</span> <span class="n">on</span> <span class="mf">10.10</span><span class="p">.</span><span class="mf">11.48</span>
+<span class="n">Completed</span> <span class="n">SYN</span> <span class="n">Stealth</span> <span class="n">Scan</span> <span class="n">at</span> <span class="mi">17</span><span class="p">:</span><span class="mi">27</span><span class="p">,</span> <span class="mf">0.25</span><span class="n">s</span> <span class="n">elapsed</span> <span class="p">(</span><span class="mi">1000</span> <span class="n">total</span> <span class="n">ports</span><span class="p">)</span>
+<span class="n">Nmap</span> <span class="n">scan</span> <span class="n">report</span> <span class="k">for</span> <span class="mf">10.10</span><span class="p">.</span><span class="mf">11.48</span>
+<span class="n">Host</span> <span class="ow">is</span> <span class="n">up</span><span class="p">,</span> <span class="n">received</span> <span class="n">user</span><span class="o">-</span><span class="nb">set</span> <span class="p">(</span><span class="mf">0.044</span><span class="n">s</span> <span class="n">latency</span><span class="p">).</span>
+<span class="n">Scanned</span> <span class="n">at</span> <span class="mi">2025</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">11</span> <span class="mi">17</span><span class="p">:</span><span class="mi">27</span><span class="p">:</span><span class="mi">06</span> <span class="n">EDT</span> <span class="k">for</span> <span class="mi">0</span><span class="n">s</span>
+<span class="n">Not</span> <span class="n">shown</span><span class="p">:</span> <span class="mi">998</span> <span class="n">closed</span> <span class="n">tcp</span> <span class="n">ports</span> <span class="p">(</span><span class="n">reset</span><span class="p">)</span>
+<span class="n">PORT</span>   <span class="n">STATE</span> <span class="n">SERVICE</span> <span class="n">REASON</span>
+<span class="mi">22</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">ssh</span>     <span class="n">syn</span><span class="o">-</span><span class="n">ack</span> <span class="n">ttl</span> <span class="mi">63</span>
+<span class="mi">80</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">http</span>    <span class="n">syn</span><span class="o">-</span><span class="n">ack</span> <span class="n">ttl</span> <span class="mi">63</span>
+
+<span class="n">Read</span> <span class="n">data</span> <span class="n">files</span> <span class="k">from</span><span class="p">:</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">nmap</span>
+<span class="n">Nmap</span> <span class="n">done</span><span class="p">:</span> <span class="mi">1</span> <span class="n">IP</span> <span class="n">address</span> <span class="p">(</span><span class="mi">1</span> <span class="n">host</span> <span class="n">up</span><span class="p">)</span> <span class="n">scanned</span> <span class="ow">in</span> <span class="mf">0.37</span> <span class="n">seconds</span>
+           <span class="n">Raw</span> <span class="n">packets</span> <span class="n">sent</span><span class="p">:</span> <span class="mi">1000</span> <span class="p">(</span><span class="mf">44.000</span><span class="n">KB</span><span class="p">)</span> <span class="o">|</span> <span class="n">Rcvd</span><span class="p">:</span> <span class="mi">1000</span> <span class="p">(</span><span class="mf">40.008</span><span class="n">KB</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">root</span><span class="o">@</span><span class="n">tornado</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">h4nger</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">uderpass</span><span class="c1"># nmap -sVC -p22,80 10.10.11.48 -oN portscan               
+</span><span class="n">Starting</span> <span class="n">Nmap</span> <span class="mf">7.95</span> <span class="p">(</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span> <span class="p">)</span> <span class="n">at</span> <span class="mi">2025</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">11</span> <span class="mi">17</span><span class="p">:</span><span class="mi">29</span> <span class="n">EDT</span>
+<span class="n">Stats</span><span class="p">:</span> <span class="mi">0</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">07</span> <span class="n">elapsed</span><span class="p">;</span> <span class="mi">0</span> <span class="n">hosts</span> <span class="n">completed</span> <span class="p">(</span><span class="mi">1</span> <span class="n">up</span><span class="p">),</span> <span class="mi">1</span> <span class="n">undergoing</span> <span class="n">Service</span> <span class="n">Scan</span>
+<span class="n">Service</span> <span class="n">scan</span> <span class="n">Timing</span><span class="p">:</span> <span class="n">About</span> <span class="mf">50.00</span><span class="o">%</span> <span class="n">done</span><span class="p">;</span> <span class="n">ETC</span><span class="p">:</span> <span class="mi">17</span><span class="p">:</span><span class="mi">29</span> <span class="p">(</span><span class="mi">0</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">06</span> <span class="n">remaining</span><span class="p">)</span>
+<span class="n">Nmap</span> <span class="n">scan</span> <span class="n">report</span> <span class="k">for</span> <span class="mf">10.10</span><span class="p">.</span><span class="mf">11.48</span>
+<span class="n">Host</span> <span class="ow">is</span> <span class="n">up</span> <span class="p">(</span><span class="mf">0.049</span><span class="n">s</span> <span class="n">latency</span><span class="p">).</span>
+
+<span class="n">PORT</span>   <span class="n">STATE</span> <span class="n">SERVICE</span> <span class="n">VERSION</span>
+<span class="mi">22</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">ssh</span>     <span class="n">OpenSSH</span> <span class="mf">8.9</span><span class="n">p1</span> <span class="n">Ubuntu</span> <span class="mi">3</span><span class="n">ubuntu0</span><span class="p">.</span><span class="mi">10</span> <span class="p">(</span><span class="n">Ubuntu</span> <span class="n">Linux</span><span class="p">;</span> <span class="n">protocol</span> <span class="mf">2.0</span><span class="p">)</span>
+<span class="o">|</span> <span class="n">ssh</span><span class="o">-</span><span class="n">hostkey</span><span class="p">:</span> 
+<span class="o">|</span>   <span class="mi">256</span> <span class="mi">48</span><span class="p">:</span><span class="n">b0</span><span class="p">:</span><span class="n">d2</span><span class="p">:</span><span class="n">c7</span><span class="p">:</span><span class="mi">29</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="n">ae</span><span class="p">:</span><span class="mi">3</span><span class="n">d</span><span class="p">:</span><span class="n">fb</span><span class="p">:</span><span class="n">b7</span><span class="p">:</span><span class="mi">6</span><span class="n">b</span><span class="p">:</span><span class="mi">0</span><span class="n">f</span><span class="p">:</span><span class="n">f5</span><span class="p">:</span><span class="mi">4</span><span class="n">d</span><span class="p">:</span><span class="mi">2</span><span class="n">a</span><span class="p">:</span><span class="n">ea</span> <span class="p">(</span><span class="n">ECDSA</span><span class="p">)</span>
+<span class="o">|</span><span class="n">_</span>  <span class="mi">256</span> <span class="n">cb</span><span class="p">:</span><span class="mi">61</span><span class="p">:</span><span class="mi">64</span><span class="p">:</span><span class="n">b8</span><span class="p">:</span><span class="mi">1</span><span class="n">b</span><span class="p">:</span><span class="mi">1</span><span class="n">b</span><span class="p">:</span><span class="n">b5</span><span class="p">:</span><span class="n">ba</span><span class="p">:</span><span class="n">b8</span><span class="p">:</span><span class="mi">45</span><span class="p">:</span><span class="mi">86</span><span class="p">:</span><span class="n">c5</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="n">bb</span><span class="p">:</span><span class="n">e2</span><span class="p">:</span><span class="n">a2</span> <span class="p">(</span><span class="n">ED25519</span><span class="p">)</span>
+<span class="mi">80</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">http</span>    <span class="n">Apache</span> <span class="n">httpd</span> <span class="mf">2.4</span><span class="p">.</span><span class="mi">52</span> <span class="p">((</span><span class="n">Ubuntu</span><span class="p">))</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">header</span><span class="p">:</span> <span class="n">Apache</span><span class="o">/</span><span class="mf">2.4</span><span class="p">.</span><span class="mi">52</span> <span class="p">(</span><span class="n">Ubuntu</span><span class="p">)</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">title</span><span class="p">:</span> <span class="n">Apache2</span> <span class="n">Ubuntu</span> <span class="n">Default</span> <span class="n">Page</span><span class="p">:</span> <span class="n">It</span> <span class="n">works</span>
+<span class="n">Service</span> <span class="n">Info</span><span class="p">:</span> <span class="n">OS</span><span class="p">:</span> <span class="n">Linux</span><span class="p">;</span> <span class="n">CPE</span><span class="p">:</span> <span class="n">cpe</span><span class="p">:</span><span class="o">/</span><span class="n">o</span><span class="p">:</span><span class="n">linux</span><span class="p">:</span><span class="n">linux_kernel</span>
+
+<span class="n">Service</span> <span class="n">detection</span> <span class="n">performed</span><span class="p">.</span> <span class="n">Please</span> <span class="n">report</span> <span class="nb">any</span> <span class="n">incorrect</span> <span class="n">results</span> <span class="n">at</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">submit</span><span class="o">/</span> <span class="p">.</span>
+<span class="n">Nmap</span> <span class="n">done</span><span class="p">:</span> <span class="mi">1</span> <span class="n">IP</span> <span class="n">address</span> <span class="p">(</span><span class="mi">1</span> <span class="n">host</span> <span class="n">up</span><span class="p">)</span> <span class="n">scanned</span> <span class="ow">in</span> <span class="mf">10.84</span> <span class="n">seconds</span>
+</code></pre></div></div>
+
+<p>Default apache page:</p>
+
+<p align="center">
+<img src="/assets/images/img-underpass/img1.png" />
+</p>
+
+<p>Fuzzing the web page didn’t find any interesting path.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@tornado:/home/h4nger/htb/uderpass/nmap# gobuster dir -u http://10.10.11.48 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt                                              
+===============================================================                                                                                                                              
+Gobuster v3.6                                                                                                                                                                                
+by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@firefart)                                                                                                                                
+===============================================================                                                                                                                              
+[+] Url:                     http://10.10.11.48 
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.6
+[+] Timeout:                 10s
+===============================================================
+Starting gobuster in directory enumeration mode 
+===============================================================
+/server-status        (Status: 403) [Size: 276]
+Progress: 96392 / 220561 (43.70%)^C
+[!] Keyboard interrupt detected, terminating.
+Progress: 96429 / 220561 (43.72%)
+===============================================================
+</code></pre></div></div>
+<p>We can see the snmp port is open in this machine.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">root</span><span class="o">@</span><span class="n">tornado</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">h4nger</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">uderpass</span><span class="o">/</span><span class="n">nmap</span><span class="c1"># nmap -p161 -sU 10.10.11.48
+</span><span class="n">Starting</span> <span class="n">Nmap</span> <span class="mf">7.95</span> <span class="p">(</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span> <span class="p">)</span> <span class="n">at</span> <span class="mi">2025</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">11</span> <span class="mi">17</span><span class="p">:</span><span class="mi">44</span> <span class="n">EDT</span>
+<span class="n">Nmap</span> <span class="n">scan</span> <span class="n">report</span> <span class="k">for</span> <span class="mf">10.10</span><span class="p">.</span><span class="mf">11.48</span>
+<span class="n">Host</span> <span class="ow">is</span> <span class="n">up</span> <span class="p">(</span><span class="mf">0.066</span><span class="n">s</span> <span class="n">latency</span><span class="p">).</span>
+
+<span class="n">PORT</span>    <span class="n">STATE</span> <span class="n">SERVICE</span>
+<span class="mi">161</span><span class="o">/</span><span class="n">udp</span> <span class="nb">open</span>  <span class="n">snmp</span>
+
+<span class="n">Nmap</span> <span class="n">done</span><span class="p">:</span> <span class="mi">1</span> <span class="n">IP</span> <span class="n">address</span> <span class="p">(</span><span class="mi">1</span> <span class="n">host</span> <span class="n">up</span><span class="p">)</span> <span class="n">scanned</span> <span class="ow">in</span> <span class="mf">0.41</span> <span class="n">seconds</span>
+<span class="n">root</span><span class="o">@</span><span class="n">tornado</span><span class="p">:</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">h4nger</span><span class="o">/</span><span class="n">htb</span><span class="o">/</span><span class="n">uderpass</span><span class="o">/</span><span class="n">nmap</span><span class="c1">#
+</span>
+</code></pre></div></div>
+
+<h2 id="recon-using-snmp">Recon using snmp</h2>
+
+<p>Using snmpwalk with the public community we can see interesting info about the machine:</p>
+
+<ul>
+  <li>Kernal version that is using.</li>
+  <li>a user mail <strong><em>“steve@uderpass.htb”</em></strong>.</li>
+  <li>a domain name <strong><em>“Underpass.htb”</em></strong>.</li>
+  <li>And the machine it’s using <strong><em>daloradius</em></strong>.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@tornado:/home/h4nger/htb/uderpass/nmap# snmpwalk -c public -v2c 10.10.11.48                                                                                                             
+iso.3.6.1.2.1.1.1.0 = STRING: "Linux underpass 5.15.0-126-generic #136-Ubuntu SMP Wed Nov 6 10:38:22 UTC 2024 x86_64"                                                                        
+iso.3.6.1.2.1.1.2.0 = OID: iso.3.6.1.4.1.8072.3.2.10                                                                                                                                         
+iso.3.6.1.2.1.1.3.0 = Timeticks: (11274768) 1 day, 7:19:07.68                                                                                                                                
+iso.3.6.1.2.1.1.4.0 = STRING: "steve@underpass.htb"                                                                                                                                          
+iso.3.6.1.2.1.1.5.0 = STRING: "UnDerPass.htb is the only daloradius server in the basin!"                                                                                                    
+iso.3.6.1.2.1.1.6.0 = STRING: "Nevada, U.S.A. but not Vegas"                                                                                                                                 
+iso.3.6.1.2.1.1.7.0 = INTEGER: 72                                                                                                                                                            
+iso.3.6.1.2.1.1.8.0 = Timeticks: (0) 0:00:00.00                                                                                                                                              
+iso.3.6.1.2.1.1.9.1.2.1 = OID: iso.3.6.1.6.3.10.3.1.1                                                                                                                                        
+iso.3.6.1.2.1.1.9.1.2.2 = OID: iso.3.6.1.6.3.11.3.1.1                                                                                                                                        
+iso.3.6.1.2.1.1.9.1.2.3 = OID: iso.3.6.1.6.3.15.2.1.1                                                                                                                                        
+iso.3.6.1.2.1.1.9.1.2.4 = OID: iso.3.6.1.6.3.1                                                                                                                                               
+iso.3.6.1.2.1.1.9.1.2.5 = OID: iso.3.6.1.6.3.16.2.2.1                                                                                                                                        
+iso.3.6.1.2.1.1.9.1.2.6 = OID: iso.3.6.1.2.1.49                                                                                                                                              
+iso.3.6.1.2.1.1.9.1.2.7 = OID: iso.3.6.1.2.1.50                                                                                                                                              
+iso.3.6.1.2.1.1.9.1.2.8 = OID: iso.3.6.1.2.1.4                                                                                                                                               
+iso.3.6.1.2.1.1.9.1.2.9 = OID: iso.3.6.1.6.3.13.3.1.3                                                                                                                                        
+iso.3.6.1.2.1.1.9.1.2.10 = OID: iso.3.6.1.2.1.92
+</code></pre></div></div>
+
+<p>Editing the hosts file to put the domain <strong><em>uderpass.htb</em></strong> there was no difference notice accessing the web page.</p>
+
+<p align="center">
+<img src="/assets/images/img-underpass/img2.png" />
+</p>
+
+<p>If we want to get more information from the victim machine through snmp we can use <strong><em>MIBs</em></strong>.</p>
+
+<p>So first we need to install it:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@tornado:/home/h4nger/htb/uderpass/nmap# apt install snmp-mibs-downloader 
+The following packages were automatically installed and are no longer required:
+  libdnnl3  libmsgpack-c2  libtree-sitter0.22  libunibilium4  libvterm0  libxnnpack0  lua-lpeg  lua-luv  neovim-runtime  python3-pynvim
+Use 'sudo apt autoremove' to remove them.
+
+Installing:
+  snmp-mibs-downloader
+
+Installing dependencies:
+  smistrip
+
+Summary:
+  Upgrading: 0, Installing: 2, Removing: 0, Not Upgrading: 1173
+  Download size: 5,882 kB
+  Space needed: 6,137 kB / 62.1 GB available
+
+Continue? [Y/n] 
+</code></pre></div></div>
+
+<p>Then we need to uncomment the following line on the <strong><em>snmp.conf</em></strong> file:</p>
+
+<p align="center">
+<img src="/assets/images/img-underpass/img3.png" />
+</p>
+
+<p>And using the parameter <strong><em>-m all</em></strong> we can see more information about the victim machine.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@tornado:/home/h4nger/htb/uderpass/nmap# snmpwalk -c public -v2c -m all 10.10.11.48 2&gt;&amp;/dev/null                                                                                         
+SNMPv2-MIB::sysDescr.0 = STRING: Linux underpass 5.15.0-126-generic #136-Ubuntu SMP Wed Nov 6 10:38:22 UTC 2024 x86_64                                                                       
+SNMPv2-MIB::sysObjectID.0 = OID: NET-SNMP-TC::linux                                                                                                                                          
+DISMAN-EXPRESSION-MIB::sysUpTimeInstance = Timeticks: (11388311) 1 day, 7:38:03.11                                                                                                           
+SNMPv2-MIB::sysContact.0 = STRING: steve@underpass.htb                                                                                                                                       
+SNMPv2-MIB::sysName.0 = STRING: UnDerPass.htb is the only daloradius server in the basin!                                                                                                    
+SNMPv2-MIB::sysLocation.0 = STRING: Nevada, U.S.A. but not Vegas                                                                                                                             
+SNMPv2-MIB::sysServices.0 = INTEGER: 72                                                                                                                                                      
+SNMPv2-MIB::sysORLastChange.0 = Timeticks: (0) 0:00:00.00
+SNMPv2-MIB::sysORID.1 = OID: SNMP-FRAMEWORK-MIB::snmpFrameworkMIBCompliance
+SNMPv2-MIB::sysORID.2 = OID: SNMP-MPD-MIB::snmpMPDCompliance
+SNMPv2-MIB::sysORID.3 = OID: SNMP-USER-BASED-SM-MIB::usmMIBCompliance
+SNMPv2-MIB::sysORID.4 = OID: SNMPv2-MIB::snmpMIB
+SNMPv2-MIB::sysORID.5 = OID: SNMP-VIEW-BASED-ACM-MIB::vacmBasicGroup
+SNMPv2-MIB::sysORID.6 = OID: TCP-MIB::tcpMIB
+SNMPv2-MIB::sysORID.7 = OID: UDP-MIB::udpMIB
+SNMPv2-MIB::sysORID.8 = OID: RFC1213-MIB::ip
+SNMPv2-MIB::sysORID.9 = OID: SNMP-NOTIFICATION-MIB::snmpNotifyFullCompliance
+SNMPv2-MIB::sysORID.10 = OID: NOTIFICATION-LOG-MIB::notificationLogMIB
+SNMPv2-MIB::sysORDescr.1 = STRING: The SNMP Management Architecture MIB.
+SNMPv2-MIB::sysORDescr.2 = STRING: The MIB for Message Processing and Dispatching.
+SNMPv2-MIB::sysORDescr.3 = STRING: The management information definitions for the SNMP User-based Security Model.
+SNMPv2-MIB::sysORDescr.4 = STRING: The MIB module for SNMPv2 entities
+SNMPv2-MIB::sysORDescr.5 = STRING: View-based Access Control Model for SNMP.
+SNMPv2-MIB::sysORDescr.6 = STRING: The MIB module for managing TCP implementations
+SNMPv2-MIB::sysORDescr.7 = STRING: The MIB module for managing UDP implementations
+SNMPv2-MIB::sysORDescr.8 = STRING: The MIB module for managing IP and ICMP implementations
+SNMPv2-MIB::sysORDescr.9 = STRING: The MIB modules for managing SNMP Notification, plus filtering.
+SNMPv2-MIB::sysORDescr.10 = STRING: The MIB module for logging SNMP Notifications.
+SNMPv2-MIB::sysORUpTime.1 = Timeticks: (0) 0:00:00.00
+SNMPv2-MIB::sysORUpTime.2 = Timeticks: (0) 0:00:00.00
+SNMPv2-MIB::sysORUpTime.3 = Timeticks: (0) 0:00:00.00
+SNMPv2-MIB::sysORUpTime.4 = Timeticks: (0) 0:00:00.00
+SNMPv2-MIB::sysORUpTime.5 = Timeticks: (0) 0:00:00.00
+SNMPv2-MIB::sysORUpTime.6 = Timeticks: (0) 0:00:00.00
+SNMPv2-MIB::sysORUpTime.7 = Timeticks: (0) 0:00:00.00
+SNMPv2-MIB::sysORUpTime.8 = Timeticks: (0) 0:00:00.00
+SNMPv2-MIB::sysORUpTime.9 = Timeticks: (0) 0:00:00.00
+SNMPv2-MIB::sysORUpTime.10 = Timeticks: (0) 0:00:00.00
+HOST-RESOURCES-MIB::hrSystemUptime.0 = Timeticks: (11389479) 1 day, 7:38:14.79
+HOST-RESOURCES-MIB::hrSystemDate.0 = STRING: 2025-5-11,22:6:8.0,+0:0
+</code></pre></div></div>
+
+<h2 id="exploitation">Exploitation</h2>
+
+<p>Previously we saw that the machine is hosting a <strong><em>daloradius</em></strong> service, And we can see on the web page it’s giving us <strong><em>forbidden</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-underpass/img4.png" />
+</p>
+
+<p>Fuzzing in that path we can see some others paths:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@tornado:/home/h4nger/htb/uderpass/nmap# gobuster dir -u http://10.10.11.48/daloradius/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
+===============================================================
+Gobuster v3.6
+by OJ Reeves (@TheColonial) &amp; Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://10.10.11.48/daloradius/
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.6
+[+] Timeout:                 10s
+===============================================================
+Starting gobuster in directory enumeration mode
+===============================================================
+/library              (Status: 301) [Size: 323] [--&gt; http://10.10.11.48/daloradius/library/]
+/doc                  (Status: 301) [Size: 319] [--&gt; http://10.10.11.48/daloradius/doc/]
+/app                  (Status: 301) [Size: 319] [--&gt; http://10.10.11.48/daloradius/app/]
+/contrib              (Status: 301) [Size: 323] [--&gt; http://10.10.11.48/daloradius/contrib/]
+/ChangeLog            (Status: 200) [Size: 24703]
+/setup                (Status: 301) [Size: 321] [--&gt; http://10.10.11.48/daloradius/setup/]
+/LICENSE              (Status: 200) [Size: 18011]
+Progress: 21092 / 220561 (9.56%)^C
+[!] Keyboard interrupt detected, terminating.
+Progress: 21111 / 220561 (9.57%)
+===============================================================
+Finished
+===============================================================
+</code></pre></div></div>
+<p>Searching for some information about this service I found a github <strong><a href="https://github.com/lirantal/daloradius">repository</a></strong> where is structured the files and directories of this service.</p>
+
+<p>So there are two login pages the first one <strong><em>/app/users</em></strong> using the default credentials did not work.</p>
+
+<p align="center">
+<img src="/assets/images/img-underpass/img5.png" />
+</p>
+
+<p>But the second login wich is the <strong><em>/app/operators</em></strong> using the default daloradius credencials works <strong><em>(administrator:radius)</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-underpass/img6.png" />
+</p>
+
+<p>We see that there is a user created named <strong><em>svcMosh</em></strong> and that the password is hashed.</p>
+
+<p align="center">
+<img src="/assets/images/img-underpass/img7.png" />
+</p>
+
+<p>By cracking the hash from <strong><a href="https://crackstation.net/">crackstation</a></strong> we can see the user’s password in clear text.</p>
+
+<p align="center">
+<img src="/assets/images/img-underpass/img8.png" />
+</p>
+
+<p>During the scanning phase we saw that the machine that the port 22 is open.</p>
+
+<p>So by using these credentials we have access to the victim machine through ssh.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@tornado:/home/h4nger/htb/uderpass/nmap# ssh svcMosh@10.10.11.48                                
+The authenticity of host '10.10.11.48 (10.10.11.48)' can't be established.
+ED25519 key fingerprint is SHA256:zrDqCvZoLSy6MxBOPcuEyN926YtFC94ZCJ5TWRS0VaM.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.10.11.48' (ED25519) to the list of known hosts.
+svcMosh@10.10.11.48's password: 
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-126-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Sun May 11 10:36:11 PM UTC 2025
+
+  System load:  0.0               Processes:             227
+  Usage of /:   71.7% of 6.56GB   Users logged in:       1
+  Memory usage: 33%               IPv4 address for eth0: 10.10.11.48
+  Swap usage:   0%
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+
+Last login: Sun May 11 19:04:09 2025 from 10.10.14.186
+svcMosh@underpass:~$
+</code></pre></div></div>
+
+<p>We found the fisrt flag to submit on htb:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>svcMosh@underpass:~$ ls
+user.txt
+svcMosh@underpass:~$ cat user.txt 
+8bc994f8799fc71ead820322425fc6ee
+svcMosh@underpass:~$
+</code></pre></div></div>
+<h2 id="privesc">PrivEsc</h2>
+
+<p>The user svcMosh have sudo permissions on the binary mosh-server</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>svcMosh@underpass:~$ sudo -l
+Matching Defaults entries for svcMosh on localhost:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin, use_pty
+
+User svcMosh may run the following commands on localhost:
+    (ALL) NOPASSWD: /usr/bin/mosh-server
+svcMosh@underpass:~$
+</code></pre></div></div>
+<p>Doing some research I found the following <strong><a href="https://www.hackingdream.net/2020/03/linux-privilege-escalation-techniques.html">website</a></strong> where it explains how to exploit this binary to access as root if we have SUID permissions.</p>
+
+<p>So using the following command i gain access to the root user –&gt; <strong><em>mosh –server=”sudo /usr/bin/mosh-server” localhost</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-underpass/img9.png" />
+</p>
+
+<p>Another wey to gain root access is using the commando <strong><em>sudo mosh-server</em></strong> and it will generate a temporal key, then with that key using the command <strong><em>mosh-client</em></strong> we have root access.</p>
+
+<p align="center">
+<img src="/assets/images/img-underpass/img10.png" />
+</p>
+
+<p align="center">
+<img src="/assets/images/img-underpass/img11.png" />
+</p>
+
+<p>And now we can submit the last flag.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@underpass:~# cat root.txt 
+08d1c61bb03603f3e3d1a012759d626c
+root@underpass:~# 
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#daloradius" class="page__taxonomy-item" rel="tag">Daloradius</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#hack-the-box" class="page__taxonomy-item" rel="tag">Hack the box</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#linux" class="page__taxonomy-item" rel="tag">Linux</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#snmp" class="page__taxonomy-item" rel="tag">snmp</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#web" class="page__taxonomy-item" rel="tag">Web</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Fecha:</strong> <time datetime="2025-05-17T00:00:00-04:00">May 17, 2025</time></p>
+        
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/thm-relevant/" class="pagination--pager" title="THM - Relevant
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+</div>
+
+    </div>
+
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 bynafrez08.io</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script data-search-pseudo-elements defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  </body>
+</html>

